@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BatchWatermark Web · 批量图片与视频水印实时预览工具</title>
+  <meta name="description" content="纯浏览器本地运行的批量图片与视频打水印工具：实时多图同步预览、横竖版隔离展示与导出、自定义预设本机保存与 JSON 导入导出，零上传保护隐私。" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='4' y='4' width='56' height='56' rx='14' fill='%231a1f2a' stroke='%233b82f6' stroke-width='3'/%3E%3Crect x='14' y='16' width='30' height='26' rx='4' fill='%231f2937' stroke='%2393c5fd' stroke-width='2.5'/%3E%3Ccircle cx='44' cy='44' r='11' fill='%232563eb' stroke='%23ffffff' stroke-width='2.5'/%3E%3Cpath d='M44 38 L39 45 A5 5 0 1 0 49 45 Z' fill='%23ffffff'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Top Toolbar -->
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <div class="brand">
+          <span class="brand-icon" aria-hidden="true">💧</span>
+          <span class="brand-title">BatchWatermark</span>
+          <span class="brand-tag">Web</span>
+        </div>
+
+        <button id="btnAddFiles" class="btn" type="button" title="选择多张图片或视频">＋ 添加图片/视频</button>
+        <button id="btnAddFolder" class="btn" type="button" title="导入整个文件夹中的所有图片与视频">📂 添加文件夹</button>
+        <button id="btnIsolateToggle" class="btn btn-toggle" type="button" aria-pressed="false" title="开启后横版与竖版分开展示、支持独立参数，并分文件夹导出">横竖隔离</button>
+        <button id="btnClearAll" class="btn btn-danger" type="button" disabled>✕ 清空</button>
+        <span id="countBadge" class="count-badge">共 0 项</span>
+      </div>
+
+      <div class="top-bar-right">
+        <span class="privacy-pill" title="所有图片与视频仅在您的浏览器内存中本地处理，不会上传到任何服务器">🔒 纯本地处理</span>
+        <label class="size-control" for="cardSizeSlider">
+          <span class="muted-text">预览尺寸</span>
+          <input id="cardSizeSlider" type="range" min="170" max="380" value="250" />
+        </label>
+        <button id="btnTopExport" class="btn btn-primary" type="button" disabled>⬇ 批量导出</button>
+        <a class="btn btn-ghost repo-link" href="https://github.com/drank5090/BatchWatermark" target="_blank" rel="noopener noreferrer" title="查看 GitHub 开源仓库与桌面端 EXE 下载">GitHub</a>
+      </div>
+    </header>
+
+    <!-- Main Split Workspace -->
+    <main class="workspace">
+      <!-- Left Gallery Area -->
+      <section id="galleryPane" class="gallery-pane" aria-label="实时多图预览区">
+        <!-- Orientation Isolation Scope Filter Bar -->
+        <div id="galleryFilterBar" class="gallery-filter-bar hidden">
+          <div class="filter-bar-left">
+            <span class="filter-label">横竖隔离视图：</span>
+            <div class="pill-group" role="group" aria-label="横竖视图筛选">
+              <button class="btn-pill active" data-scope="both" type="button">分组并列显示</button>
+              <button class="btn-pill" id="btnScopeLand" data-scope="landscape" type="button">仅看横版 (0)</button>
+              <button class="btn-pill" id="btnScopePort" data-scope="portrait" type="button">仅看竖版 (0)</button>
+            </div>
+          </div>
+          <span class="muted-text">导出时将自动分别保存到「横版/」与「竖版/」子文件夹</span>
+        </div>
+
+        <!-- Empty Drop Zone -->
+        <div id="emptyState" class="empty-state">
+          <div id="dropZone" class="drop-zone">
+            <div class="drop-icons" aria-hidden="true">🖼️ 🎬</div>
+            <h2>拖拽多张图片、视频或整个文件夹到此处</h2>
+            <p class="drop-sub">图片支持 JPG / PNG / WebP / BMP / GIF · 视频支持 MP4 / WebM / MOV · 全程浏览器本地运算，绝不上传</p>
+            <div class="drop-actions">
+              <button id="btnEmptyAddFiles" class="btn btn-primary" type="button">＋ 选择图片 / 视频</button>
+              <button id="btnEmptyAddFolder" class="btn" type="button">📂 选择文件夹</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Populated Gallery Scroll Area -->
+        <div id="galleryScroll" class="gallery-scroll hidden">
+          <!-- Primary Section (All items in unified mode, Landscape items in isolated mode) -->
+          <div id="primarySection" class="media-section">
+            <div id="landHeader" class="group-header hidden">
+              <span class="group-title">横版媒体区（宽 ≥ 高）</span>
+              <span id="landCountBadge" class="group-badge">0 项</span>
+            </div>
+            <div id="landEmptyHint" class="group-empty hidden">暂无横版图片或视频</div>
+            <div id="primaryGrid" class="media-grid"></div>
+          </div>
+
+          <!-- Portrait Section (Visible only in orientation-isolated mode) -->
+          <div id="portraitSection" class="media-section hidden">
+            <div id="portHeader" class="group-header">
+              <span class="group-title">竖版媒体区（高 &gt; 宽）</span>
+              <span id="portCountBadge" class="group-badge">0 项</span>
+            </div>
+            <div id="portEmptyHint" class="group-empty hidden">暂无竖版图片或视频</div>
+            <div id="portraitGrid" class="media-grid"></div>
+          </div>
+        </div>
+
+        <!-- Status Bar -->
+        <footer class="status-bar">
+          <span id="statusText">就绪 · 请添加图片/视频或拖拽文件夹到左侧预览区</span>
+          <span class="muted-text">支持与桌面端 EXE 互通 JSON 预设</span>
+        </footer>
+      </section>
+
+      <!-- Right Control Panel -->
+      <aside class="control-panel" aria-label="水印参数操作面板">
+        <div class="panel-scroll">
+          <!-- Orientation Independent Params Card -->
+          <section id="orientationCard" class="section-card orientation-card hidden">
+            <div class="section-title accent-title">横竖隔离 · 参数模式</div>
+            <label class="checkbox-row">
+              <input id="chkIndependentParams" type="checkbox" />
+              <span>横版与竖版使用独立水印参数</span>
+            </label>
+            <div id="orientSwitchHost" class="orient-switch-host hidden">
+              <div class="segmented-row">
+                <button id="btnEditLandscape" class="btn-segmented active" type="button">编辑横版参数</button>
+                <button id="btnEditPortrait" class="btn-segmented" type="button">编辑竖版参数</button>
+              </div>
+              <button id="btnSyncOtherOrient" class="btn btn-ghost full-width" type="button">将当前参数同步复制到另一方向</button>
+            </div>
+          </section>
+
+          <!-- Preset Management Card -->
+          <section class="section-card">
+            <div class="section-title">水印预设管理（本机保存与导入导出）</div>
+            <div class="inline-row">
+              <select id="presetSelect" class="input-select grow" aria-label="选择水印预设"></select>
+              <button id="btnResetParams" class="btn btn-ghost" type="button">重置</button>
+            </div>
+            <div class="preset-actions">
+              <button id="btnSavePreset" class="btn btn-ghost grow" type="button" title="将当前参数保存到浏览器本机存储">保存预设</button>
+              <button id="btnDeletePreset" class="btn btn-ghost" type="button" disabled title="删除当前选中的自定义预设">删除</button>
+              <button id="btnImportPreset" class="btn btn-ghost" type="button" title="从 JSON 文件导入预设（兼容桌面端 EXE 预设）">导入</button>
+              <div class="dropdown-wrap">
+                <button id="btnExportPresetMenu" class="btn btn-ghost" type="button">导出 ▾</button>
+                <div id="exportPresetDropdown" class="dropdown-menu hidden">
+                  <button id="btnExportCurPreset" type="button">导出当前水印参数 (.json)</button>
+                  <button id="btnExportAllPresets" type="button">导出全部本机自定义预设 (.json)</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Watermark Content Card -->
+          <section class="section-card">
+            <div class="section-title">水印内容</div>
+            <div class="segmented-row">
+              <button id="btnTypeText" class="btn-segmented active" type="button">文字水印</button>
+              <button id="btnTypeImage" class="btn-segmented" type="button">图片 / Logo</button>
+            </div>
+
+            <!-- Text Controls -->
+            <div id="textControls" class="control-stack">
+              <textarea id="txtWatermark" class="input-textarea" rows="3" placeholder="输入水印文字（支持多行换行）..."></textarea>
+
+              <div class="inline-row">
+                <span class="field-label short">字体</span>
+                <select id="fontSelect" class="input-select grow" aria-label="选择字体">
+                  <option value="微软雅黑">微软雅黑</option>
+                  <option value="微软雅黑 粗体">微软雅黑 粗体</option>
+                  <option value="黑体">黑体</option>
+                  <option value="宋体">宋体</option>
+                  <option value="楷体">楷体</option>
+                  <option value="仿宋">仿宋</option>
+                  <option value="PingFang SC">PingFang SC</option>
+                  <option value="Segoe UI">Segoe UI</option>
+                  <option value="Arial">Arial</option>
+                  <option value="Georgia">Georgia</option>
+                  <option value="Monospace">等宽字体 (Monospace)</option>
+                </select>
+                <button id="btnLoadCustomFont" class="btn btn-ghost" type="button" title="加载本地 .ttf / .otf / .woff2 字体文件">导入字体</button>
+              </div>
+              <div id="customFontInfo" class="muted-text hidden"></div>
+
+              <div class="slider-row">
+                <span class="field-label">字号大小</span>
+                <input id="rngFontSize" type="range" min="10" max="220" value="44" />
+                <input id="numFontSize" class="input-num" type="number" min="10" max="220" value="44" />
+              </div>
+
+              <label class="checkbox-row">
+                <input id="chkProportionalText" type="checkbox" checked />
+                <span>按媒体尺寸自适应比例</span>
+              </label>
+
+              <div class="slider-row">
+                <span class="field-label">行间距</span>
+                <input id="rngLineSpacing" type="range" min="10" max="25" value="13" />
+                <input id="numLineSpacing" class="input-num" type="number" min="1.0" max="2.5" step="0.1" value="1.3" />
+              </div>
+
+              <div class="color-row">
+                <span class="field-label">文字颜色</span>
+                <label class="color-chip">
+                  <input id="clrText" type="color" value="#ffffff" />
+                  <span id="clrTextHex">#FFFFFF</span>
+                </label>
+                <div class="swatches" id="textSwatches">
+                  <button type="button" class="swatch" data-color="#FFFFFF" style="background:#FFFFFF" title="纯白"></button>
+                  <button type="button" class="swatch" data-color="#000000" style="background:#000000" title="纯黑"></button>
+                  <button type="button" class="swatch" data-color="#E5E7EB" style="background:#E5E7EB" title="浅灰"></button>
+                  <button type="button" class="swatch" data-color="#EF4444" style="background:#EF4444" title="红色"></button>
+                  <button type="button" class="swatch" data-color="#3B82F6" style="background:#3B82F6" title="蓝色"></button>
+                  <button type="button" class="swatch" data-color="#F59E0B" style="background:#F59E0B" title="金黄"></button>
+                </div>
+              </div>
+
+              <div class="effect-header">
+                <label class="checkbox-row">
+                  <input id="chkStroke" type="checkbox" checked />
+                  <span>文字描边</span>
+                </label>
+                <label class="color-chip compact">
+                  <input id="clrStroke" type="color" value="#000000" />
+                  <span id="clrStrokeHex">#000000</span>
+                </label>
+              </div>
+              <div class="slider-row" id="strokeWidthRow">
+                <span class="field-label">描边粗细</span>
+                <input id="rngStrokeWidth" type="range" min="1" max="16" value="2" />
+                <input id="numStrokeWidth" class="input-num" type="number" min="1" max="16" value="2" />
+              </div>
+
+              <div class="effect-header">
+                <label class="checkbox-row">
+                  <input id="chkShadow" type="checkbox" checked />
+                  <span>投影阴影</span>
+                </label>
+                <label class="color-chip compact">
+                  <input id="clrShadow" type="color" value="#000000" />
+                  <span id="clrShadowHex">#000000</span>
+                </label>
+              </div>
+              <div class="slider-row" id="shadowOffsetRow">
+                <span class="field-label">阴影偏移</span>
+                <input id="rngShadowOffset" type="range" min="1" max="20" value="3" />
+                <input id="numShadowOffset" class="input-num" type="number" min="1" max="20" value="3" />
+              </div>
+            </div>
+
+            <!-- Image/Logo Controls -->
+            <div id="logoControls" class="control-stack hidden">
+              <div class="logo-picker-box">
+                <div id="logoThumbBox" class="logo-thumb">无Logo</div>
+                <div class="logo-picker-info">
+                  <div id="logoFileName" class="muted-text">请选择带透明背景的 PNG / WebP Logo</div>
+                  <button id="btnPickLogo" class="btn" type="button">选择水印图片...</button>
+                </div>
+              </div>
+              <div class="slider-row">
+                <span class="field-label">缩放比例</span>
+                <input id="rngLogoScale" type="range" min="3" max="100" value="22" />
+                <input id="numLogoScale" class="input-num" type="number" min="3" max="100" value="22" />
+              </div>
+              <label class="checkbox-row">
+                <input id="chkProportionalLogo" type="checkbox" checked />
+                <span>按目标媒体宽度百分比缩放</span>
+              </label>
+            </div>
+          </section>
+
+          <!-- Appearance Card -->
+          <section class="section-card">
+            <div class="section-title">透明度与角度</div>
+            <div class="slider-row">
+              <span class="field-label">不透明度</span>
+              <input id="rngOpacity" type="range" min="0" max="100" value="55" />
+              <input id="numOpacity" class="input-num" type="number" min="0" max="100" value="55" />
+            </div>
+            <div class="slider-row">
+              <span class="field-label">旋转角度</span>
+              <input id="rngRotation" type="range" min="-180" max="180" value="-25" />
+              <input id="numRotation" class="input-num" type="number" min="-180" max="180" value="-25" />
+            </div>
+            <div class="quick-angles">
+              <span class="field-label muted-text">快捷角度</span>
+              <button class="btn-pill" data-angle="0" type="button">0°</button>
+              <button class="btn-pill" data-angle="-25" type="button">-25°</button>
+              <button class="btn-pill" data-angle="-45" type="button">-45°</button>
+              <button class="btn-pill" data-angle="30" type="button">30°</button>
+              <button class="btn-pill" data-angle="45" type="button">45°</button>
+            </div>
+          </section>
+
+          <!-- Position & Layout Card -->
+          <section class="section-card">
+            <div class="section-title">位置与排布</div>
+            <div class="segmented-row">
+              <button id="btnModeTiled" class="btn-segmented active" type="button">全图平铺</button>
+              <button id="btnModeSingle" class="btn-segmented" type="button">单点定位</button>
+            </div>
+
+            <!-- Tiled options -->
+            <div id="tiledControls" class="control-stack">
+              <div class="slider-row">
+                <span class="field-label">水平间距</span>
+                <input id="rngTileX" type="range" min="10" max="500" value="120" />
+                <input id="numTileX" class="input-num" type="number" min="10" max="500" value="120" />
+              </div>
+              <div class="slider-row">
+                <span class="field-label">垂直间距</span>
+                <input id="rngTileY" type="range" min="10" max="500" value="100" />
+                <input id="numTileY" class="input-num" type="number" min="10" max="500" value="100" />
+              </div>
+              <label class="checkbox-row">
+                <input id="chkTileStagger" type="checkbox" checked />
+                <span>奇偶行交错排布（砖墙错位）</span>
+              </label>
+            </div>
+
+            <!-- Single options -->
+            <div id="singleControls" class="control-stack hidden">
+              <div class="anchor-row">
+                <span class="field-label">九宫格</span>
+                <div id="anchorGrid" class="anchor-grid" role="group" aria-label="九宫格锚点">
+                  <button type="button" class="anchor-btn" data-anchor="top_left" title="左上角">↖</button>
+                  <button type="button" class="anchor-btn" data-anchor="top_center" title="顶部居中">↑</button>
+                  <button type="button" class="anchor-btn" data-anchor="top_right" title="右上角">↗</button>
+                  <button type="button" class="anchor-btn" data-anchor="middle_left" title="左侧居中">←</button>
+                  <button type="button" class="anchor-btn" data-anchor="center" title="正中心">●</button>
+                  <button type="button" class="anchor-btn" data-anchor="middle_right" title="右侧居中">→</button>
+                  <button type="button" class="anchor-btn" data-anchor="bottom_left" title="左下角">↙</button>
+                  <button type="button" class="anchor-btn" data-anchor="bottom_center" title="底部居中">↓</button>
+                  <button type="button" class="anchor-btn active" data-anchor="bottom_right" title="右下角">↘</button>
+                </div>
+              </div>
+              <div class="slider-row">
+                <span class="field-label">水平边距</span>
+                <input id="rngMarginX" type="range" min="0" max="300" value="40" />
+                <input id="numMarginX" class="input-num" type="number" min="0" max="30" step="0.5" value="4.0" />
+              </div>
+              <div class="slider-row">
+                <span class="field-label">垂直边距</span>
+                <input id="rngMarginY" type="range" min="0" max="300" value="40" />
+                <input id="numMarginY" class="input-num" type="number" min="0" max="30" step="0.5" value="4.0" />
+              </div>
+            </div>
+
+            <!-- Shared Fine Offsets -->
+            <div class="slider-row">
+              <span class="field-label">水平微调</span>
+              <input id="rngOffsetX" type="range" min="-400" max="400" value="0" />
+              <input id="numOffsetX" class="input-num" type="number" min="-40" max="40" step="0.5" value="0.0" />
+            </div>
+            <div class="slider-row">
+              <span class="field-label">垂直微调</span>
+              <input id="rngOffsetY" type="range" min="-400" max="400" value="0" />
+              <input id="numOffsetY" class="input-num" type="number" min="-40" max="40" step="0.5" value="0.0" />
+            </div>
+          </section>
+
+          <!-- Export Settings Card -->
+          <section class="section-card">
+            <div class="section-title">批量导出设置</div>
+            <div id="exportIsolationHint" class="info-hint hidden">
+              已开启横竖隔离：导出将自动分为「横版/」与「竖版/」子文件夹
+            </div>
+            <div class="inline-row">
+              <span class="field-label short">前缀</span>
+              <input id="txtPrefix" class="input-text grow" type="text" placeholder="可选" />
+              <span class="field-label short">后缀</span>
+              <input id="txtSuffix" class="input-text grow" type="text" value="_watermarked" placeholder="如 _wm" />
+            </div>
+            <div class="inline-row">
+              <span class="field-label">图片格式</span>
+              <select id="selOutputFormat" class="input-select grow">
+                <option value="keep">保持原格式</option>
+                <option value="jpeg">JPEG (.jpg)</option>
+                <option value="png">PNG (.png)</option>
+                <option value="webp">WebP (.webp)</option>
+              </select>
+            </div>
+            <div class="slider-row">
+              <span class="field-label">导出质量</span>
+              <input id="rngQuality" type="range" min="50" max="100" value="92" />
+              <input id="numQuality" class="input-num" type="number" min="50" max="100" value="92" />
+            </div>
+            <label class="checkbox-row">
+              <input id="chkVideoAudio" type="checkbox" checked />
+              <span>视频保留原声（Canvas + MediaRecorder 本地录制）</span>
+            </label>
+          </section>
+        </div>
+
+        <!-- Sticky Export Footer -->
+        <div class="export-footer">
+          <button id="btnExportZip" class="btn btn-primary full-width export-main-btn" type="button" disabled>
+            ⬇ 打包导出 ZIP (0 项)
+          </button>
+          <button id="btnExportDir" class="btn full-width" type="button" disabled title="Chrome / Edge 支持直接将文件写入本地目标文件夹">
+            📁 直接导出到本地文件夹
+          </button>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <!-- Hidden File Inputs -->
+  <input id="fileInputMedia" type="file" multiple accept="image/*,video/*" hidden />
+  <input id="fileInputFolder" type="file" webkitdirectory directory multiple hidden />
+  <input id="fileInputLogo" type="file" accept="image/*" hidden />
+  <input id="fileInputFont" type="file" accept=".ttf,.otf,.woff,.woff2" hidden />
+  <input id="fileInputPreset" type="file" accept=".json,application/json" hidden />
+
+  <!-- High-Res Lightbox Modal -->
+  <div id="lightboxModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-label="高清实时预览">
+    <div class="modal-card lightbox-card">
+      <div class="modal-header">
+        <span id="lightboxTitle" class="modal-title">高清实时预览</span>
+        <div class="modal-header-actions">
+          <button id="btnLbPrev" class="btn" type="button">◀ 上一项</button>
+          <button id="btnLbNext" class="btn" type="button">下一项 ▶</button>
+          <button id="btnLbClose" class="btn" type="button">关闭</button>
+        </div>
+      </div>
+      <div class="lightbox-stage">
+        <canvas id="lightboxCanvas"></canvas>
+      </div>
+      <div id="lightboxVideoBar" class="lightbox-video-bar hidden">
+        <button id="btnLbPlay" class="btn btn-primary" type="button">▶ 实时预览播放</button>
+        <input id="rngLbTime" type="range" min="0" max="1000" value="0" />
+        <span id="lblLbTime" class="muted-text time-readout">00:00 / 00:00</span>
+        <div class="pill-group">
+          <button class="btn-pill" data-jump="0" type="button">开头</button>
+          <button class="btn-pill" data-jump="0.25" type="button">25%</button>
+          <button class="btn-pill" data-jump="0.5" type="button">50%</button>
+          <button class="btn-pill" data-jump="0.75" type="button">75%</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Batch Export Progress Modal -->
+  <div id="exportModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-label="批量导出进度">
+    <div class="modal-card export-progress-card">
+      <div class="modal-header">
+        <span id="exportModalTitle" class="modal-title">正在批量导出水印媒体</span>
+      </div>
+      <div class="export-progress-body">
+        <div id="exportStatusDetail" class="muted-text">准备中...</div>
+        <div class="progress-track">
+          <div id="exportProgressFill" class="progress-fill" style="width:0%"></div>
+        </div>
+        <div id="exportPercentText" class="export-percent">0%</div>
+      </div>
+      <div class="modal-footer">
+        <button id="btnCancelExport" class="btn btn-danger" type="button">取消导出</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toastHost" class="toast-host" aria-live="polite"></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

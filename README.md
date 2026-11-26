@@ -11,6 +11,9 @@
 [![FFmpeg](https://img.shields.io/badge/Video-FFmpeg-007808?logo=ffmpeg&logoColor=white)](https://ffmpeg.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Release](https://img.shields.io/github/v/release/drank5090/BatchWatermark?include_prereleases&label=Release)](https://github.com/drank5090/BatchWatermark/releases)
+[![Web App](https://img.shields.io/badge/Web%20Edition-GitHub%20Pages-2563EB?logo=githubpages&logoColor=white)](https://drank5090.github.io/BatchWatermark/)
+
+> **在线纯网页版（无需安装，打开即用）**：[https://drank5090.github.io/BatchWatermark/](https://drank5090.github.io/BatchWatermark/)（纯浏览器本地处理，零上传保护隐私）
 
 </div>
 
@@ -75,6 +78,22 @@
 - 支持自定义输出目录、文件名前缀/后缀（默认后缀 `_watermarked` 保护原图）、重名自动编号或覆盖。
 - **图片导出**：支持保持原格式 / JPEG / PNG / WebP，可调节压缩质量（50%–100%）与保留原图 EXIF（同时将 Orientation 规范化为 `1`，避免二次旋转）。
 - **视频导出**：将 Pillow 生成的全分辨率透明水印 PNG 图层通过 FFmpeg 单次 `overlay` 滤镜合成至视频每一帧，输出高兼容性 H.264 `MP4`（`yuv420p` + `faststart`），默认保留原声（AAC 192k，可勾选静音），支持实时百分比进度条与随时取消。
+
+---
+
+## 在线网页版 vs 桌面端对比
+
+| 特性 | 纯网页版（[GitHub Pages 在线使用](https://drank5090.github.io/BatchWatermark/)） | 桌面端（Python / EXE） |
+| :--- | :--- | :--- |
+| 运行环境 | 现代浏览器直接打开，零安装、零外部 CDN 依赖 | Windows 独立 EXE 或 `uv run batch-watermark` |
+| 隐私安全 | **100% 浏览器本地内存计算，绝不上传服务器** | 100% 本机离线运行 |
+| 实时多图 & 视频预览 | HTML5 Canvas 2D 多图/视频实时同步预览 + 视频帧实时播放 | PySide6 多线程池 + 视口优先调度 |
+| 横竖版隔离 & 独立参数 | 支持分开展示、横竖独立参数、`横版/` 与 `竖版/` 分目录导出 | 支持分开展示、横竖独立参数、`横版/` 与 `竖版/` 分目录导出 |
+| 自定义预设 | `localStorage` 本机保存 + JSON 导入导出（**与桌面端完全互通**） | `%APPDATA%` 本机落盘 + JSON 导入导出 |
+| 批量导出方式 | 零依赖纯 JS 打包下载 **ZIP** + Chrome/Edge **直写本地文件夹** | 直接写入本机目标文件夹 |
+| 视频水印导出 | 浏览器原生 Canvas + MediaRecorder（保留原声，MP4/WebM） | 内置 FFmpeg 7.1 硬件/高速 H.264 MP4 + AAC 无损音轨 |
+
+> 网页版源码位于 [web/](web/) 目录，由 [.github/workflows/pages.yml](.github/workflows/pages.yml) 自动部署至 GitHub Pages。
 
 ---
 

@@ -10,6 +10,7 @@
 [![Pillow](https://img.shields.io/badge/Imaging-Pillow-3776AB)](https://python-pillow.org/)
 [![FFmpeg](https://img.shields.io/badge/Video-FFmpeg-007808?logo=ffmpeg&logoColor=white)](https://ffmpeg.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/drank5090/BatchWatermark?include_prereleases&label=Release)](https://github.com/drank5090/BatchWatermark/releases)
 
 </div>
 
@@ -144,6 +145,21 @@ uv run pyinstaller BatchWatermark.spec --clean -y
 ```
 
 打包完成后，独立可执行文件位于 `dist/BatchWatermark.exe`（无需目标电脑安装 Python 或 FFmpeg，双击即用）。
+
+### GitHub Actions 自动打包与发布（仅 Tag 触发）
+
+项目已配置 [.github/workflows/release.yml](.github/workflows/release.yml)，**仅在推送 Git Tag 时触发**（普通分支提交与 PR 不会触发）：
+
+1. 在 `windows-latest` 上使用 `uv sync --locked --all-groups` 还原锁定依赖并执行 `pytest` 自动化测试；
+2. 调用 PyInstaller 自动打包独立单文件 `BatchWatermark-<tag>-win64.exe` 并进行启动冒烟验证；
+3. 生成 `SHA256SUMS.txt` 校验文件，自动创建 GitHub Release 并上传附件（包含 `-alpha` / `-beta` / `-rc` 的 Tag 自动标记为 Pre-release）。
+
+发布新版本只需推送 Tag：
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
 
 ---
 

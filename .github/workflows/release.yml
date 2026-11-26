@@ -1,0 +1,120 @@
+name: Build and Release Windows EXE
+
+on:
+  push:
+    tags:
+      - "*"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-and-release:
+    name: Build & Publish (${{ github.ref_name }})
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up uv and Python
+        uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.13"
+          enable-cache: true
+
+      - name: Sync dependencies from uv.lock
+        shell: pwsh
+        run: uv sync --locked --all-groups
+
+      - name: Run automated tests
+        shell: pwsh
+        env:
+          QT_QPA_PLATFORM: offscreen
+          QT_QPA_FONTDIR: C:\Windows\Fonts
+        run: uv run pytest -v
+
+      - name: Build standalone BatchWatermark.exe
+        shell: pwsh
+        run: uv run pyinstaller BatchWatermark.spec --clean -y
+
+      - name: Smoke-test EXE and prepare release assets
+        shell: pwsh
+        run: |
+          $tag = "${{ github.ref_name }}"
+          $rawExe = "dist\BatchWatermark.exe"
+          if (-not (Test-Path $rawExe)) {
+            throw "Build failed: $rawExe not found"
+          }
+
+          # Verify built executable starts cleanly
+          $proc = Start-Process -FilePath $rawExe -ArgumentList "--version" -PassThru -Wait
+          if ($proc.ExitCode -ne 0) {
+            throw "Smoke test failed with exit code $($proc.ExitCode)"
+          }
+
+          $releaseDir = "dist\release"
+          New-Item -ItemType Directory -Force -Path $releaseDir | Out-Null
+
+          $safeTag = $tag -replace '[^A-Za-z0-9._-]', '_'
+          $assetName = "BatchWatermark-$safeTag-win64.exe"
+          $assetPath = Join-Path $releaseDir $assetName
+          Copy-Item -Path $rawExe -Destination $assetPath -Force
+
+          $hash = (Get-FileHash -Path $assetPath -Algorithm SHA256).Hash.ToLowerInvariant()
+          "$hash  $assetName" | Out-File -FilePath (Join-Path $releaseDir "SHA256SUMS.txt") -Encoding ascii
+
+          $sizeMB = [Math]::Round((Get-Item $assetPath).Length / 1MB, 2)
+          Write-Host "Prepared asset: $assetName ($sizeMB MB) | SHA256: $hash"
+
+      - name: Publish GitHub Release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $tag = "${{ github.ref_name }}"
+          $safeTag = $tag -replace '[^A-Za-z0-9._-]', '_'
+          $exeAsset = "dist\release\BatchWatermark-$safeTag-win64.exe"
+          $sumAsset = "dist\release\SHA256SUMS.txt"
+
+          $notes = @"
+          ## BatchWatermark $tag
+
+          Windows 64 位单文件独立版（已内置 Python 运行时、PySide6、Pillow 与 FFmpeg，无需安装任何依赖，下载后双击即可使用）。
+
+          ### 附件说明
+          - ``BatchWatermark-$safeTag-win64.exe``：Windows 64 位独立可执行程序
+          - ``SHA256SUMS.txt``：安装包 SHA-256 校验值
+          "@
+
+          $isPrerelease = $tag -match '(?i)-(alpha|beta|rc)'
+
+          $prevEap = $ErrorActionPreference
+          $ErrorActionPreference = "Continue"
+          gh release view $tag *> $null
+          $releaseExists = ($LASTEXITCODE -eq 0)
+          $ErrorActionPreference = $prevEap
+
+          if ($releaseExists) {
+            Write-Host "Release $tag already exists, updating assets..."
+            gh release upload $tag $exeAsset $sumAsset --clobber
+          } else {
+            $argsList = @(
+              "release", "create", $tag,
+              $exeAsset, $sumAsset,
+              "--title", "BatchWatermark $tag",
+              "--notes", $notes,
+              "--generate-notes"
+            )
+            if ($isPrerelease) {
+              $argsList += "--prerelease"
+            }
+            & gh @argsList
+          }
+          if ($LASTEXITCODE -ne 0) {
+            throw "GitHub Release publish failed with exit code $LASTEXITCODE"
+          }

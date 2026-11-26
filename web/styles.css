@@ -121,10 +121,16 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.size-control span {
+  white-space: nowrap;
 }
 
 .size-control input[type="range"] {
-  width: 100px;
+  width: 92px;
 }
 
 .repo-link {
@@ -1087,7 +1093,31 @@ input[type="range"] {
   background: #4b5568;
 }
 
-/* Responsive fallback for smaller viewports */
+/* Responsive adjustments for laptop & tablet viewports */
+@media (max-width: 1340px) {
+  .privacy-pill {
+    display: none;
+  }
+}
+
+@media (max-width: 1200px) {
+  .size-control {
+    display: none;
+  }
+  .top-bar {
+    padding: 0 10px;
+    gap: 6px;
+  }
+  .top-bar .btn {
+    padding: 5px 9px;
+    font-size: 12px;
+  }
+  .control-panel {
+    width: 375px;
+    min-width: 340px;
+  }
+}
+
 @media (max-width: 960px) {
   html,
   body {

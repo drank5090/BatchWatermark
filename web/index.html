@@ -257,16 +257,31 @@
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TQG2QNQK" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <div id="top" class="app-shell">
-    <!-- Top Toolbar -->
-    <header class="top-bar">
-      <div class="top-bar-left">
+    <!-- Top Dual-Mode Tab Switcher (Work Mode / Creative Mode — completely independent) -->
+    <nav id="modeTabBar" class="mode-tab-bar" role="tablist" aria-label="系统模式切换">
+      <div class="mode-bar-left">
         <h1 class="brand">
           <span class="brand-icon" aria-hidden="true">💧</span>
           <span class="brand-title">BatchWatermark</span>
           <span class="brand-tag">Web</span>
-          <span class="sr-only">在线批量给图片和视频加水印工具</span>
+          <span class="sr-only">在线批量给图片和视频加水印与艺术创作水印工具</span>
         </h1>
+        <div class="mode-tabs" role="tablist">
+          <button id="tabModeWork" class="mode-tab-btn active" role="tab" aria-selected="true" data-app-mode="work" type="button" title="原经典批量水印模式：图片与视频、横竖隔离、预设管理">🛠️ 工作模式</button>
+          <button id="tabModeCreative" class="mode-tab-btn" role="tab" aria-selected="false" data-app-mode="creative" type="button" title="艺术水印创作模式：图文水印库、智能大小错落排版、自由拖拽精修">✨ 创作模式</button>
+        </div>
+      </div>
+      <div class="mode-bar-right">
+        <span class="privacy-pill" title="所有图片与视频仅在您的浏览器内存中本地处理，不会上传到任何服务器">🔒 纯本地处理</span>
+        <a class="btn btn-ghost repo-link" href="https://github.com/drank5090/BatchWatermark" target="_blank" rel="noopener noreferrer" title="查看 GitHub 开源仓库与桌面端 EXE 下载">GitHub</a>
+      </div>
+    </nav>
 
+    <!-- ==================== WORK MODE (Original Classic Batch Mode) ==================== -->
+    <div id="workModeView" class="mode-view">
+    <!-- Top Toolbar -->
+    <header class="top-bar">
+      <div class="top-bar-left">
         <button id="btnAddFiles" class="btn desktop-only-inline" type="button" title="选择多张图片或视频">＋ 添加图片/视频</button>
         <button id="btnAddFolder" class="btn desktop-only-inline" type="button" title="导入整个文件夹中的所有图片与视频">📂 添加文件夹</button>
         <button id="btnIsolateToggle" class="btn btn-toggle" type="button" aria-pressed="false" title="开启后横版与竖版分开展示、支持独立参数，并分文件夹导出">横竖隔离</button>
@@ -275,13 +290,11 @@
       </div>
 
       <div class="top-bar-right">
-        <span class="privacy-pill" title="所有图片与视频仅在您的浏览器内存中本地处理，不会上传到任何服务器">🔒 纯本地处理</span>
         <label class="size-control" for="cardSizeSlider">
           <span class="muted-text">预览尺寸</span>
           <input id="cardSizeSlider" type="range" min="170" max="380" value="250" />
         </label>
         <button id="btnTopExport" class="btn btn-primary desktop-only-inline" type="button" disabled>⬇ 批量导出</button>
-        <a class="btn btn-ghost repo-link" href="https://github.com/drank5090/BatchWatermark" target="_blank" rel="noopener noreferrer" title="查看 GitHub 开源仓库与桌面端 EXE 下载">GitHub</a>
       </div>
     </header>
 
@@ -661,6 +674,201 @@
         </div>
       </aside>
     </main>
+    </div><!-- /#workModeView -->
+
+    <!-- ==================== CREATIVE MODE (Art Watermark Studio) ==================== -->
+    <div id="creativeModeView" class="mode-view hidden" aria-label="创作模式工作区">
+      <header class="top-bar creative-toolbar">
+        <div class="top-bar-left">
+          <button id="btnCreativeAddImg" class="btn" type="button">＋ 添加图片</button>
+          <button id="btnCreativeClearImgs" class="btn btn-danger" type="button" disabled>✕ 清空</button>
+          <span id="creativeCountBadge" class="count-badge">共 0 张</span>
+          <button id="btnCreativeAuto" class="btn btn-primary" type="button" disabled title="使用避让主体的多尺度算法自动生成美观大小不一的水印">✨ 智能排版</button>
+          <button id="btnCreativeShuffle" class="btn" type="button" disabled title="更换随机种子重新生成（锁定图层会保留）">🎲 换一版</button>
+          <button id="btnCreativeAutoAll" class="btn desktop-only-inline" type="button" disabled title="为全部图片各自生成智能避让排版">⚡ 全部智能排版</button>
+          <button id="btnCreativeSyncAll" class="btn desktop-only-inline" type="button" disabled title="将当前手工精修好的排版按相对比例同步到全部图片">📋 套用当前到全部</button>
+        </div>
+        <div class="top-bar-right">
+          <button id="btnCreativeUndo" class="btn btn-ghost" type="button" disabled title="撤销 (Ctrl+Z)">↶ 撤销</button>
+          <button id="btnCreativeRedo" class="btn btn-ghost" type="button" disabled title="重做 (Ctrl+Y)">↷ 重做</button>
+          <button id="btnCreativeExportTop" class="btn btn-primary desktop-only-inline" type="button" disabled>⬇ 导出图片</button>
+        </div>
+      </header>
+
+      <main id="creativeWorkspace" class="creative-workspace" data-mobile-creative-tab="auto">
+        <!-- Left Pane: Watermark Library (Images + Texts) -->
+        <aside id="creativeLibPane" class="creative-lib-pane" data-creative-panel="library" aria-label="创作模式水印素材库">
+          <div class="creative-pane-header">
+            <span class="section-title">🎨 水印素材库（图片 + 文字）</span>
+            <span id="creativeLibCount" class="group-badge">0 项</span>
+          </div>
+          <p class="muted-text creative-pane-hint">勾选参与自动排版；按住素材卡片拖到画布，或点「＋」直接放上画布</p>
+          <div class="creative-lib-actions">
+            <button id="btnLibUploadImg" class="btn btn-primary grow" type="button">＋ 上传图片水印</button>
+            <button id="btnLibAddText" class="btn grow" type="button">＋ 文字水印</button>
+          </div>
+          <div class="creative-lib-pack-row">
+            <button id="btnLibImport" class="btn btn-ghost grow" type="button" title="导入 JSON 水印库（兼容桌面端 EXE）">导入库</button>
+            <button id="btnLibExport" class="btn btn-ghost grow" type="button" title="导出 JSON 水印库（兼容桌面端 EXE）">导出库</button>
+            <button id="btnLibReset" class="btn btn-ghost grow" type="button" title="恢复内置艺术雪花/星光/初雪印章素材">恢复默认</button>
+          </div>
+          <div id="creativeLibList" class="creative-lib-list"></div>
+        </aside>
+
+        <!-- Center Pane: Interactive Drag/Scale/Rotate Canvas + Filmstrip -->
+        <section id="creativeStagePane" class="creative-stage-pane" aria-label="创作模式交互画布">
+          <div id="creativeStageBox" class="creative-stage-box">
+            <div id="creativeEmptyState" class="creative-empty-state">
+              <div class="drop-zone creative-drop-zone">
+                <div class="drop-icons" aria-hidden="true">✨ 🖼️ 🎨</div>
+                <h2>选择或拖入图片，开始艺术水印创作</h2>
+                <p class="drop-sub">支持上传透明 PNG 贴纸与多行文字水印库 · 一键智能大小错落避让主体 · 任意元素自由拖拽、缩放、旋转</p>
+                <div class="drop-actions">
+                  <button id="btnCreativeEmptyAdd" class="btn btn-primary" type="button">＋ 选择图片开始创作</button>
+                </div>
+              </div>
+            </div>
+            <canvas id="creativeCanvas" class="creative-canvas hidden"></canvas>
+          </div>
+          <div id="creativeFilmstrip" class="creative-filmstrip" aria-label="已导入创作图片列表"></div>
+        </section>
+
+        <!-- Mobile-only Creative Mode Tab Strip -->
+        <nav id="creativeMobileTabs" class="mobile-param-tabs creative-mobile-tabs" role="tablist" aria-label="创作模式面板切换">
+          <button class="mobile-tab-btn active" role="tab" aria-selected="true" data-creative-tab="auto" type="button">✨ 自动排版</button>
+          <button class="mobile-tab-btn" role="tab" aria-selected="false" data-creative-tab="library" type="button">🎨 水印库</button>
+          <button class="mobile-tab-btn" role="tab" aria-selected="false" data-creative-tab="layer" type="button">🖐️ 精修</button>
+          <button class="mobile-tab-btn" role="tab" aria-selected="false" data-creative-tab="export" type="button">⬇ 导出</button>
+        </nav>
+
+        <!-- Right Pane: Auto Algorithm + Selected Layer Inspector + Export -->
+        <aside id="creativeRightPane" class="creative-right-pane" aria-label="创作模式参数面板">
+          <div class="panel-scroll">
+            <!-- Auto Aesthetic Layout Card -->
+            <section class="section-card" data-creative-panel="auto">
+              <div class="section-title">✨ 自动美学排版算法</div>
+              <div class="inline-row">
+                <span class="field-label">风格</span>
+                <select id="selCreativeStyle" class="input-select grow" aria-label="自动排版风格">
+                  <option value="artistic_scatter">艺术错落 · 示例同款（推荐）</option>
+                  <option value="frame_halo">边框环绕 · 中心人物通透</option>
+                  <option value="full_anti_theft">全图防盗 · 多尺寸防抠图</option>
+                  <option value="magazine_editorial">杂志海报 · 主标题+点缀</option>
+                </select>
+              </div>
+              <div class="slider-row">
+                <span class="field-label">分布密度</span>
+                <input id="rngCDensity" type="range" min="10" max="100" value="58" />
+                <input id="numCDensity" class="input-num" type="number" min="10" max="100" value="58" />
+              </div>
+              <div class="slider-row">
+                <span class="field-label">大小差异</span>
+                <input id="rngCScaleVar" type="range" min="0" max="100" value="72" />
+                <input id="numCScaleVar" class="input-num" type="number" min="0" max="100" value="72" />
+              </div>
+              <div class="slider-row">
+                <span class="field-label">主体避让</span>
+                <input id="rngCAvoid" type="range" min="0" max="100" value="75" />
+                <input id="numCAvoid" class="input-num" type="number" min="0" max="100" value="75" />
+              </div>
+              <div class="slider-row">
+                <span class="field-label">整体透明</span>
+                <input id="rngCOpacity" type="range" min="15" max="100" value="78" />
+                <input id="numCOpacity" class="input-num" type="number" min="15" max="100" value="78" />
+              </div>
+              <div class="slider-row">
+                <span class="field-label">随机倾斜</span>
+                <input id="rngCRotJitter" type="range" min="0" max="45" value="18" />
+                <input id="numCRotJitter" class="input-num" type="number" min="0" max="45" value="18" />
+              </div>
+              <label class="checkbox-row">
+                <input id="chkCSoftGlow" type="checkbox" checked />
+                <span>柔和外发光（亮暗背景均通透清晰）</span>
+              </label>
+              <label class="checkbox-row">
+                <input id="chkCMicroGrid" type="checkbox" checked />
+                <span>补充微型防盗底纹（示例图同款细纹）</span>
+              </label>
+              <div class="inline-row">
+                <button id="btnPanelAutoGen" class="btn btn-primary grow" type="button">✨ 生成美观排版</button>
+                <button id="btnPanelShuffle" class="btn" type="button">🎲 换一版</button>
+                <button id="btnClearLayers" class="btn btn-ghost" type="button">清空</button>
+              </div>
+            </section>
+
+            <!-- Selected Layer Inspector Card -->
+            <section class="section-card" data-creative-panel="layer">
+              <div class="section-title">🖐️ 选中水印精修（自由拖拽/缩放/旋转）</div>
+              <p id="creativeInspectorEmpty" class="muted-text">点击画布中的任意水印，或从水印库拖入元素后，即可在此微调大小、角度、透明度与层级；支持 Delete 删除与 Ctrl+Z 撤销。</p>
+              <div id="creativeInspectorBody" class="control-stack hidden">
+                <div id="inspectorLayerName" class="info-hint"></div>
+                <div class="slider-row">
+                  <span class="field-label">大小比例</span>
+                  <input id="rngLayerScale" type="range" min="30" max="800" value="140" />
+                  <input id="numLayerScale" class="input-num" type="number" min="3" max="80" step="0.5" value="14.0" />
+                </div>
+                <div class="slider-row">
+                  <span class="field-label">不透明度</span>
+                  <input id="rngLayerOpacity" type="range" min="5" max="100" value="75" />
+                  <input id="numLayerOpacity" class="input-num" type="number" min="5" max="100" value="75" />
+                </div>
+                <div class="slider-row">
+                  <span class="field-label">旋转角度</span>
+                  <input id="rngLayerRot" type="range" min="-180" max="180" value="0" />
+                  <input id="numLayerRot" class="input-num" type="number" min="-180" max="180" value="0" />
+                </div>
+                <div class="inline-row">
+                  <label class="checkbox-row grow">
+                    <input id="chkLayerGlow" type="checkbox" checked />
+                    <span>柔和外发光</span>
+                  </label>
+                  <label class="checkbox-row grow">
+                    <input id="chkLayerLock" type="checkbox" />
+                    <span>🔒 锁定位置</span>
+                  </label>
+                </div>
+                <div class="preset-actions">
+                  <button id="btnLayerUp" class="btn btn-ghost grow" type="button">上移</button>
+                  <button id="btnLayerDown" class="btn btn-ghost grow" type="button">下移</button>
+                  <button id="btnLayerDup" class="btn btn-ghost grow" type="button">复制</button>
+                  <button id="btnLayerDel" class="btn btn-danger grow" type="button">删除</button>
+                </div>
+              </div>
+            </section>
+
+            <!-- Export Settings Card -->
+            <section class="section-card" data-creative-panel="export">
+              <div class="section-title">⬇ 创作模式导出设置</div>
+              <div class="inline-row">
+                <span class="field-label">输出格式</span>
+                <select id="selCOutputFormat" class="input-select grow">
+                  <option value="keep">保持原格式</option>
+                  <option value="png">PNG（无损）</option>
+                  <option value="jpeg">JPEG (.jpg)</option>
+                  <option value="webp">WebP (.webp)</option>
+                </select>
+              </div>
+              <div class="slider-row">
+                <span class="field-label">导出质量</span>
+                <input id="rngCQuality" type="range" min="50" max="100" value="94" />
+                <input id="numCQuality" class="input-num" type="number" min="50" max="100" value="94" />
+              </div>
+              <div class="inline-row">
+                <span class="field-label">文件后缀</span>
+                <input id="txtCSuffix" class="input-text grow" type="text" value="_creative" />
+              </div>
+            </section>
+          </div>
+
+          <div class="export-footer creative-export-footer">
+            <div class="export-footer-row">
+              <button id="btnCreativeExportCur" class="btn" type="button" disabled>导出当前图</button>
+              <button id="btnCreativeExportAll" class="btn btn-primary grow" type="button" disabled>⬇ 批量导出 ZIP (0 张)</button>
+            </div>
+          </div>
+        </aside>
+      </main>
+    </div><!-- /#creativeModeView -->
   </div>
 
   <!-- Crawlable Product Guide & GEO Knowledge Hub (scroll below the app viewport) -->
@@ -712,6 +920,10 @@
       <section class="guide-section" aria-labelledby="featTitle">
         <h2 id="featTitle">核心功能</h2>
         <ul class="feature-grid">
+          <li class="feature-item">
+            <h3>✨ 创作模式（图文水印库 + 智能避让 + 自由拖拽）</h3>
+            <p>支持顶部标签页在「工作模式」与「创作模式」间独立切换；可上传透明贴纸与多条文字组建水印库，一键生成避让人物主体的大小错落艺术水印，也支持直接拖拽、缩放、旋转单个水印并按比例同步套用到多张图。</p>
+          </li>
           <li class="feature-item">
             <h3>批量图片与视频加水印</h3>
             <p>支持多选文件、导入整个文件夹或直接拖拽整批素材；自动校正手机照片 EXIF 拍摄方向，视频导出可保留原声。</p>
@@ -885,6 +1097,71 @@
   <input id="fileInputLogo" type="file" accept="image/*" hidden />
   <input id="fileInputFont" type="file" accept=".ttf,.otf,.woff,.woff2" hidden />
   <input id="fileInputPreset" type="file" accept=".json,application/json" hidden />
+  <input id="creativeFileInput" type="file" accept="image/*" multiple hidden />
+  <input id="creativeAssetFileInput" type="file" accept="image/*" multiple hidden />
+  <input id="creativeLibImportInput" type="file" accept=".json,application/json" hidden />
+
+  <!-- Creative Mode Add Text Watermark Modal -->
+  <div id="creativeTextModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-label="添加文字水印到水印库">
+    <div class="modal-card creative-text-modal-card">
+      <div class="modal-header">
+        <span class="modal-title">＋ 添加文字水印到水印库</span>
+        <button id="btnCloseTextModal" class="btn btn-ghost" type="button">关闭</button>
+      </div>
+      <div class="creative-modal-body">
+        <div class="inline-row">
+          <span class="field-label">素材名称</span>
+          <input id="txtAssetName" class="input-text grow" type="text" placeholder="留空自动取文字前 16 字" />
+        </div>
+        <textarea id="txtAssetContent" class="input-textarea" rows="3" placeholder="输入文字水印（支持中英双语换行）...">© 原创作品 · 禁止二改搬运</textarea>
+        <div class="inline-row">
+          <span class="field-label">排版角色</span>
+          <select id="selAssetRole" class="input-select grow">
+            <option value="auto">智能分级（自动大小错落）</option>
+            <option value="hero">主视觉标题（大号醒目，如底部主标题）</option>
+            <option value="accent">中号装饰/配文（边缘空白错落）</option>
+            <option value="micro">微型防盗底纹（细密低透明防盗）</option>
+          </select>
+        </div>
+        <div class="inline-row">
+          <span class="field-label">字体样式</span>
+          <select id="selAssetFont" class="input-select grow">
+            <option value="宋体">宋体（艺术标题推荐）</option>
+            <option value="楷体">楷体</option>
+            <option value="微软雅黑">微软雅黑</option>
+            <option value="微软雅黑 粗体">微软雅黑 粗体</option>
+            <option value="黑体">黑体</option>
+            <option value="Georgia">Georgia（英文衬线）</option>
+          </select>
+          <input id="clrAssetColor" type="color" value="#FFFFFF" title="文字颜色" class="color-native-input" />
+        </div>
+        <div class="inline-row">
+          <label class="checkbox-row grow">
+            <input id="chkAssetStroke" type="checkbox" checked />
+            <span>细描边（增强对比）</span>
+          </label>
+          <label class="checkbox-row grow">
+            <input id="chkAssetGlow" type="checkbox" checked />
+            <span>柔和外发光</span>
+          </label>
+        </div>
+        <div class="slider-row">
+          <span class="field-label">默认大小</span>
+          <input id="rngAssetScale" type="range" min="6" max="48" value="22" />
+          <span class="muted-text">%</span>
+        </div>
+        <div class="slider-row">
+          <span class="field-label">默认透明</span>
+          <input id="rngAssetOpacity" type="range" min="15" max="100" value="78" />
+          <span class="muted-text">%</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btnCancelTextModal" class="btn btn-ghost" type="button">取消</button>
+        <button id="btnConfirmAddText" class="btn btn-primary" type="button">添加到水印库</button>
+      </div>
+    </div>
+  </div>
 
   <!-- High-Res Lightbox Modal -->
   <div id="lightboxModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-label="高清实时预览">

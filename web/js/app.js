@@ -2,6 +2,7 @@
  * Main interactive controller for BatchWatermark Web Edition.
  */
 
+import { CreativeModeApp } from "./creative-app.js";
 import {
   SUPPORTED_IMAGE_EXTS,
   SUPPORTED_VIDEO_EXTS,
@@ -1494,5 +1495,33 @@ class BatchWatermarkApp {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  window.__batchWatermarkApp = new BatchWatermarkApp();
+  const workApp = new BatchWatermarkApp();
+  const creativeApp = new CreativeModeApp({
+    toast: (msg) => workApp._toast(msg),
+    trackEvent: (name, params) => workApp._trackEvent(name, params),
+  });
+
+  // Top Dual-Mode Tab Switcher (Work Mode vs Creative Mode — completely independent)
+  const switchMode = (mode) => {
+    const isCreative = mode === "creative";
+    $("workModeView").classList.toggle("hidden", isCreative);
+    $("creativeModeView").classList.toggle("hidden", !isCreative);
+
+    $("tabModeWork").classList.toggle("active", !isCreative);
+    $("tabModeWork").setAttribute("aria-selected", String(!isCreative));
+    $("tabModeCreative").classList.toggle("active", isCreative);
+    $("tabModeCreative").setAttribute("aria-selected", String(isCreative));
+
+    if (isCreative) {
+      requestAnimationFrame(() => creativeApp.renderCanvas());
+    }
+    workApp._trackEvent("app_mode_switched", { mode });
+  };
+
+  $("tabModeWork")?.addEventListener("click", () => switchMode("work"));
+  $("tabModeCreative")?.addEventListener("click", () => switchMode("creative"));
+
+  window.__batchWatermarkApp = workApp;
+  window.__creativeApp = creativeApp;
+  window.__switchAppMode = switchMode;
 });

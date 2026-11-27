@@ -17,6 +17,9 @@ build/
 dist/
 *.log
 
+# Local promo video generation workspace & outputs
+docs/promo/
+
 # IDE / OS
 .vscode/
 .idea/

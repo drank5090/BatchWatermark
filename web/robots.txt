@@ -1,13 +1,34 @@
 # robots.txt for BatchWatermark Web
-#
-# NOTE: crawlers only read robots.txt from the *host root*
-# (e.g. https://drank5090.github.io/robots.txt). While the site is served
-# from the GitHub Pages project sub-path /BatchWatermark/, submit
-# sitemap.xml manually in Google Search Console / Bing Webmaster Tools /
-# Baidu 搜索资源平台. This file takes effect automatically once the site
-# is moved to a custom domain or a user/organisation Pages site.
+# Canonical domain: https://watermark.zak-cloud.top/
+# Mirror: https://drank5090.github.io/BatchWatermark/
 
 User-agent: *
 Allow: /
 
-Sitemap: https://drank5090.github.io/BatchWatermark/sitemap.xml
+# Explicitly welcome AI search & GEO retrieval bots
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+# Google AdSense crawler
+User-agent: Mediapartners-Google
+Allow: /
+
+Sitemap: https://watermark.zak-cloud.top/sitemap.xml

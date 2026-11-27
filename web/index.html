@@ -53,15 +53,16 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="app-shell">
+  <div id="top" class="app-shell">
     <!-- Top Toolbar -->
     <header class="top-bar">
       <div class="top-bar-left">
-        <div class="brand">
+        <h1 class="brand">
           <span class="brand-icon" aria-hidden="true">💧</span>
           <span class="brand-title">BatchWatermark</span>
           <span class="brand-tag">Web</span>
-        </div>
+          <span class="sr-only">在线批量给图片和视频加水印工具</span>
+        </h1>
 
         <button id="btnAddFiles" class="btn" type="button" title="选择多张图片或视频">＋ 添加图片/视频</button>
         <button id="btnAddFolder" class="btn" type="button" title="导入整个文件夹中的所有图片与视频">📂 添加文件夹</button>
@@ -137,7 +138,10 @@
         <!-- Status Bar -->
         <footer class="status-bar">
           <span id="statusText">就绪 · 请添加图片/视频或拖拽文件夹到左侧预览区</span>
-          <span class="muted-text">支持与桌面端 EXE 互通 JSON 预设</span>
+          <span class="status-right">
+            <span class="muted-text">支持与桌面端 EXE 互通 JSON 预设</span>
+            <a class="guide-link" href="#guide">使用指南与常见问题 ↓</a>
+          </span>
         </footer>
       </section>
 
@@ -433,6 +437,111 @@
         </div>
       </aside>
     </main>
+  </div>
+
+  <!-- Crawlable product guide: features / how-to / FAQ (scroll below the app) -->
+  <div class="site-guide-wrap">
+    <article id="guide" class="site-guide" aria-labelledby="guideTitle">
+      <header class="guide-hero">
+        <p class="guide-eyebrow">免费 · 开源 · 无需安装 · 零上传</p>
+        <h2 id="guideTitle">BatchWatermark：在线批量给图片和视频加水印</h2>
+        <p class="guide-lead">
+          BatchWatermark 网页版是一款完全运行在浏览器本地的<strong>批量加水印工具</strong>。一次导入几十上百张照片、商品图或短视频，
+          调整文字水印或 Logo 水印参数时，所有预览会同步实时刷新；确认效果后可一键打包导出 ZIP，或直接写入本地文件夹。
+          所有文件只在你的设备内存中处理，<strong>绝不上传服务器</strong>，适合摄影作品、电商图片、自媒体素材与内部资料的版权保护。
+        </p>
+        <a class="btn btn-primary guide-cta" href="#top">↑ 立即开始批量加水印</a>
+      </header>
+
+      <section class="guide-section" aria-labelledby="featTitle">
+        <h2 id="featTitle">核心功能</h2>
+        <ul class="feature-grid">
+          <li class="feature-item">
+            <h3>批量图片与视频加水印</h3>
+            <p>支持 JPG、PNG、WebP、BMP、GIF 图片与 MP4、WebM、MOV 视频，可多选文件、导入整个文件夹或直接拖拽，一次处理整批素材。</p>
+          </li>
+          <li class="feature-item">
+            <h3>文字水印与 Logo 水印</h3>
+            <p>多行文字、常用中英文字体与自定义字体文件，可调颜色、描边、阴影和行间距；也可使用带透明背景的 PNG / WebP Logo 按比例缩放。</p>
+          </li>
+          <li class="feature-item">
+            <h3>全图平铺防盗与九宫格定位</h3>
+            <p>平铺模式可调水平/垂直间距、旋转角度与砖墙交错排布；单点模式支持九宫格锚点、边距百分比与精细位置微调。</p>
+          </li>
+          <li class="feature-item">
+            <h3>多图实时同步预览</h3>
+            <p>基于 HTML5 Canvas 实时渲染，修改任一参数即可看到全部图片与视频帧的水印效果，支持高清大图与视频时间轴预览，所见即所得。</p>
+          </li>
+          <li class="feature-item">
+            <h3>横版与竖版分开处理</h3>
+            <p>开启「横竖隔离」后横版与竖版分组展示，可为 16:9 横屏和 9:16 竖屏分别设置水印，导出时自动分到「横版/」「竖版/」文件夹。</p>
+          </li>
+          <li class="feature-item">
+            <h3>水印预设保存与导入导出</h3>
+            <p>常用水印样式一键保存在浏览器本机，支持 JSON 文件导入导出，与 BatchWatermark 桌面端 EXE 的预设完全互通。</p>
+          </li>
+        </ul>
+      </section>
+
+      <section class="guide-section" aria-labelledby="howtoTitle">
+        <h2 id="howtoTitle">如何在线批量加水印？只需 4 步</h2>
+        <ol class="howto-steps">
+          <li><strong>导入素材：</strong>点击「添加图片/视频」或「添加文件夹」，也可以把文件直接拖到左侧预览区。</li>
+          <li><strong>设置水印：</strong>在右侧面板选择文字水印或图片 Logo，调整字体、字号、颜色、不透明度与旋转角度。</li>
+          <li><strong>选择排布：</strong>使用「全图平铺」防止盗图，或用「单点定位」把水印放在右下角等九宫格位置。</li>
+          <li><strong>批量导出：</strong>设置文件名前缀/后缀与输出格式，点击「打包导出 ZIP」或「直接导出到本地文件夹」。</li>
+        </ol>
+      </section>
+
+      <section class="guide-section" aria-labelledby="faqTitle">
+        <h2 id="faqTitle">常见问题</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>BatchWatermark 在线加水印免费吗？需要注册吗？</summary>
+            <p>完全免费并基于 MIT 协议开源，无需注册登录、不限使用次数，打开网页即可使用。</p>
+          </details>
+          <details class="faq-item">
+            <summary>我的图片和视频会被上传到服务器吗？</summary>
+            <p>不会。图片解码、水印绘制、视频录制与 ZIP 打包全部在浏览器本地完成，网页没有任何上传接口，可放心处理私密或商业素材。</p>
+          </details>
+          <details class="faq-item">
+            <summary>支持哪些图片和视频格式？可以导出什么格式？</summary>
+            <p>图片支持 JPG / PNG / WebP / BMP / GIF，可保持原格式或导出为 JPEG、PNG、WebP 并调节质量；视频支持 MP4 / WebM / MOV，通过浏览器原生 MediaRecorder 导出 MP4 或 WebM，并可保留原声。</p>
+          </details>
+          <details class="faq-item">
+            <summary>如何给图片加平铺水印防止盗图？</summary>
+            <p>在「位置与排布」中选择「全图平铺」，设置 -25° 或 -45° 的旋转角度、合适的不透明度与间距，并勾选「奇偶行交错排布」，即可得到覆盖整张图片、难以裁剪去除的防盗水印。</p>
+          </details>
+          <details class="faq-item">
+            <summary>横版和竖版图片可以使用不同的水印吗？</summary>
+            <p>可以。点击顶部「横竖隔离」，勾选「横版与竖版使用独立水印参数」，即可分别编辑两种方向的水印，导出时自动保存到「横版/」与「竖版/」子文件夹。</p>
+          </details>
+          <details class="faq-item">
+            <summary>需要处理大量视频，有桌面版吗？</summary>
+            <p>有。BatchWatermark 提供基于 Python、PySide6 与 FFmpeg 的 Windows 桌面端，导出 H.264 MP4 更快、兼容性更好，可在 <a href="https://github.com/drank5090/BatchWatermark/releases" target="_blank" rel="noopener">GitHub Releases</a> 免费下载 EXE，预设 JSON 与网页版互通。</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="guide-section" lang="en" aria-labelledby="enTitle">
+        <h2 id="enTitle">Free online batch watermark tool for photos &amp; videos</h2>
+        <p>
+          BatchWatermark Web lets you add text or logo watermarks to hundreds of images and videos at once, right in your browser.
+          Live multi-image preview, tiled anti-theft patterns, 3×3 anchor positioning, separate landscape / portrait settings,
+          JSON presets and one-click ZIP export — 100% local processing, nothing is ever uploaded.
+        </p>
+      </section>
+
+      <footer class="guide-footer">
+        <nav class="guide-links" aria-label="项目链接">
+          <a href="https://github.com/drank5090/BatchWatermark" target="_blank" rel="noopener">GitHub 开源仓库</a>
+          <a href="https://github.com/drank5090/BatchWatermark/releases" target="_blank" rel="noopener">下载 Windows 桌面版 EXE</a>
+          <a href="https://github.com/drank5090/BatchWatermark/issues" target="_blank" rel="noopener">反馈问题与建议</a>
+          <a href="https://github.com/drank5090/BatchWatermark/blob/main/LICENSE" target="_blank" rel="noopener">MIT 开源协议</a>
+        </nav>
+        <p class="muted-text">© 2026 BatchWatermark · 纯浏览器本地处理的免费批量加水印工具</p>
+      </footer>
+    </article>
   </div>
 
   <!-- Hidden File Inputs -->

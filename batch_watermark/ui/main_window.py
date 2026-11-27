@@ -9,6 +9,7 @@ import uuid
 from PySide6.QtCore import Qt, QThreadPool, QTimer, QUrl
 from PySide6.QtGui import QCloseEvent, QDesktopServices, QImage
 from PySide6.QtWidgets import (
+    QButtonGroup,
     QCheckBox,
     QDialog,
     QFileDialog,
@@ -21,11 +22,13 @@ from PySide6.QtWidgets import (
     QPushButton,
     QSlider,
     QSplitter,
+    QStackedWidget,
     QStatusBar,
     QVBoxLayout,
     QWidget,
 )
 
+from ..creative_library import CreativeLibraryStore
 from ..engine import scan_media_files
 from ..models import (
     ExportConfig,
@@ -39,6 +42,7 @@ from ..models import (
 from ..presets import PresetStore
 from ..workers import BatchExportThread, MediaLoadWorker, PreviewRenderWorker
 from .control_panel import ControlPanel
+from .creative_workspace import CreativeWorkspaceWidget
 from .preview_gallery import LightboxPreviewDialog, PreviewGalleryWidget
 
 
@@ -140,13 +144,15 @@ class MainWindow(QMainWindow):
         self,
         initial_paths: list[Path] | None = None,
         preset_store: PresetStore | None = None,
+        creative_library_store: CreativeLibraryStore | None = None,
     ) -> None:
         super().__init__()
-        self.setWindowTitle("BatchWatermark · 批量图片与视频水印实时预览工具")
-        self.resize(1400, 880)
-        self.setMinimumSize(1060, 700)
+        self.setWindowTitle("BatchWatermark v2.0 · 工作模式 & 创作模式批量水印工具")
+        self.resize(1440, 900)
+        self.setMinimumSize(1080, 700)
 
         self._preset_store = preset_store
+        self._creative_library_store = creative_library_store
 
         # Data state
         self._items: dict[str, ImageItem] = {}
@@ -187,19 +193,66 @@ class MainWindow(QMainWindow):
         root.setContentsMargins(0, 0, 0, 0)
         root.setSpacing(0)
 
-        # ---- Top Toolbar ----
+        # ---- Top Mode Switcher Tab Bar (Work Mode vs Creative Mode — fully independent) ----
+        mode_bar = QFrame()
+        mode_bar.setObjectName("ModeTabBar")
+        mode_bar.setFixedHeight(44)
+        mb = QHBoxLayout(mode_bar)
+        mb.setContentsMargins(14, 5, 14, 5)
+        mb.setSpacing(8)
+
+        brand_lbl = QLabel("💧 BatchWatermark")
+        brand_lbl.setObjectName("AppTitle")
+        mb.addWidget(brand_lbl)
+
+        mb.addSpacing(12)
+
+        self._mode_group = QButtonGroup(self)
+        self._mode_group.setExclusive(True)
+
+        self._btn_mode_work = QPushButton("🛠️ 工作模式")
+        self._btn_mode_work.setObjectName("ModeTabBtn")
+        self._btn_mode_work.setCheckable(True)
+        self._btn_mode_work.setChecked(True)
+        self._btn_mode_work.setCursor(Qt.CursorShape.PointingHandCursor)
+        self._btn_mode_work.setToolTip("批量图片与视频水印、横竖隔离与预设管理（原经典模式）")
+
+        self._btn_mode_creative = QPushButton("✨ 创作模式")
+        self._btn_mode_creative.setObjectName("ModeTabBtn")
+        self._btn_mode_creative.setCheckable(True)
+        self._btn_mode_creative.setCursor(Qt.CursorShape.PointingHandCursor)
+        self._btn_mode_creative.setToolTip("上传图文水印库，智能生成美观大小不一艺术水印，或自由拖拽精修")
+
+        self._mode_group.addButton(self._btn_mode_work, 0)
+        self._mode_group.addButton(self._btn_mode_creative, 1)
+        mb.addWidget(self._btn_mode_work)
+        mb.addWidget(self._btn_mode_creative)
+
+        mb.addStretch(1)
+
+        mode_hint = QLabel("双模式完全独立 · 切换标签页互不干扰")
+        mode_hint.setObjectName("MutedLabel")
+        mb.addWidget(mode_hint)
+
+        root.addWidget(mode_bar)
+
+        # ---- Stacked Dual Workspaces ----
+        self._mode_stack = QStackedWidget()
+        root.addWidget(self._mode_stack, 1)
+
+        # Page 0: Work Mode (original complete workflow)
+        work_page = QWidget()
+        work_root = QVBoxLayout(work_page)
+        work_root.setContentsMargins(0, 0, 0, 0)
+        work_root.setSpacing(0)
+
+        # ---- Work Mode Top Toolbar ----
         top_bar = QFrame()
         top_bar.setObjectName("TopBar")
-        top_bar.setFixedHeight(54)
+        top_bar.setFixedHeight(52)
         tb = QHBoxLayout(top_bar)
-        tb.setContentsMargins(14, 8, 14, 8)
+        tb.setContentsMargins(14, 7, 14, 7)
         tb.setSpacing(8)
-
-        title_lbl = QLabel("💧 BatchWatermark")
-        title_lbl.setObjectName("AppTitle")
-        tb.addWidget(title_lbl)
-
-        tb.addSpacing(4)
 
         self._btn_add_files = QPushButton("＋ 添加图片/视频")
         self._btn_add_files.setCursor(Qt.CursorShape.PointingHandCursor)
@@ -254,9 +307,9 @@ class MainWindow(QMainWindow):
         self._btn_top_export.setCursor(Qt.CursorShape.PointingHandCursor)
         tb.addWidget(self._btn_top_export)
 
-        root.addWidget(top_bar)
+        work_root.addWidget(top_bar)
 
-        # ---- Main Split Workspace ----
+        # ---- Work Mode Main Split Workspace ----
         splitter = QSplitter(Qt.Orientation.Horizontal)
         splitter.setChildrenCollapsible(False)
 
@@ -269,15 +322,42 @@ class MainWindow(QMainWindow):
         splitter.setStretchFactor(1, 0)
         splitter.setSizes([950, 440])
 
-        root.addWidget(splitter, 1)
+        work_root.addWidget(splitter, 1)
+        self._mode_stack.addWidget(work_page)
+
+        # Page 1: Creative Mode (completely independent workspace)
+        self.creative_workspace = CreativeWorkspaceWidget(
+            library_store=self._creative_library_store,
+            parent=self,
+        )
+        self._mode_stack.addWidget(self.creative_workspace)
 
         # ---- Status Bar ----
         status = QStatusBar()
         self.setStatusBar(status)
-        self._status_label = QLabel("就绪 · 请添加图片/视频或拖拽文件夹到左侧预览区")
+        self._status_label = QLabel("工作模式 · 请添加图片/视频或切换至「✨ 创作模式」体验艺术水印与自由拖拽")
         status.addWidget(self._status_label, 1)
 
+    def switch_mode(self, mode: str) -> None:
+        """Switch between 'work' and 'creative' modes via the top tab switcher."""
+        if mode == "creative":
+            self._btn_mode_creative.setChecked(True)
+            self._mode_stack.setCurrentIndex(1)
+            self._status_label.setText("创作模式 · 导入图片后可一键生成美观大小不一的水印，或从左侧水印库自由拖拽")
+        else:
+            self._btn_mode_work.setChecked(True)
+            self._mode_stack.setCurrentIndex(0)
+            self._status_label.setText("工作模式 · 批量图片与视频水印实时预览，支持横竖隔离与 JSON 预设")
+
+    @property
+    def current_mode(self) -> str:
+        return "creative" if self._mode_stack.currentIndex() == 1 else "work"
+
     def _connect_signals(self) -> None:
+        self._btn_mode_work.clicked.connect(lambda: self.switch_mode("work"))
+        self._btn_mode_creative.clicked.connect(lambda: self.switch_mode("creative"))
+        self.creative_workspace.status_message.connect(self._status_label.setText)
+
         self._btn_add_files.clicked.connect(self._open_add_files_dialog)
         self._btn_add_folder.clicked.connect(self._open_add_folder_dialog)
         self._btn_isolate_orientation.toggled.connect(self.set_orientation_isolated)

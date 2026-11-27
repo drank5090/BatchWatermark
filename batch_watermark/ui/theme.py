@@ -21,6 +21,99 @@ QWidget#GridHost {
     background-color: #14161B;
 }
 
+/* Top Mode Tab Switcher (Work Mode / Creative Mode) */
+QFrame#ModeTabBar {
+    background-color: #14171E;
+    border-bottom: 1px solid #2A303D;
+}
+
+QPushButton#ModeTabBtn {
+    background-color: transparent;
+    color: #9CA3AF;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    padding: 6px 16px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+QPushButton#ModeTabBtn:hover {
+    background-color: #202532;
+    color: #F3F4F6;
+}
+
+QPushButton#ModeTabBtn:checked {
+    background-color: #2563EB;
+    color: #FFFFFF;
+    border: 1px solid #60A5FA;
+}
+
+QFrame#CreativeSidePane {
+    background-color: #181B22;
+    border-right: 1px solid #2A303D;
+}
+
+QFrame#CreativeAssetCard {
+    background-color: #20242D;
+    border: 1px solid #2F3645;
+    border-radius: 8px;
+}
+
+QFrame#CreativeAssetCard:hover {
+    background-color: #262C38;
+    border-color: #4B6B9B;
+}
+
+QLabel#AssetThumb {
+    background-color: #14171E;
+    border: 1px solid #2C3342;
+    border-radius: 6px;
+}
+
+QLabel#AssetTitle {
+    font-size: 12px;
+    font-weight: 600;
+    color: #F3F4F6;
+}
+
+QLabel#KindBadgeImg {
+    background-color: #1E3A5F;
+    color: #93C5FD;
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+QLabel#KindBadgeTxt {
+    background-color: #3B2452;
+    color: #D8B4FE;
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+QComboBox#MiniCombo {
+    padding: 1px 6px;
+    font-size: 11px;
+}
+
+QFrame#FilmstripCard {
+    background-color: #1F232B;
+    border: 1px solid #2D323E;
+    border-radius: 7px;
+}
+
+QFrame#FilmstripCard:hover {
+    border-color: #4B6B9B;
+}
+
+QFrame#FilmstripCard[selected="true"] {
+    border: 2px solid #38BDF8;
+    background-color: #222C3D;
+}
+
 /* Top toolbar bar */
 QFrame#TopBar {
     background-color: #1E2128;

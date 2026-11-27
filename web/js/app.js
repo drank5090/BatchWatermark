@@ -86,8 +86,29 @@ class BatchWatermarkApp {
     const openFolder = () => $("fileInputFolder").click();
     $("btnAddFiles").addEventListener("click", openFiles);
     $("btnEmptyAddFiles").addEventListener("click", openFiles);
+    $("btnMobileAdd")?.addEventListener("click", openFiles);
     $("btnAddFolder").addEventListener("click", openFolder);
     $("btnEmptyAddFolder").addEventListener("click", openFolder);
+
+    // Mobile parameter category tabs
+    document.querySelectorAll("#mobileParamTabs [data-mobile-tab]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const tab = btn.dataset.mobileTab;
+        $("controlPanel").dataset.activeMobileTab = tab;
+        document.querySelectorAll("#mobileParamTabs [data-mobile-tab]").forEach((b) => {
+          const active = b === btn;
+          b.classList.toggle("active", active);
+          b.setAttribute("aria-selected", String(active));
+        });
+      });
+    });
+
+    // Mobile pinned preview expand / collapse toggle
+    $("btnMobileExpandGallery")?.addEventListener("click", () => {
+      const pane = $("galleryPane");
+      const expanded = pane.classList.toggle("mobile-expanded");
+      $("btnMobileExpandGallery").textContent = expanded ? "收起画廊" : "展开画廊";
+    });
 
     $("fileInputMedia").addEventListener("change", (e) => {
       if (e.target.files?.length) this.addFiles(Array.from(e.target.files));
@@ -423,8 +444,13 @@ class BatchWatermarkApp {
 
     $("emptyState").classList.add("hidden");
     $("galleryScroll").classList.remove("hidden");
+    $("mobileGalleryBar")?.classList.remove("hidden");
     this._reflowGallery();
     this._updateCountsAndButtons();
+    this._trackEvent("media_imported", {
+      count: newItems.length,
+      video_count: newItems.filter((x) => x.mediaType === "video").length,
+    });
     this._setStatus(`正在本地解析 ${newItems.length} 项媒体并生成实时水印预览...`);
 
     // Decode previews with controlled concurrency so large batches stay responsive
@@ -577,6 +603,9 @@ class BatchWatermarkApp {
       $("emptyState").classList.remove("hidden");
       $("galleryScroll").classList.add("hidden");
       $("galleryFilterBar").classList.add("hidden");
+      $("mobileGalleryBar")?.classList.add("hidden");
+      $("galleryPane").classList.remove("mobile-expanded");
+      if ($("btnMobileExpandGallery")) $("btnMobileExpandGallery").textContent = "展开画廊";
     } else {
       this._reflowGallery();
     }
@@ -594,6 +623,9 @@ class BatchWatermarkApp {
     $("emptyState").classList.remove("hidden");
     $("galleryScroll").classList.add("hidden");
     $("galleryFilterBar").classList.add("hidden");
+    $("mobileGalleryBar")?.classList.add("hidden");
+    $("galleryPane").classList.remove("mobile-expanded");
+    if ($("btnMobileExpandGallery")) $("btnMobileExpandGallery").textContent = "展开画廊";
     this._updateCountsAndButtons();
     this._setStatus("已清空媒体列表");
   }
@@ -620,6 +652,7 @@ class BatchWatermarkApp {
 
     this._reflowGallery();
     this._updateCountsAndButtons();
+    this._trackEvent("orientation_isolation_toggled", { enabled });
     this._setStatus(
       enabled
         ? "已开启横竖隔离：横版与竖版分开展示，导出时将自动分为「横版/」与「竖版/」子文件夹"
@@ -730,8 +763,12 @@ class BatchWatermarkApp {
     $("btnClearAll").disabled = total === 0;
     $("btnTopExport").disabled = total === 0;
     $("btnExportZip").disabled = total === 0;
-    $("btnExportZip").textContent = `⬇ 打包导出 ZIP (${total} 项)`;
+    $("btnExportZip").textContent =
+      total === 1 ? "⬇ 直接导出文件 (1 项)" : `⬇ 打包导出 ZIP (${total} 项)`;
     $("btnExportDir").disabled = total === 0 || typeof window.showDirectoryPicker !== "function";
+    if ($("mobileGallerySummary")) {
+      $("mobileGallerySummary").textContent = `实时预览 · ${$("countBadge").textContent}`;
+    }
   }
 
   // ---- Real-Time Multi-Preview Rendering ----
@@ -1055,6 +1092,7 @@ class BatchWatermarkApp {
     }
     this.presetStore.saveCustom(clean, this._readConfigFromUI());
     this._rebuildPresetSelect(`custom:${clean}`);
+    this._trackEvent("preset_saved", { preset_name: clean });
     this._toast(`已保存到本机预设：${clean}`);
   }
 
@@ -1289,20 +1327,26 @@ class BatchWatermarkApp {
     const exportConfig = this._readExportConfig();
     const list = this.itemOrder.map((id) => this.items.get(id)).filter(Boolean);
     const total = list.length;
+    const directSingleDownload = mode === "zip" && total === 1;
 
     this._exportCancelled = false;
     $("btnCancelExport").disabled = false;
     $("btnCancelExport").textContent = "取消导出";
     $("exportModalTitle").textContent =
-      mode === "directory" ? "正在批量导出到本地文件夹" : "正在批量处理并打包 ZIP";
+      mode === "directory"
+        ? "正在批量导出到本地文件夹"
+        : directSingleDownload
+          ? "正在导出水印文件"
+          : "正在批量处理并打包 ZIP";
     $("exportProgressFill").style.width = "0%";
     $("exportPercentText").textContent = "0%";
     $("exportStatusDetail").textContent = `准备导出共 ${total} 项媒体...`;
     $("exportModal").classList.remove("hidden");
 
-    const zip = mode === "zip" ? new ZipBuilder() : null;
+    const zip = mode === "zip" && !directSingleDownload ? new ZipBuilder() : null;
     const usedRelPaths = new Set();
     let success = 0;
+    let singleResult = null;
     const errors = [];
 
     const setProgress = (pct, detail) => {
@@ -1358,7 +1402,9 @@ class BatchWatermarkApp {
           }
           usedRelPaths.add(relPath.toLowerCase());
 
-          if (mode === "zip") {
+          if (directSingleDownload) {
+            singleResult = { blob, filename: finalName };
+          } else if (mode === "zip") {
             await zip.addFile(relPath, blob);
           } else {
             let targetDir = dirHandle;
@@ -1380,7 +1426,9 @@ class BatchWatermarkApp {
         setProgress(((i + 1) / total) * 100, `(${i + 1}/${total}) 已完成：${item.filename}`);
       }
 
-      if (!this._exportCancelled && mode === "zip" && success > 0) {
+      if (!this._exportCancelled && directSingleDownload && singleResult) {
+        this._downloadBlob(singleResult.blob, singleResult.filename);
+      } else if (!this._exportCancelled && mode === "zip" && success > 0) {
         setProgress(100, "正在生成 ZIP 压缩包...");
         const zipBlob = zip.buildBlob();
         const stamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-");
@@ -1388,6 +1436,14 @@ class BatchWatermarkApp {
       }
     } finally {
       $("exportModal").classList.add("hidden");
+    }
+
+    if (!this._exportCancelled && success > 0) {
+      this._trackEvent("watermark_exported", {
+        mode: directSingleDownload ? "single" : mode,
+        count: success,
+        isolated: exportConfig.isolateOrientation,
+      });
     }
 
     if (this._exportCancelled) {
@@ -1416,6 +1472,15 @@ class BatchWatermarkApp {
 
   _setStatus(text) {
     $("statusText").textContent = text;
+  }
+
+  _trackEvent(eventName, params = {}) {
+    try {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: eventName, ...params });
+    } catch {
+      // ignore if blocked
+    }
   }
 
   _toast(message) {

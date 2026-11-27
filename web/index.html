@@ -2,48 +2,248 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>在线批量加水印工具 · 图片与视频批量添加文字/Logo水印 | BatchWatermark</title>
-  <meta name="description" content="BatchWatermark 免费在线批量加水印工具：无需安装、不上传服务器，在浏览器本地为多张图片和视频批量添加文字或 Logo 水印，支持全图平铺防盗、九宫格定位、实时多图预览、横竖版分开导出与预设 JSON 导入导出。" />
-  <meta name="keywords" content="批量加水印,在线加水印,图片加水印,视频加水印,批量水印,水印工具,Logo水印,文字水印,平铺水印,防盗图,免费水印工具,BatchWatermark,batch watermark,watermark online" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>BatchWatermark 在线批量加水印工具 · 免费图片与视频添加文字/Logo水印（零上传）</title>
+  <meta name="description" content="BatchWatermark（watermark.zak-cloud.top）是免费开源、100% 浏览器本地运行的在线批量加水印工具：无需安装、绝不上传服务器，支持多张图片与视频实时同步预览、文字/Logo 水印、全图平铺防盗、九宫格定位、横竖版隔离分开导出与 JSON 预设管理。" />
+  <meta name="keywords" content="批量加水印,在线加水印,图片加水印,视频加水印,批量水印,免费加水印工具,Logo水印,文字水印,平铺水印,防盗图水印,本地加水印,不上传图片加水印,横竖版水印,BatchWatermark,batch watermark online,watermark photos and videos free" />
   <meta name="author" content="drank5090" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-  <link rel="canonical" href="https://drank5090.github.io/BatchWatermark/" />
-  <link rel="alternate" hreflang="zh-CN" href="https://drank5090.github.io/BatchWatermark/" />
-  <link rel="alternate" hreflang="x-default" href="https://drank5090.github.io/BatchWatermark/" />
+  <link rel="canonical" href="https://watermark.zak-cloud.top/" />
+  <link rel="alternate" hreflang="zh-CN" href="https://watermark.zak-cloud.top/" />
+  <link rel="alternate" hreflang="x-default" href="https://watermark.zak-cloud.top/" />
 
-  <!-- Browser / platform hints -->
+  <!-- Performance hints for analytics & ads -->
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
+
+  <!-- Google Tag Manager (GTM-TQG2QNQK) + gtag dataLayer bridge -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    window.dataLayer.push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
+    gtag('js', new Date());
+  </script>
+  <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-TQG2QNQK"></script>
+
+  <!-- Google AdSense (ca-pub-5095229134923261) -->
+  <meta name="google-adsense-account" content="ca-pub-5095229134923261" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5095229134923261" crossorigin="anonymous"></script>
+
+  <!-- Browser / mobile / platform hints -->
   <meta name="application-name" content="BatchWatermark Web" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="BatchWatermark" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="theme-color" content="#1e2128" />
   <meta name="color-scheme" content="dark" />
   <meta name="format-detection" content="telephone=no" />
-  <!-- Baidu / domestic browsers: render with WebKit, keep desktop + mobile, forbid transcoding -->
   <meta name="renderer" content="webkit" />
   <meta name="applicable-device" content="pc,mobile" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
 
-  <!-- Open Graph (Facebook / LinkedIn / WeChat / Slack / Discord previews) -->
+  <!-- Open Graph (WeChat / Facebook / LinkedIn / Slack / Discord) -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="BatchWatermark" />
   <meta property="og:locale" content="zh_CN" />
-  <meta property="og:url" content="https://drank5090.github.io/BatchWatermark/" />
-  <meta property="og:title" content="BatchWatermark · 免费在线批量给图片和视频加水印" />
-  <meta property="og:description" content="打开即用、零上传：在浏览器本地批量为图片与视频添加文字或 Logo 水印，实时多图同步预览，支持平铺防盗、横竖版分开导出与预设管理。" />
-  <meta property="og:image" content="https://drank5090.github.io/BatchWatermark/og-image.png" />
-  <meta property="og:image:secure_url" content="https://drank5090.github.io/BatchWatermark/og-image.png" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:url" content="https://watermark.zak-cloud.top/" />
+  <meta property="og:title" content="BatchWatermark · 免费在线批量给图片和视频加水印（纯本地零上传）" />
+  <meta property="og:description" content="打开即用、绝不上传服务器：在浏览器本地批量为图片与视频添加文字或 Logo 水印，支持实时多图预览、平铺防盗、横竖版隔离导出与预设导入导出。" />
+  <meta property="og:image" content="https://watermark.zak-cloud.top/og-image.png" />
+  <meta property="og:image:secure_url" content="https://watermark.zak-cloud.top/og-image.png" />
   <meta property="og:image:type" content="image/png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="BatchWatermark 在线批量加水印工具界面：多张图片同步实时预览平铺水印" />
+  <meta property="og:image:alt" content="BatchWatermark 在线批量加水印工具界面：多张图片与视频同步实时预览平铺水印" />
 
   <!-- Twitter / X Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="BatchWatermark · 免费在线批量给图片和视频加水印" />
-  <meta name="twitter:description" content="打开即用、零上传：在浏览器本地批量为图片与视频添加文字或 Logo 水印，实时多图同步预览，支持平铺防盗、横竖版分开导出与预设管理。" />
-  <meta name="twitter:image" content="https://drank5090.github.io/BatchWatermark/og-image.png" />
-  <meta name="twitter:image:alt" content="BatchWatermark 在线批量加水印工具界面：多张图片同步实时预览平铺水印" />
+  <meta name="twitter:title" content="BatchWatermark · 免费在线批量给图片和视频加水印（纯本地零上传）" />
+  <meta name="twitter:description" content="打开即用、绝不上传服务器：在浏览器本地批量为图片与视频添加文字或 Logo 水印，支持实时多图预览、平铺防盗、横竖版隔离导出与预设导入导出。" />
+  <meta name="twitter:image" content="https://watermark.zak-cloud.top/og-image.png" />
+  <meta name="twitter:image:alt" content="BatchWatermark 在线批量加水印工具界面：多张图片与视频同步实时预览平铺水印" />
+
+  <!-- Structured Data (JSON-LD @graph for SEO & Generative Engine Optimization / GEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://watermark.zak-cloud.top/#website",
+        "name": "BatchWatermark",
+        "alternateName": ["BatchWatermark Web", "在线批量加水印工具"],
+        "url": "https://watermark.zak-cloud.top/",
+        "inLanguage": ["zh-CN", "en"],
+        "sameAs": [
+          "https://drank5090.github.io/BatchWatermark/",
+          "https://github.com/drank5090/BatchWatermark"
+        ]
+      },
+      {
+        "@type": "WebApplication",
+        "@id": "https://watermark.zak-cloud.top/#app",
+        "name": "BatchWatermark 在线批量加水印工具",
+        "alternateName": ["BatchWatermark Web", "Batch Watermark Online"],
+        "url": "https://watermark.zak-cloud.top/",
+        "sameAs": [
+          "https://drank5090.github.io/BatchWatermark/",
+          "https://github.com/drank5090/BatchWatermark"
+        ],
+        "description": "免费开源、100% 浏览器本地运行的批量图片与视频加水印工具。支持多图与视频实时同步预览、多行文字与透明 Logo 水印、斜向砖墙平铺防盗、3×3 九宫格定位、横竖版隔离独立参数与分文件夹导出、本地持久化预设及 JSON 导入导出。",
+        "applicationCategory": "MultimediaApplication",
+        "applicationSubCategory": "Image and Video Watermarking Tool",
+        "operatingSystem": "Web Browser (Chrome, Edge, Safari, Firefox, iOS, Android), Windows 10/11",
+        "browserRequirements": "Requires HTML5 Canvas 2D and MediaRecorder support",
+        "softwareVersion": "1.0.0",
+        "isAccessibleForFree": true,
+        "license": "https://opensource.org/licenses/MIT",
+        "screenshot": "https://watermark.zak-cloud.top/og-image.png",
+        "image": "https://watermark.zak-cloud.top/og-image.png",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "CNY"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "drank5090",
+          "url": "https://github.com/drank5090"
+        },
+        "featureList": [
+          "100% 浏览器本地内存运算，图片与视频零上传服务器",
+          "批量导入多张图片、视频或整个文件夹，支持拖拽上传",
+          "多图与视频帧同步实时预览，支持高清大图与视频时间轴播放预览",
+          "支持多行文字水印（自定义字体、描边、投影）与透明 PNG/WebP Logo 水印",
+          "支持全图斜向交错平铺防盗与 3×3 九宫格单点定位",
+          "横版竖版一键隔离展示、独立水印参数设置与自动分文件夹导出",
+          "自定义预设本机保存与 JSON 导入导出，与 Windows 桌面 EXE 互通",
+          "支持单文件直下、零依赖 UTF-8 ZIP 打包导出与 Chrome/Edge 直写本地目录"
+        ]
+      },
+      {
+        "@type": "HowTo",
+        "@id": "https://watermark.zak-cloud.top/#howto",
+        "name": "如何使用 BatchWatermark 在线批量给图片和视频加水印",
+        "description": "无需安装软件、不上传文件，4 步在浏览器本地完成批量图片和视频水印添加与导出。",
+        "totalTime": "PT1M",
+        "tool": [
+          { "@type": "HowToTool", "name": "现代浏览器（Chrome / Edge / Safari / Firefox）" }
+        ],
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "导入图片或视频",
+            "text": "点击「添加图片/视频」或「添加文件夹」，也可以直接把多张照片、短视频或整个文件夹拖拽到预览区。"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "调整文字或 Logo 水印参数",
+            "text": "在控制面板中选择文字水印或图片 Logo，调节字体、字号、颜色、描边、阴影、不透明度与旋转角度，所有预览图实时同步刷新。"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "选择平铺或九宫格排布（可选横竖隔离）",
+            "text": "选择「全图平铺」防盗图或「单点定位」九宫格摆放；若同时处理横屏与竖屏素材，可开启「横竖隔离」分别配置参数。"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 4,
+            "name": "一键本地批量导出",
+            "text": "设置文件名前后缀、输出格式与导出质量，点击「打包导出 ZIP」或「直接导出到本地文件夹」即可完成本地保存。"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://watermark.zak-cloud.top/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "BatchWatermark 在线加水印免费吗？需要注册登录吗？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "完全免费并基于 MIT 协议开源，无需注册登录、无张数限制、无强制品牌角标，打开 watermark.zak-cloud.top 或 GitHub Pages 镜像即可直接使用。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "我的图片和视频会被上传到服务器吗？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "绝不会上传。BatchWatermark 的图片解码、Canvas 水印绘制、MediaRecorder 视频合成与 ZIP 打包全部在您的浏览器本地内存中完成，没有任何文件上传接口，适合处理商业素材、证件照与内部文档。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "支持手机端使用吗？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "支持。网页版针对 iOS Safari 与 Android 浏览器做了专属移动端布局优化：顶部固定实时预览区，下方通过分类标签切换文字、样式、排布、预设与导出设置，单图支持直接下载保存到手机。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "支持哪些图片和视频格式？可以导出什么格式？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "图片支持 JPG / JPEG / PNG / WebP / BMP / GIF / AVIF，可保持原格式或转换为 JPEG、PNG、WebP 并调节质量；视频支持 MP4 / WebM / MOV，通过浏览器本地 MediaRecorder 导出 MP4 或 WebM 并保留原声。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "如何给图片加斜向平铺水印防止盗图？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "在「位置与排布」中选择「全图平铺」，将旋转角度设为 -25° 或 -45°，调节不透明度与水平/垂直间距，并勾选「奇偶行交错排布（砖墙错位）」，即可生成覆盖整张图片、难以裁剪去除的防盗水印。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "横版和竖版图片可以使用不同的水印并分开导出吗？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "可以。点击顶部「横竖隔离」，预览区会自动分为「横版媒体区（宽 ≥ 高）」和「竖版媒体区（高 > 宽）」；勾选「横版与竖版使用独立水印参数」即可分别调节，导出时自动归入「横版/」和「竖版/」子文件夹。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "watermark.zak-cloud.top 和 GitHub Pages 地址有什么区别？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "两个地址部署的是同一套开源代码，功能完全一致。watermark.zak-cloud.top 是官方推荐主站（访问更稳定且支持根路径完整 SEO/PWA 特性），drank5090.github.io/BatchWatermark/ 是官方 GitHub Pages 镜像。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "需要处理大量高清长视频，有离线桌面版吗？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "有。BatchWatermark 提供基于 Python、PySide6 与内置 FFmpeg 7.1 的 Windows 独立单文件 EXE，导出 H.264 MP4 速度更快、格式兼容更广，可在 GitHub Releases 免费下载，且预设 JSON 与网页版 100% 互通。"
+            }
+          }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://watermark.zak-cloud.top/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "BatchWatermark 首页",
+            "item": "https://watermark.zak-cloud.top/"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 
   <!-- Icons & PWA manifest -->
   <link rel="icon" href="favicon.ico" sizes="48x48" />
@@ -53,6 +253,9 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TQG2QNQK" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
   <div id="top" class="app-shell">
     <!-- Top Toolbar -->
     <header class="top-bar">
@@ -64,8 +267,8 @@
           <span class="sr-only">在线批量给图片和视频加水印工具</span>
         </h1>
 
-        <button id="btnAddFiles" class="btn" type="button" title="选择多张图片或视频">＋ 添加图片/视频</button>
-        <button id="btnAddFolder" class="btn" type="button" title="导入整个文件夹中的所有图片与视频">📂 添加文件夹</button>
+        <button id="btnAddFiles" class="btn desktop-only-inline" type="button" title="选择多张图片或视频">＋ 添加图片/视频</button>
+        <button id="btnAddFolder" class="btn desktop-only-inline" type="button" title="导入整个文件夹中的所有图片与视频">📂 添加文件夹</button>
         <button id="btnIsolateToggle" class="btn btn-toggle" type="button" aria-pressed="false" title="开启后横版与竖版分开展示、支持独立参数，并分文件夹导出">横竖隔离</button>
         <button id="btnClearAll" class="btn btn-danger" type="button" disabled>✕ 清空</button>
         <span id="countBadge" class="count-badge">共 0 项</span>
@@ -77,7 +280,7 @@
           <span class="muted-text">预览尺寸</span>
           <input id="cardSizeSlider" type="range" min="170" max="380" value="250" />
         </label>
-        <button id="btnTopExport" class="btn btn-primary" type="button" disabled>⬇ 批量导出</button>
+        <button id="btnTopExport" class="btn btn-primary desktop-only-inline" type="button" disabled>⬇ 批量导出</button>
         <a class="btn btn-ghost repo-link" href="https://github.com/drank5090/BatchWatermark" target="_blank" rel="noopener noreferrer" title="查看 GitHub 开源仓库与桌面端 EXE 下载">GitHub</a>
       </div>
     </header>
@@ -86,28 +289,37 @@
     <main class="workspace">
       <!-- Left Gallery Area -->
       <section id="galleryPane" class="gallery-pane" aria-label="实时多图预览区">
+        <!-- Mobile-only compact preview bar when items are loaded -->
+        <div id="mobileGalleryBar" class="mobile-gallery-bar hidden">
+          <span id="mobileGallerySummary" class="mobile-gallery-summary">实时预览</span>
+          <div class="mobile-gallery-bar-actions">
+            <button id="btnMobileExpandGallery" class="btn-pill" type="button">展开画廊</button>
+            <a class="btn-pill mobile-guide-pill" href="#guide">指南</a>
+          </div>
+        </div>
+
         <!-- Orientation Isolation Scope Filter Bar -->
         <div id="galleryFilterBar" class="gallery-filter-bar hidden">
           <div class="filter-bar-left">
             <span class="filter-label">横竖隔离视图：</span>
             <div class="pill-group" role="group" aria-label="横竖视图筛选">
-              <button class="btn-pill active" data-scope="both" type="button">分组并列显示</button>
-              <button class="btn-pill" id="btnScopeLand" data-scope="landscape" type="button">仅看横版 (0)</button>
-              <button class="btn-pill" id="btnScopePort" data-scope="portrait" type="button">仅看竖版 (0)</button>
+              <button class="btn-pill active" data-scope="both" type="button">分组并列</button>
+              <button class="btn-pill" id="btnScopeLand" data-scope="landscape" type="button">仅横版 (0)</button>
+              <button class="btn-pill" id="btnScopePort" data-scope="portrait" type="button">仅竖版 (0)</button>
             </div>
           </div>
-          <span class="muted-text">导出时将自动分别保存到「横版/」与「竖版/」子文件夹</span>
+          <span class="muted-text desktop-only-inline">导出时将自动分别保存到「横版/」与「竖版/」子文件夹</span>
         </div>
 
         <!-- Empty Drop Zone -->
         <div id="emptyState" class="empty-state">
           <div id="dropZone" class="drop-zone">
             <div class="drop-icons" aria-hidden="true">🖼️ 🎬</div>
-            <h2>拖拽多张图片、视频或整个文件夹到此处</h2>
-            <p class="drop-sub">图片支持 JPG / PNG / WebP / BMP / GIF · 视频支持 MP4 / WebM / MOV · 全程浏览器本地运算，绝不上传</p>
+            <h2>选择或拖拽图片、视频开始批量加水印</h2>
+            <p class="drop-sub">图片支持 JPG / PNG / WebP / BMP / GIF · 视频支持 MP4 / WebM / MOV · 100% 本地运算，绝不上传</p>
             <div class="drop-actions">
               <button id="btnEmptyAddFiles" class="btn btn-primary" type="button">＋ 选择图片 / 视频</button>
-              <button id="btnEmptyAddFolder" class="btn" type="button">📂 选择文件夹</button>
+              <button id="btnEmptyAddFolder" class="btn desktop-only-inline" type="button">📂 选择文件夹</button>
             </div>
           </div>
         </div>
@@ -139,17 +351,26 @@
         <footer class="status-bar">
           <span id="statusText">就绪 · 请添加图片/视频或拖拽文件夹到左侧预览区</span>
           <span class="status-right">
-            <span class="muted-text">支持与桌面端 EXE 互通 JSON 预设</span>
+            <span class="muted-text desktop-only-inline">支持与桌面端 EXE 互通 JSON 预设</span>
             <a class="guide-link" href="#guide">使用指南与常见问题 ↓</a>
           </span>
         </footer>
       </section>
 
-      <!-- Right Control Panel -->
-      <aside class="control-panel" aria-label="水印参数操作面板">
+      <!-- Right Control Panel (Desktop sidebar / Mobile tabbed drawer below pinned preview) -->
+      <aside id="controlPanel" class="control-panel" data-active-mobile-tab="content" aria-label="水印参数操作面板">
+        <!-- Mobile-only thumb-friendly parameter category tabs -->
+        <nav id="mobileParamTabs" class="mobile-param-tabs" role="tablist" aria-label="水印参数分类">
+          <button class="mobile-tab-btn active" role="tab" aria-selected="true" data-mobile-tab="content" type="button">内容</button>
+          <button class="mobile-tab-btn" role="tab" aria-selected="false" data-mobile-tab="style" type="button">透明/角度</button>
+          <button class="mobile-tab-btn" role="tab" aria-selected="false" data-mobile-tab="layout" type="button">位置排布</button>
+          <button class="mobile-tab-btn" role="tab" aria-selected="false" data-mobile-tab="preset" type="button">预设/隔离</button>
+          <button class="mobile-tab-btn" role="tab" aria-selected="false" data-mobile-tab="export" type="button">导出设置</button>
+        </nav>
+
         <div class="panel-scroll">
           <!-- Orientation Independent Params Card -->
-          <section id="orientationCard" class="section-card orientation-card hidden">
+          <section id="orientationCard" class="section-card orientation-card hidden" data-tab-group="preset">
             <div class="section-title accent-title">横竖隔离 · 参数模式</div>
             <label class="checkbox-row">
               <input id="chkIndependentParams" type="checkbox" />
@@ -165,7 +386,7 @@
           </section>
 
           <!-- Preset Management Card -->
-          <section class="section-card">
+          <section class="section-card" data-tab-group="preset">
             <div class="section-title">水印预设管理（本机保存与导入导出）</div>
             <div class="inline-row">
               <select id="presetSelect" class="input-select grow" aria-label="选择水印预设"></select>
@@ -186,7 +407,7 @@
           </section>
 
           <!-- Watermark Content Card -->
-          <section class="section-card">
+          <section class="section-card" data-tab-group="content">
             <div class="section-title">水印内容</div>
             <div class="segmented-row">
               <button id="btnTypeText" class="btn-segmented active" type="button">文字水印</button>
@@ -195,7 +416,7 @@
 
             <!-- Text Controls -->
             <div id="textControls" class="control-stack">
-              <textarea id="txtWatermark" class="input-textarea" rows="3" placeholder="输入水印文字（支持多行换行）..."></textarea>
+              <textarea id="txtWatermark" class="input-textarea" rows="2" placeholder="输入水印文字（支持多行换行）..."></textarea>
 
               <div class="inline-row">
                 <span class="field-label short">字体</span>
@@ -240,12 +461,12 @@
                   <span id="clrTextHex">#FFFFFF</span>
                 </label>
                 <div class="swatches" id="textSwatches">
-                  <button type="button" class="swatch" data-color="#FFFFFF" style="background:#FFFFFF" title="纯白"></button>
-                  <button type="button" class="swatch" data-color="#000000" style="background:#000000" title="纯黑"></button>
-                  <button type="button" class="swatch" data-color="#E5E7EB" style="background:#E5E7EB" title="浅灰"></button>
-                  <button type="button" class="swatch" data-color="#EF4444" style="background:#EF4444" title="红色"></button>
-                  <button type="button" class="swatch" data-color="#3B82F6" style="background:#3B82F6" title="蓝色"></button>
-                  <button type="button" class="swatch" data-color="#F59E0B" style="background:#F59E0B" title="金黄"></button>
+                  <button type="button" class="swatch" data-color="#FFFFFF" style="background:#FFFFFF" title="纯白" aria-label="纯白"></button>
+                  <button type="button" class="swatch" data-color="#000000" style="background:#000000" title="纯黑" aria-label="纯黑"></button>
+                  <button type="button" class="swatch" data-color="#E5E7EB" style="background:#E5E7EB" title="浅灰" aria-label="浅灰"></button>
+                  <button type="button" class="swatch" data-color="#EF4444" style="background:#EF4444" title="红色" aria-label="红色"></button>
+                  <button type="button" class="swatch" data-color="#3B82F6" style="background:#3B82F6" title="蓝色" aria-label="蓝色"></button>
+                  <button type="button" class="swatch" data-color="#F59E0B" style="background:#F59E0B" title="金黄" aria-label="金黄"></button>
                 </div>
               </div>
 
@@ -304,7 +525,7 @@
           </section>
 
           <!-- Appearance Card -->
-          <section class="section-card">
+          <section class="section-card" data-tab-group="style">
             <div class="section-title">透明度与角度</div>
             <div class="slider-row">
               <span class="field-label">不透明度</span>
@@ -327,7 +548,7 @@
           </section>
 
           <!-- Position & Layout Card -->
-          <section class="section-card">
+          <section class="section-card" data-tab-group="layout">
             <div class="section-title">位置与排布</div>
             <div class="segmented-row">
               <button id="btnModeTiled" class="btn-segmented active" type="button">全图平铺</button>
@@ -394,7 +615,7 @@
           </section>
 
           <!-- Export Settings Card -->
-          <section class="section-card">
+          <section class="section-card" data-tab-group="export">
             <div class="section-title">批量导出设置</div>
             <div id="exportIsolationHint" class="info-hint hidden">
               已开启横竖隔离：导出将自动分为「横版/」与「竖版/」子文件夹
@@ -428,10 +649,13 @@
 
         <!-- Sticky Export Footer -->
         <div class="export-footer">
-          <button id="btnExportZip" class="btn btn-primary full-width export-main-btn" type="button" disabled>
-            ⬇ 打包导出 ZIP (0 项)
-          </button>
-          <button id="btnExportDir" class="btn full-width" type="button" disabled title="Chrome / Edge 支持直接将文件写入本地目标文件夹">
+          <div class="export-footer-row">
+            <button id="btnMobileAdd" class="btn mobile-only-flex" type="button">＋ 添加</button>
+            <button id="btnExportZip" class="btn btn-primary grow export-main-btn" type="button" disabled>
+              ⬇ 打包导出 ZIP (0 项)
+            </button>
+          </div>
+          <button id="btnExportDir" class="btn full-width desktop-only-block" type="button" disabled title="Chrome / Edge 支持直接将文件写入本地目标文件夹">
             📁 直接导出到本地文件夹
           </button>
         </div>
@@ -439,46 +663,145 @@
     </main>
   </div>
 
-  <!-- Crawlable product guide: features / how-to / FAQ (scroll below the app) -->
+  <!-- Crawlable Product Guide & GEO Knowledge Hub (scroll below the app viewport) -->
   <div class="site-guide-wrap">
     <article id="guide" class="site-guide" aria-labelledby="guideTitle">
       <header class="guide-hero">
-        <p class="guide-eyebrow">免费 · 开源 · 无需安装 · 零上传</p>
+        <p class="guide-eyebrow">免费 · MIT 开源 · 无需安装 · 100% 本地零上传</p>
         <h2 id="guideTitle">BatchWatermark：在线批量给图片和视频加水印</h2>
         <p class="guide-lead">
-          BatchWatermark 网页版是一款完全运行在浏览器本地的<strong>批量加水印工具</strong>。一次导入几十上百张照片、商品图或短视频，
-          调整文字水印或 Logo 水印参数时，所有预览会同步实时刷新；确认效果后可一键打包导出 ZIP，或直接写入本地文件夹。
-          所有文件只在你的设备内存中处理，<strong>绝不上传服务器</strong>，适合摄影作品、电商图片、自媒体素材与内部资料的版权保护。
+          <strong>BatchWatermark</strong>（主站 <a href="https://watermark.zak-cloud.top/">watermark.zak-cloud.top</a>）是一款完全运行在浏览器本地的免费<strong>批量图片与视频加水印工具</strong>。
+          一次导入几十上百张照片、电商商品图、证件扫描件或短视频，在调整文字水印或透明 Logo 水印参数时，所有预览会<strong>同步实时刷新</strong>；
+          确认效果后可单图直下、一键打包导出 ZIP，或在 Chrome / Edge 中直接写入本地文件夹。
+          所有编解码与渲染均在你的设备内存中完成，<strong>零服务器上传</strong>，彻底杜绝隐私与商密泄露风险。
         </p>
-        <a class="btn btn-primary guide-cta" href="#top">↑ 立即开始批量加水印</a>
+        <a class="btn btn-primary guide-cta" href="#top">↑ 返回工具立即开始加水印</a>
       </header>
+
+      <!-- GEO Concise Fact Summary (TL;DR) -->
+      <section class="guide-section" aria-labelledby="tldrTitle">
+        <h2 id="tldrTitle">核心规格一览（TL;DR）</h2>
+        <dl class="facts-grid">
+          <div class="fact-card">
+            <dt>隐私与数据安全</dt>
+            <dd><strong>0 次服务器上传</strong> · 100% 本地浏览器 HTML5 Canvas + MediaRecorder 运算</dd>
+          </div>
+          <div class="fact-card">
+            <dt>支持媒体格式</dt>
+            <dd>图片 <strong>JPG / PNG / WebP / BMP / GIF / AVIF</strong> · 视频 <strong>MP4 / WebM / MOV</strong></dd>
+          </div>
+          <div class="fact-card">
+            <dt>横竖版隔离导出</dt>
+            <dd>自动区分横版（宽 ≥ 高）与竖版（高 &gt; 宽），支持独立水印参数并分存 <code>横版/</code> 与 <code>竖版/</code></dd>
+          </div>
+          <div class="fact-card">
+            <dt>预设与跨端互通</dt>
+            <dd>本机持久保存 + UTF-8 JSON 导入导出，与 Windows 独立桌面 EXE <strong>100% 互通</strong></dd>
+          </div>
+          <div class="fact-card">
+            <dt>费用与开源协议</dt>
+            <dd><strong>完全免费</strong> · 无张数限制 · 无登录门槛 · MIT 协议开源</dd>
+          </div>
+          <div class="fact-card">
+            <dt>官方访问入口</dt>
+            <dd>主站 <code>watermark.zak-cloud.top</code> · GitHub Pages 镜像同步可用</dd>
+          </div>
+        </dl>
+      </section>
 
       <section class="guide-section" aria-labelledby="featTitle">
         <h2 id="featTitle">核心功能</h2>
         <ul class="feature-grid">
           <li class="feature-item">
             <h3>批量图片与视频加水印</h3>
-            <p>支持 JPG、PNG、WebP、BMP、GIF 图片与 MP4、WebM、MOV 视频，可多选文件、导入整个文件夹或直接拖拽，一次处理整批素材。</p>
+            <p>支持多选文件、导入整个文件夹或直接拖拽整批素材；自动校正手机照片 EXIF 拍摄方向，视频导出可保留原声。</p>
           </li>
           <li class="feature-item">
-            <h3>文字水印与 Logo 水印</h3>
-            <p>多行文字、常用中英文字体与自定义字体文件，可调颜色、描边、阴影和行间距；也可使用带透明背景的 PNG / WebP Logo 按比例缩放。</p>
+            <h3>多行文字水印与 Logo 水印</h3>
+            <p>支持常用中英文字体与本地导入 <code>.ttf / .otf / .woff2</code> 自定义字体，可调颜色、描边、阴影与行间距；透明 PNG / WebP Logo 按宽度比例缩放。</p>
           </li>
           <li class="feature-item">
             <h3>全图平铺防盗与九宫格定位</h3>
-            <p>平铺模式可调水平/垂直间距、旋转角度与砖墙交错排布；单点模式支持九宫格锚点、边距百分比与精细位置微调。</p>
+            <p>平铺模式可调水平/垂直间距、-180°~180° 旋转角度与奇偶行砖墙交错；单点模式提供 3×3 九宫格定位、边距百分比与精细偏移。</p>
           </li>
           <li class="feature-item">
-            <h3>多图实时同步预览</h3>
-            <p>基于 HTML5 Canvas 实时渲染，修改任一参数即可看到全部图片与视频帧的水印效果，支持高清大图与视频时间轴预览，所见即所得。</p>
+            <h3>多图实时同步预览（PC + 手机适配）</h3>
+            <p>修改任一参数即可同时看到全部图片与视频帧的水印变化；手机端采用固定实时预览 + 底部触控标签切换，单手操作流畅。</p>
           </li>
           <li class="feature-item">
-            <h3>横版与竖版分开处理</h3>
-            <p>开启「横竖隔离」后横版与竖版分组展示，可为 16:9 横屏和 9:16 竖屏分别设置水印，导出时自动分到「横版/」「竖版/」文件夹。</p>
+            <h3>横版与竖版一键隔离处理</h3>
+            <p>开启「横竖隔离」后横版与竖版分区展示，可为 16:9 横屏和 9:16 竖屏分别定制不同水印，导出自动分目录保存。</p>
           </li>
           <li class="feature-item">
-            <h3>水印预设保存与导入导出</h3>
-            <p>常用水印样式一键保存在浏览器本机，支持 JSON 文件导入导出，与 BatchWatermark 桌面端 EXE 的预设完全互通。</p>
+            <h3>自定义预设保存与 JSON 导入导出</h3>
+            <p>常用品牌或防盗水印样式一键保存到本机，支持单个或全部预设导出 JSON，团队协作或更换设备一键复用。</p>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Structured Comparison Table (High-citation GEO signal) -->
+      <section class="guide-section" aria-labelledby="compareTitle">
+        <h2 id="compareTitle">BatchWatermark 网页版 vs 桌面 EXE vs 传统云端水印网站</h2>
+        <div class="table-scroll">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>对比维度</th>
+                <th>BatchWatermark 网页版（本站）</th>
+                <th>BatchWatermark Windows EXE</th>
+                <th>常见云端在线水印网站</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>文件是否上传服务器</td>
+                <td><strong>绝不上传（100% 本地内存）</strong></td>
+                <td><strong>绝不上传（完全离线）</strong></td>
+                <td>需上传至第三方服务器</td>
+              </tr>
+              <tr>
+                <td>批量实时多图预览</td>
+                <td>支持全部图片与视频同步实时刷新</td>
+                <td>多线程池 + 视口优先极速刷新</td>
+                <td>大多仅支持单图预览或提交后查看</td>
+              </tr>
+              <tr>
+                <td>横竖版隔离 &amp; 独立参数</td>
+                <td>支持分区展示、独立参数、分文件夹导出</td>
+                <td>支持分区展示、独立参数、分文件夹导出</td>
+                <td>极少支持，需手动挑图分批处理</td>
+              </tr>
+              <tr>
+                <td>视频批量加水印</td>
+                <td>支持（Canvas + MediaRecorder，保留原声）</td>
+                <td>内置 FFmpeg 7.1，高速 H.264 MP4 导出</td>
+                <td>通常收费或严格限制时长/分辨率</td>
+              </tr>
+              <tr>
+                <td>费用、登录与张数限制</td>
+                <td>免费开源 · 免登录 · 无张数限制</td>
+                <td>免费开源 · 离线双击运行</td>
+                <td>常有限免张数、会员订阅或附带角标</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="guide-section" aria-labelledby="usecaseTitle">
+        <h2 id="usecaseTitle">适用人群与典型场景</h2>
+        <ul class="feature-grid">
+          <li class="feature-item">
+            <h3>电商运营 &amp; 店铺视觉</h3>
+            <p>一次性为几十上百张商品主图、详情图批量打上店铺 Logo 或斜向防盗图水印，统一比例观感。</p>
+          </li>
+          <li class="feature-item">
+            <h3>自媒体创作者 &amp; 短视频剪辑</h3>
+            <p>开启「横竖隔离」，同时给 16:9 B站/YouTube 横屏图与 9:16 抖音/小红书竖屏短视频分别加上专属品牌水印。</p>
+          </li>
+          <li class="feature-item">
+            <h3>摄影师样图交付 &amp; 企业合规</h3>
+            <p>交付选片样图、身份证/营业执照复印件标注「仅限某某业务使用」时，全程本地零上传，兼顾效率与数据安全。</p>
           </li>
         </ul>
       </section>
@@ -486,60 +809,72 @@
       <section class="guide-section" aria-labelledby="howtoTitle">
         <h2 id="howtoTitle">如何在线批量加水印？只需 4 步</h2>
         <ol class="howto-steps">
-          <li><strong>导入素材：</strong>点击「添加图片/视频」或「添加文件夹」，也可以把文件直接拖到左侧预览区。</li>
-          <li><strong>设置水印：</strong>在右侧面板选择文字水印或图片 Logo，调整字体、字号、颜色、不透明度与旋转角度。</li>
-          <li><strong>选择排布：</strong>使用「全图平铺」防止盗图，或用「单点定位」把水印放在右下角等九宫格位置。</li>
-          <li><strong>批量导出：</strong>设置文件名前缀/后缀与输出格式，点击「打包导出 ZIP」或「直接导出到本地文件夹」。</li>
+          <li><strong>导入素材：</strong>点击「添加图片/视频」或「添加文件夹」，也可以把文件直接拖拽到预览区。</li>
+          <li><strong>设置水印：</strong>选择文字水印或图片 Logo，调整字体、字号、颜色、描边、不透明度与旋转角度。</li>
+          <li><strong>选择排布：</strong>使用「全图平铺」防止盗图，或用「单点定位」把水印放在九宫格指定角落；混合横竖素材可一键开启「横竖隔离」。</li>
+          <li><strong>批量导出：</strong>设置文件名前缀/后缀与输出格式，单图可直接下载，多图一键「打包导出 ZIP」或直接写入本地文件夹。</li>
         </ol>
       </section>
 
       <section class="guide-section" aria-labelledby="faqTitle">
-        <h2 id="faqTitle">常见问题</h2>
+        <h2 id="faqTitle">常见问题（FAQ）</h2>
         <div class="faq-list">
           <details class="faq-item">
-            <summary>BatchWatermark 在线加水印免费吗？需要注册吗？</summary>
-            <p>完全免费并基于 MIT 协议开源，无需注册登录、不限使用次数，打开网页即可使用。</p>
+            <summary>BatchWatermark 在线加水印免费吗？需要注册登录吗？</summary>
+            <p>完全免费并基于 MIT 协议开源，无需注册登录、无张数限制、无强制品牌角标，打开 <a href="https://watermark.zak-cloud.top/">watermark.zak-cloud.top</a> 或 GitHub Pages 镜像即可直接使用。</p>
           </details>
           <details class="faq-item">
             <summary>我的图片和视频会被上传到服务器吗？</summary>
-            <p>不会。图片解码、水印绘制、视频录制与 ZIP 打包全部在浏览器本地完成，网页没有任何上传接口，可放心处理私密或商业素材。</p>
+            <p>绝不会上传。图片解码、Canvas 水印绘制、MediaRecorder 视频合成与 ZIP 打包全部在您的浏览器本地内存中完成，没有任何文件上传接口，适合处理商业素材、证件照与内部文档。</p>
+          </details>
+          <details class="faq-item">
+            <summary>支持手机端使用吗？</summary>
+            <p>支持。网页版针对 iOS Safari 与 Android 浏览器做了专属移动端布局优化：顶部固定实时预览区，下方通过分类标签切换文字、样式、排布、预设与导出设置，单图支持直接下载保存到手机。</p>
           </details>
           <details class="faq-item">
             <summary>支持哪些图片和视频格式？可以导出什么格式？</summary>
-            <p>图片支持 JPG / PNG / WebP / BMP / GIF，可保持原格式或导出为 JPEG、PNG、WebP 并调节质量；视频支持 MP4 / WebM / MOV，通过浏览器原生 MediaRecorder 导出 MP4 或 WebM，并可保留原声。</p>
+            <p>图片支持 JPG / JPEG / PNG / WebP / BMP / GIF / AVIF，可保持原格式或转换为 JPEG、PNG、WebP 并调节质量；视频支持 MP4 / WebM / MOV，通过浏览器本地 MediaRecorder 导出 MP4 或 WebM 并保留原声。</p>
           </details>
           <details class="faq-item">
-            <summary>如何给图片加平铺水印防止盗图？</summary>
-            <p>在「位置与排布」中选择「全图平铺」，设置 -25° 或 -45° 的旋转角度、合适的不透明度与间距，并勾选「奇偶行交错排布」，即可得到覆盖整张图片、难以裁剪去除的防盗水印。</p>
+            <summary>如何给图片加斜向平铺水印防止盗图？</summary>
+            <p>在「位置与排布」中选择「全图平铺」，将旋转角度设为 -25° 或 -45°，调节不透明度与水平/垂直间距，并勾选「奇偶行交错排布（砖墙错位）」，即可生成覆盖整张图片、难以裁剪去除的防盗水印。</p>
           </details>
           <details class="faq-item">
-            <summary>横版和竖版图片可以使用不同的水印吗？</summary>
-            <p>可以。点击顶部「横竖隔离」，勾选「横版与竖版使用独立水印参数」，即可分别编辑两种方向的水印，导出时自动保存到「横版/」与「竖版/」子文件夹。</p>
+            <summary>横版和竖版图片可以使用不同的水印并分开导出吗？</summary>
+            <p>可以。点击顶部「横竖隔离」，预览区会自动分为「横版媒体区（宽 ≥ 高）」和「竖版媒体区（高 &gt; 宽）」；勾选「横版与竖版使用独立水印参数」即可分别调节，导出时自动归入「横版/」和「竖版/」子文件夹。</p>
           </details>
           <details class="faq-item">
-            <summary>需要处理大量视频，有桌面版吗？</summary>
-            <p>有。BatchWatermark 提供基于 Python、PySide6 与 FFmpeg 的 Windows 桌面端，导出 H.264 MP4 更快、兼容性更好，可在 <a href="https://github.com/drank5090/BatchWatermark/releases" target="_blank" rel="noopener">GitHub Releases</a> 免费下载 EXE，预设 JSON 与网页版互通。</p>
+            <summary>watermark.zak-cloud.top 和 GitHub Pages 地址有什么区别？</summary>
+            <p>两个地址部署的是同一套开源代码，功能完全一致。<a href="https://watermark.zak-cloud.top/">watermark.zak-cloud.top</a> 是官方推荐主站（访问更稳定且支持根路径完整 SEO/PWA 特性），<a href="https://drank5090.github.io/BatchWatermark/" rel="noopener">drank5090.github.io/BatchWatermark/</a> 是官方 GitHub Pages 镜像。</p>
+          </details>
+          <details class="faq-item">
+            <summary>需要处理大量高清长视频，有离线桌面版吗？</summary>
+            <p>有。BatchWatermark 提供基于 Python、PySide6 与内置 FFmpeg 7.1 的 Windows 独立单文件 EXE，导出 H.264 MP4 速度更快、格式兼容更广，可在 <a href="https://github.com/drank5090/BatchWatermark/releases" target="_blank" rel="noopener">GitHub Releases</a> 免费下载，且预设 JSON 与网页版 100% 互通。</p>
           </details>
         </div>
       </section>
 
       <section class="guide-section" lang="en" aria-labelledby="enTitle">
-        <h2 id="enTitle">Free online batch watermark tool for photos &amp; videos</h2>
+        <h2 id="enTitle">BatchWatermark — Free Private Online Batch Watermark Tool for Photos &amp; Videos</h2>
         <p>
-          BatchWatermark Web lets you add text or logo watermarks to hundreds of images and videos at once, right in your browser.
-          Live multi-image preview, tiled anti-theft patterns, 3×3 anchor positioning, separate landscape / portrait settings,
-          JSON presets and one-click ZIP export — 100% local processing, nothing is ever uploaded.
+          Available at <a href="https://watermark.zak-cloud.top/">watermark.zak-cloud.top</a> (and mirrored on GitHub Pages),
+          <strong>BatchWatermark</strong> is an open-source (MIT) browser-local tool for adding text or transparent logo watermarks to
+          hundreds of photos and videos simultaneously. Enjoy real-time multi-image preview, diagonal staggered anti-theft tiling,
+          3×3 anchor positioning, separate landscape and portrait watermark isolation, portable JSON presets shared with the Windows EXE edition,
+          and instant ZIP or local-folder export — with <strong>100% local processing and zero server uploads</strong>.
         </p>
       </section>
 
       <footer class="guide-footer">
-        <nav class="guide-links" aria-label="项目链接">
+        <nav class="guide-links" aria-label="项目与镜像链接">
+          <a href="https://watermark.zak-cloud.top/">官方主站 (watermark.zak-cloud.top)</a>
+          <a href="https://drank5090.github.io/BatchWatermark/" rel="noopener">GitHub Pages 镜像</a>
           <a href="https://github.com/drank5090/BatchWatermark" target="_blank" rel="noopener">GitHub 开源仓库</a>
           <a href="https://github.com/drank5090/BatchWatermark/releases" target="_blank" rel="noopener">下载 Windows 桌面版 EXE</a>
-          <a href="https://github.com/drank5090/BatchWatermark/issues" target="_blank" rel="noopener">反馈问题与建议</a>
+          <a href="llms.txt">AI 索引说明 (llms.txt)</a>
           <a href="https://github.com/drank5090/BatchWatermark/blob/main/LICENSE" target="_blank" rel="noopener">MIT 开源协议</a>
         </nav>
-        <p class="muted-text">© 2026 BatchWatermark · 纯浏览器本地处理的免费批量加水印工具</p>
+        <p class="muted-text">© 2026 BatchWatermark · 纯浏览器本地处理的免费开源批量图片与视频加水印工具</p>
       </footer>
     </article>
   </div>

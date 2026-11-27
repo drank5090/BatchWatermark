@@ -2,12 +2,8 @@ name: Deploy Web Edition to GitHub Pages
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - "web/**"
-      - ".github/workflows/pages.yml"
-  workflow_dispatch:
+    tags:
+      - "*"
 
 permissions:
   contents: read

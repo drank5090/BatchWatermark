@@ -1,4 +1,4 @@
-name: Build and Release Windows EXE
+name: Release EXE and Deploy Web
 
 on:
   push:
@@ -118,3 +118,33 @@ jobs:
           if ($LASTEXITCODE -ne 0) {
             throw "GitHub Release publish failed with exit code $LASTEXITCODE"
           }
+
+  deploy-web-safeline:
+    name: Deploy Web to SafeLine WAF (${{ github.ref_name }})
+    needs: build-and-release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Validate web JavaScript syntax
+        run: |
+          for f in web/js/*.js; do
+            node --check "$f"
+          done
+
+      - name: Push web/ static assets to SafeLine WAF
+        env:
+          SAFELINE_WAF_URL: ${{ secrets.SAFELINE_WAF_URL }}
+          SAFELINE_API_KEY: ${{ secrets.SAFELINE_API_KEY }}
+          SAFELINE_SITE_DOMAIN: ${{ vars.SAFELINE_SITE_DOMAIN || 'watermark.zak-cloud.top' }}
+          SAFELINE_SITE_ID: ${{ vars.SAFELINE_SITE_ID }}
+        run: python scripts/deploy_safeline.py --source web

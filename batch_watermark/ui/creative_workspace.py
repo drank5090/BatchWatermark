@@ -46,6 +46,7 @@ from ..creative_models import (
 )
 from ..engine import create_preview_base, scan_image_files
 from ..fonts import discover_system_fonts
+from ..i18n import get_locale, retranslate_widget_tree, t
 from ..models import (
     ConflictPolicy,
     ExportConfig,
@@ -436,7 +437,9 @@ class FilmstripItemCard(QFrame):
         self.set_layer_count(len(doc.placements))
 
     def set_layer_count(self, count: int) -> None:
-        self._badge.setText(f"{count} 层")
+        raw = f"{count} 层"
+        self._badge.setProperty("_i18n_text", raw)
+        self._badge.setText(t(raw))
 
     def set_selected(self, selected: bool) -> None:
         self.setProperty("selected", selected)
@@ -914,7 +917,10 @@ class CreativeWorkspaceWidget(QWidget):
             card.delete_requested.connect(self._on_asset_delete)
             self._lib_layout.insertWidget(self._lib_layout.count() - 1, card)
 
-        self._lib_count_lbl.setText(f"{len(assets)} 项")
+        self._lib_count_lbl.setProperty("_i18n_text", f"{len(assets)} 项")
+        self._lib_count_lbl.setText(t(f"{len(assets)} 项"))
+        if get_locale() != "zh-CN":
+            retranslate_widget_tree(self._lib_host, get_locale())
         self.canvas.set_assets(self.library_store.asset_map())
 
     def _open_upload_image_assets(self) -> None:
@@ -947,6 +953,8 @@ class CreativeWorkspaceWidget(QWidget):
 
     def _open_add_text_asset(self) -> None:
         dlg = AddTextAssetDialog(self)
+        if get_locale() != "zh-CN":
+            retranslate_widget_tree(dlg, get_locale())
         if dlg.exec() == QDialog.DialogCode.Accepted:
             asset = dlg.build_asset()
             self.library_store.add_asset(asset)
@@ -1266,7 +1274,9 @@ class CreativeWorkspaceWidget(QWidget):
             asset = self.library_store.get_asset(layer.asset_id)
             name = asset.name if asset else "水印图层"
             tag = "自动生成" if layer.auto_generated else "手动放置"
-            self._insp_name_lbl.setText(f"当前选中：{name}（{tag}）")
+            raw_lbl = f"当前选中：{name}（{tag}）"
+            self._insp_name_lbl.setProperty("_i18n_text", raw_lbl)
+            self._insp_name_lbl.setText(t(raw_lbl))
             self._layer_scale_row.set_value(round(layer.scale * 100.0, 1), emit=False)
             self._layer_op_row.set_value(layer.opacity, emit=False)
             self._layer_rot_row.set_value(round(layer.rotation, 1), emit=False)
@@ -1353,7 +1363,8 @@ class CreativeWorkspaceWidget(QWidget):
         count = len(self._doc_order)
         has_docs = count > 0
         doc = self._active_doc()
-        self._doc_count_badge.setText(f"共 {count} 张")
+        self._doc_count_badge.setProperty("_i18n_text", f"共 {count} 张")
+        self._doc_count_badge.setText(t(f"共 {count} 张"))
         self._btn_clear_docs.setEnabled(has_docs)
         self._btn_auto_current.setEnabled(has_docs)
         self._btn_shuffle.setEnabled(has_docs)

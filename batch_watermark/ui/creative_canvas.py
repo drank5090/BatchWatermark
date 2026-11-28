@@ -25,6 +25,7 @@ from PySide6.QtWidgets import QWidget
 
 from ..creative_engine import render_asset_stamp
 from ..creative_models import CreativeAsset, CreativePlacement
+from ..i18n import t
 
 MIME_CREATIVE_ASSET = "application/x-bw-creative-asset"
 
@@ -328,7 +329,7 @@ class CreativeCanvasWidget(QWidget):
         painter.drawText(
             box.adjusted(18, 36, -18, -90),
             Qt.AlignmentFlag.AlignCenter,
-            "✨ 创作模式画布 · 点击或拖入图片开始",
+            t("✨ 创作模式画布 · 点击或拖入图片开始"),
         )
 
         painter.setPen(QColor("#9CA3AF"))
@@ -338,7 +339,7 @@ class CreativeCanvasWidget(QWidget):
         painter.drawText(
             box.adjusted(24, 96, -24, -24),
             Qt.AlignmentFlag.AlignCenter | Qt.TextFlag.TextWordWrap,
-            "导入图片后，可一键运行「算法智能美观排版」\n或直接从左侧水印库拖入贴纸与文字，自由拖拽、缩放、旋转！",
+            t("导入图片后，可一键运行「算法智能美观排版」\n或直接从左侧水印库拖入贴纸与文字，自由拖拽、缩放、旋转！"),
         )
 
     def _paint_selection_gizmo(
@@ -376,7 +377,7 @@ class CreativeCanvasWidget(QWidget):
 
         # Subtle HUD readout while actively dragging
         if self._drag_mode:
-            hud_text = (
+            hud_raw = (
                 f"角度 {layer.rotation:.1f}°"
                 if self._drag_mode == "rotate"
                 else (
@@ -385,6 +386,7 @@ class CreativeCanvasWidget(QWidget):
                     else f"位置 ({layer.x * 100:.0f}%, {layer.y * 100:.0f}%)"
                 )
             )
+            hud_text = t(hud_raw)
             badge = QRectF(center.x() - 56, center.y() + hh + 12, 112, 22)
             painter.setPen(QPen(QColor("#38BDF8"), 1.0))
             painter.setBrush(QColor(15, 23, 42, 220))

@@ -11,6 +11,7 @@ from PySide6.QtGui import QCloseEvent, QDesktopServices, QImage
 from PySide6.QtWidgets import (
     QButtonGroup,
     QCheckBox,
+    QComboBox,
     QDialog,
     QFileDialog,
     QFrame,
@@ -30,6 +31,7 @@ from PySide6.QtWidgets import (
 
 from ..creative_library import CreativeLibraryStore
 from ..engine import scan_media_files
+from ..i18n import SUPPORTED_LOCALES, get_locale, retranslate_widget_tree, set_locale, t
 from ..models import (
     ExportConfig,
     ImageItem,
@@ -145,6 +147,7 @@ class MainWindow(QMainWindow):
         initial_paths: list[Path] | None = None,
         preset_store: PresetStore | None = None,
         creative_library_store: CreativeLibraryStore | None = None,
+        settings_path: Path | None = None,
     ) -> None:
         super().__init__()
         self.setWindowTitle("BatchWatermark v2.0 · 工作模式 & 创作模式批量水印工具")
@@ -153,6 +156,7 @@ class MainWindow(QMainWindow):
 
         self._preset_store = preset_store
         self._creative_library_store = creative_library_store
+        self._settings_path = settings_path
 
         # Data state
         self._items: dict[str, ImageItem] = {}
@@ -180,6 +184,8 @@ class MainWindow(QMainWindow):
 
         self._build_ui()
         self._connect_signals()
+        if get_locale() != "zh-CN":
+            retranslate_widget_tree(self, get_locale())
 
         if initial_paths:
             QTimer.singleShot(50, lambda: self.add_paths(initial_paths))
@@ -233,6 +239,19 @@ class MainWindow(QMainWindow):
         mode_hint = QLabel("双模式完全独立 · 切换标签页互不干扰")
         mode_hint.setObjectName("MutedLabel")
         mb.addWidget(mode_hint)
+
+        mb.addSpacing(8)
+
+        self._lang_combo = QComboBox()
+        self._lang_combo.setProperty("_i18n_skip", True)
+        self._lang_combo.setFixedWidth(124)
+        self._lang_combo.setToolTip("Language / 语言 / 言語")
+        for loc_code, loc_label, _slug in SUPPORTED_LOCALES:
+            self._lang_combo.addItem(f"🌐 {loc_label}", loc_code)
+        cur_idx = self._lang_combo.findData(get_locale())
+        if cur_idx >= 0:
+            self._lang_combo.setCurrentIndex(cur_idx)
+        mb.addWidget(self._lang_combo)
 
         root.addWidget(mode_bar)
 
@@ -343,11 +362,27 @@ class MainWindow(QMainWindow):
         if mode == "creative":
             self._btn_mode_creative.setChecked(True)
             self._mode_stack.setCurrentIndex(1)
-            self._status_label.setText("创作模式 · 导入图片后可一键生成美观大小不一的水印，或从左侧水印库自由拖拽")
+            self._set_status("创作模式 · 导入图片后可一键生成美观大小不一的水印，或从左侧水印库自由拖拽")
         else:
             self._btn_mode_work.setChecked(True)
             self._mode_stack.setCurrentIndex(0)
-            self._status_label.setText("工作模式 · 批量图片与视频水印实时预览，支持横竖隔离与 JSON 预设")
+            self._set_status("工作模式 · 批量图片与视频水印实时预览，支持横竖隔离与 JSON 预设")
+
+    def _set_status(self, text: str) -> None:
+        self._status_label.setProperty("_i18n_text", text)
+        self._status_label.setText(t(text))
+
+    def set_language(self, locale_code: str, *, persist: bool = True) -> str:
+        """Switch the entire desktop application UI language live without losing state."""
+        active = set_locale(locale_code, persist=persist, settings_path=self._settings_path)
+        idx = self._lang_combo.findData(active)
+        if idx >= 0 and self._lang_combo.currentIndex() != idx:
+            self._lang_combo.blockSignals(True)
+            self._lang_combo.setCurrentIndex(idx)
+            self._lang_combo.blockSignals(False)
+        retranslate_widget_tree(self, active)
+        self.creative_workspace.canvas.update()
+        return active
 
     @property
     def current_mode(self) -> str:
@@ -356,7 +391,10 @@ class MainWindow(QMainWindow):
     def _connect_signals(self) -> None:
         self._btn_mode_work.clicked.connect(lambda: self.switch_mode("work"))
         self._btn_mode_creative.clicked.connect(lambda: self.switch_mode("creative"))
-        self.creative_workspace.status_message.connect(self._status_label.setText)
+        self._lang_combo.currentIndexChanged.connect(
+            lambda _i: self.set_language(str(self._lang_combo.currentData() or "zh-CN"), persist=True)
+        )
+        self.creative_workspace.status_message.connect(self._set_status)
 
         self._btn_add_files.clicked.connect(self._open_add_files_dialog)
         self._btn_add_folder.clicked.connect(self._open_add_folder_dialog)
@@ -528,16 +566,20 @@ class MainWindow(QMainWindow):
                 if i in self._items and self._items[i].orientation == OrientationGroup.LANDSCAPE
             )
             port = count - land
-            self._count_badge.setText(f"共 {count} 项 · 横{land} / 竖{port}")
+            raw_badge = f"共 {count} 项 · 横{land} / 竖{port}"
         else:
             vids = sum(1 for i in self._item_order if i in self._items and self._items[i].is_video)
             if vids > 0:
-                self._count_badge.setText(f"共 {count} 项 (视频 {vids})")
+                raw_badge = f"共 {count} 项 (视频 {vids})"
             else:
-                self._count_badge.setText(f"共 {count} 项")
+                raw_badge = f"共 {count} 项"
+        self._count_badge.setProperty("_i18n_text", raw_badge)
+        self._count_badge.setText(t(raw_badge))
         self._btn_clear.setEnabled(count > 0)
         self._btn_top_export.setEnabled(count > 0)
         self.control_panel.set_image_count(count)
+        if get_locale() != "zh-CN":
+            retranslate_widget_tree(self.control_panel._btn_export, get_locale())
 
     # ---- Real-Time Multi-Media Preview Pipeline ----
 

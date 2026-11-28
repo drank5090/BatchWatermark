@@ -10,6 +10,7 @@ from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication
 
 from batch_watermark import __version__
+from batch_watermark.i18n import detect_system_locale, load_saved_locale, set_locale
 from batch_watermark.ui.main_window import MainWindow
 from batch_watermark.ui.theme import STUDIO_DARK_QSS
 
@@ -49,6 +50,9 @@ def main(argv: list[str] | None = None) -> int:
     icon_file = resource_path("assets/app_icon.ico")
     if icon_file.is_file():
         app.setWindowIcon(QIcon(str(icon_file)))
+
+    saved_loc = load_saved_locale()
+    set_locale(saved_loc if saved_loc else detect_system_locale(), persist=False)
 
     initial_paths = [Path(p) for p in args[1:] if not p.startswith("-") and Path(p).exists()]
     window = MainWindow(initial_paths=initial_paths)

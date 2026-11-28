@@ -22,6 +22,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Inject CI-managed analytics, AdSense tags & ads.txt
+        env:
+          GTM_CONTAINER_ID: ${{ secrets.GTM_CONTAINER_ID }}
+          ADSENSE_CLIENT_ID: ${{ secrets.ADSENSE_CLIENT_ID }}
+          ADSENSE_ADS_TXT: ${{ secrets.ADSENSE_ADS_TXT }}
+        run: python scripts/inject_site_tags.py --web-dir web
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 

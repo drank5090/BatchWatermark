@@ -20,6 +20,9 @@ dist/
 # Local promo video generation workspace & outputs
 docs/promo/
 
+# CI-injected publisher ads.txt (populated from GitHub Secrets during deployment)
+web/ads.txt
+
 # IDE / OS
 .vscode/
 .idea/

@@ -28,6 +28,7 @@ from batch_watermark.presets import PresetStore
 from batch_watermark.ui.main_window import MainWindow
 from batch_watermark.ui.theme import STUDIO_DARK_QSS
 from scripts.deploy_safeline import collect_web_assets
+from scripts.inject_site_tags import BODY_MARKER, HEAD_MARKER, inject_site_tags
 
 ROOT = Path(__file__).resolve().parent.parent
 WEB_DIR = ROOT / "web"
@@ -44,11 +45,13 @@ def qapp() -> QApplication:
 
 
 def test_strict_no_sensitive_terms_or_legacy_region_codes() -> None:
-    """Verify strictly zero forbidden terms or region codes across code, web, and SEO files."""
+    """Verify strictly zero forbidden terms, legacy region codes, or hardcoded publisher/GTM IDs."""
     bad_patterns = [
         re.compile(r"\u53f0\u6e7e|\u53f0\u7063|\u81fa\u7063"),
         re.compile(r"zh[-_]tw", re.IGNORECASE),
         re.compile(r"hreflang\s*=\s*['\"][^'\"]*tw", re.IGNORECASE),
+        re.compile(r"(?:ca-)?pub-\d{10,}", re.IGNORECASE),
+        re.compile(r"\bGTM-[A-Z0-9]{4,}\b"),
     ]
     scan_roots = [ROOT / "batch_watermark", ROOT / "web", ROOT / "scripts", ROOT / "tests"]
     violations: list[str] = []
@@ -62,7 +65,8 @@ def test_strict_no_sensitive_terms_or_legacy_region_codes() -> None:
             for pat in bad_patterns:
                 if pat.search(txt):
                     violations.append(f"{fp.relative_to(ROOT)}: matched {pat.pattern}")
-    assert not violations, f"Forbidden terms/codes found: {violations}"
+    assert not (WEB_DIR / "ads.txt").exists(), "web/ads.txt must be CI-injected, not committed"
+    assert not violations, f"Forbidden terms/codes/IDs found: {violations}"
 
 
 def test_desktop_i18n_translations_and_persistence(tmp_path: Path) -> None:
@@ -153,10 +157,11 @@ def test_web_multilingual_seo_pages_hreflang_sitemap_and_safeline_assets() -> No
         assert f'href="{prefix}styles.css"' in text
         assert f'src="{prefix}js/app.js"' in text
 
-        # Deduplicated GTM & AdSense preserved on every localized page
-        assert text.count("gtm.js?id=GTM-TQG2QNQK") == 1
-        assert text.count("ns.html?id=GTM-TQG2QNQK") == 1
-        assert text.count("adsbygoogle.js?client=ca-pub-5095229134923261") == 1
+        # Clean CI injection placeholders (no hardcoded personal GTM/AdSense IDs in public repo)
+        assert HEAD_MARKER in text
+        assert BODY_MARKER in text
+        assert "gtm.js?id=" not in text
+        assert "adsbygoogle.js?client=" not in text
 
         # Valid localized JSON-LD @graph
         m = re.search(r'<script type="application/ld\+json">(.*?)</script>', text, re.S)
@@ -185,3 +190,48 @@ def test_web_multilingual_seo_pages_hreflang_sitemap_and_safeline_assets() -> No
     file_paths = {rp for rp, _ in files}
     for rp in ("/index.html", "/en/index.html", "/ja/index.html", "/zh-hant/index.html", "/js/i18n.js", "/js/i18n-data.js"):
         assert rp in file_paths
+
+
+def test_ci_site_tag_injection_and_fork_clean_strip(tmp_path: Path) -> None:
+    """Verify inject_site_tags injects GTM/AdSense/ads.txt in CI and strips cleanly for forks."""
+    sample_web = tmp_path / "web"
+    (sample_web / "en").mkdir(parents=True)
+    for rel in ("index.html", "en/index.html"):
+        (sample_web / rel).write_text(
+            f"<html><head>{HEAD_MARKER}</head><body>{BODY_MARKER}<main/></body></html>",
+            encoding="utf-8",
+        )
+    (sample_web / "404.html").write_text(
+        f"<html><head>{HEAD_MARKER}</head><body>404</body></html>",
+        encoding="utf-8",
+    )
+
+    # 1. With CI secrets configured -> injects deduplicated tags & writes ads.txt, skips 404.html
+    res = inject_site_tags(
+        sample_web,
+        gtm_id="GTM-TEST1234",
+        adsense_client="ca-pub-1234567890123456",
+        ads_txt_content="google.com, pub-1234567890123456, DIRECT, f08c47fec0942fa0",
+    )
+    assert res == {"updated_pages": 2, "gtm_enabled": True, "adsense_enabled": True, "ads_txt_written": True}
+    for rel in ("index.html", "en/index.html"):
+        txt = (sample_web / rel).read_text(encoding="utf-8")
+        assert txt.count("gtm.js?id=GTM-TEST1234") == 1
+        assert txt.count("ns.html?id=GTM-TEST1234") == 1
+        assert txt.count("adsbygoogle.js?client=ca-pub-1234567890123456") == 1
+        assert HEAD_MARKER not in txt and BODY_MARKER not in txt
+    assert "adsbygoogle" not in (sample_web / "404.html").read_text(encoding="utf-8")
+    assert (sample_web / "ads.txt").read_text(encoding="utf-8").strip().startswith("google.com, pub-1234567890123456")
+
+    # 2. Fork/local build with empty env -> removes placeholders cleanly & removes ads.txt
+    sample_web2 = tmp_path / "web_fork"
+    sample_web2.mkdir()
+    (sample_web2 / "index.html").write_text(
+        f"<html><head>{HEAD_MARKER}</head><body>{BODY_MARKER}</body></html>",
+        encoding="utf-8",
+    )
+    res2 = inject_site_tags(sample_web2)
+    assert res2 == {"updated_pages": 1, "gtm_enabled": False, "adsense_enabled": False, "ads_txt_written": False}
+    clean_html = (sample_web2 / "index.html").read_text(encoding="utf-8")
+    assert HEAD_MARKER not in clean_html and BODY_MARKER not in clean_html
+    assert not (sample_web2 / "ads.txt").exists()

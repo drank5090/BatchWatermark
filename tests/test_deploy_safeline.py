@@ -21,15 +21,15 @@ from scripts.deploy_safeline import (
 
 class _MockSafeLineState:
     def __init__(self) -> None:
-        self.expected_token = "secret-token-xyz-999"
+        self.expected_token = "mock-token-for-unit-test"
         self.sites = [
-            {"id": 1, "comment": "proxy", "server_names": ["api.example.com"], "type": 0},
-            {"id": 5, "comment": "水印网站", "server_names": ["watermark.zak-cloud.top"], "type": 1},
+            {"id": 1, "comment": "proxy-demo", "server_names": ["api.example.com"], "type": 0},
+            {"id": 42, "comment": "static-demo", "server_names": ["static.example.com"], "type": 1},
         ]
         # Pre-existing server-side verification files that MUST NOT be deleted
         self.files: dict[str, bytes] = {
-            "/BingSiteAuth.xml": b"<bing/>",
-            "/google6969.html": b"google-site-verification",
+            "/site-verify-a.xml": b"<verify-a/>",
+            "/site-verify-b.html": b"site-verification-token",
         }
         self.dirs: set[str] = {"/"}
         self.requests: list[tuple[str, str]] = []
@@ -62,7 +62,7 @@ def _start_mock_safeline(state: _MockSafeLineState):
             if parsed.path == "/api/open/site":
                 self._send(200, {"data": {"data": state.sites}, "err": None, "msg": ""})
                 return
-            if parsed.path == "/api/open/site/5/static":
+            if parsed.path == "/api/open/site/42/static":
                 q = urllib.parse.parse_qs(parsed.query)
                 target = q.get("path", [""])[0]
                 if target == "/":
@@ -83,7 +83,7 @@ def _start_mock_safeline(state: _MockSafeLineState):
                 return
             length = int(self.headers.get("Content-Length", "0"))
             body = json.loads(self.rfile.read(length).decode("utf-8"))
-            if self.path == "/api/open/site/5/static":
+            if self.path == "/api/open/site/42/static":
                 assert not body.get("zip"), "Must not use destructive zip upload on root"
                 path = body["path"]
                 if body.get("dir"):
@@ -129,9 +129,9 @@ def test_deploy_preserves_verification_files_and_verifies_sizes(tmp_path: Path):
     server, url = _start_mock_safeline(state)
     try:
         client = SafeLineClient(url, state.expected_token, retries=1)
-        result = deploy_static_site(client, tmp_path, domain="watermark.zak-cloud.top")
+        result = deploy_static_site(client, tmp_path, domain="static.example.com")
 
-        assert result["site_id"] == 5
+        assert result["site_id"] == 42
         assert result["dirs"] == 1
         assert result["files"] == 3
         assert result["verified_root_files"] == 2
@@ -139,8 +139,8 @@ def test_deploy_preserves_verification_files_and_verifies_sizes(tmp_path: Path):
         assert state.files["/llms.txt"] == b"# BatchWatermark"
         assert state.files["/js/app.js"] == b"export const x = 1;"
         # Existing verification files remain untouched
-        assert state.files["/BingSiteAuth.xml"] == b"<bing/>"
-        assert state.files["/google6969.html"] == b"google-site-verification"
+        assert state.files["/site-verify-a.xml"] == b"<verify-a/>"
+        assert state.files["/site-verify-b.html"] == b"site-verification-token"
     finally:
         server.shutdown()
 

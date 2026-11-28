@@ -10,7 +10,7 @@ Required environment variables (keep in GitHub Actions Secrets):
   SAFELINE_API_KEY      SafeLine Open API token (X-SLCE-API-TOKEN, never printed)
 
 Optional environment variables:
-  SAFELINE_SITE_DOMAIN  Target static site domain (default: watermark.zak-cloud.top)
+  SAFELINE_SITE_DOMAIN  Target static site domain (or pass --domain)
   SAFELINE_SITE_ID      Explicit numeric site ID (overrides domain lookup)
   SAFELINE_INSECURE_TLS Set to '1'/'true' only for self-signed certs (default: false)
 """
@@ -316,7 +316,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--source", default="web", help="Local static directory (default: web)")
     parser.add_argument(
         "--domain",
-        default=os.environ.get("SAFELINE_SITE_DOMAIN", "watermark.zak-cloud.top"),
+        default=os.environ.get("SAFELINE_SITE_DOMAIN", ""),
         help="Target SafeLine static site domain",
     )
     parser.add_argument(

@@ -1,39 +1,33 @@
-# BatchWatermark
+# BatchWatermark (v2.0 Dual-Mode & Multi-Language)
 
-> Free, open-source (MIT), 100% browser-local batch image and video watermarking tool. Add text or transparent logo watermarks to hundreds of photos and videos simultaneously with real-time multi-image preview, landscape/portrait isolation, JSON preset sync, and zero server uploads.
+> Free, open-source (MIT), 100% client-side batch image & video watermarking tool and artistic watermark creative studio. Zero server uploads. Available in Simplified Chinese (zh-CN), English (en), Japanese (ja), and Traditional Chinese (zh-Hant) across both Web and Windows Desktop EXE.
 
-## Official URLs
+## Official Multilingual Entry Points
 
-- Primary Web App: https://watermark.zak-cloud.top/
+- Simplified Chinese (Primary / Default): https://watermark.zak-cloud.top/
+- English: https://watermark.zak-cloud.top/en/
+- Japanese (日本語): https://watermark.zak-cloud.top/ja/
+- Traditional Chinese (繁體中文 / zh-Hant): https://watermark.zak-cloud.top/zh-hant/
 - GitHub Pages Mirror: https://drank5090.github.io/BatchWatermark/
-- Open-Source Repository & Windows EXE Releases: https://github.com/drank5090/BatchWatermark
-- License: MIT (https://github.com/drank5090/BatchWatermark/blob/main/LICENSE)
+- Source Code & Windows Desktop EXE Releases: https://github.com/drank5090/BatchWatermark
 
-## Core Facts & Capabilities
+## Dual-Mode Architecture (Independent Top Tabs)
 
-- **Privacy Architecture**: 100% client-side processing in browser memory via HTML5 Canvas 2D, Web Audio API, and MediaRecorder. Zero files are ever uploaded to any server; no login, registration, or usage limits.
-- **Supported Input Formats**:
-  - Images: JPG, JPEG, PNG, WebP, BMP, GIF, AVIF (with automatic EXIF orientation handling).
-  - Videos: MP4, WebM, MOV, M4V, MKV (browser-native decoding & local MediaRecorder export preserving original audio).
-- **Watermark Types**:
-  - Multi-line text watermarks with system fonts + local custom font upload (`.ttf`, `.otf`, `.woff`, `.woff2`), proportional scaling across mixed resolutions, color picker, stroke outline, drop shadow, and line spacing.
-  - Transparent PNG / WebP logo watermarks with proportional scaling.
-- **Layout Modes**:
-  - Full-canvas tiled anti-theft pattern with configurable horizontal/vertical spacing, rotation (-180° to +180°), and staggered brick offset.
-  - Single-point 3×3 nine-grid anchor positioning with percentage margins and fine X/Y offsets.
-- **Real-Time Multi-Preview**: Every imported photo and video thumbnail updates simultaneously in real time when any parameter changes. Double-click opens a high-resolution lightbox (with video timeline scrubbing and live watermarked playback).
-- **Landscape / Portrait Isolation (横竖隔离)**: Automatically separates landscape (`width >= height`) and portrait (`height > width`) media in the gallery, optionally applies independent watermark parameters to each orientation, and exports them into separate `横版/` and `竖版/` subfolders.
-- **Preset Management**: Built-in starter templates plus persistent local saving (`localStorage` on web, `%APPDATA%` on desktop) and portable UTF-8 JSON import/export 100% interoperable between BatchWatermark Web and the Windows Desktop EXE.
-- **Batch Export**: Direct single-file download, zero-dependency UTF-8 ZIP archive export (preserving `横版/` and `竖版/` folder trees), and direct local folder writing via the File System Access API in Chrome/Edge.
+1. **Work Mode (工作模式 / ワークモード)**:
+   - Bulk image & video watermarking with real-time synchronized multi-preview.
+   - Multi-line text watermarks (custom `.ttf`/`.otf`/`.woff2` fonts, stroke, drop shadow) and transparent PNG/WebP logo watermarks.
+   - Brick-staggered diagonal anti-theft tiling (`-180°` to `180°`) and 3×3 anchor grid positioning.
+   - Landscape / Portrait Orientation Isolation (`横竖隔离`): independent configs and automatic subfolder export.
+   - Local persistent presets + UTF-8 JSON import/export 100% compatible with the Windows Desktop EXE.
 
-## Desktop Companion Edition
+2. **Creative Mode (创作模式 / クリエイティブモード)**:
+   - Custom Watermark Library supporting multiple transparent PNG/WebP image stickers and multi-line text templates (persisted locally via IndexedDB on Web / JSON on Desktop, with cross-platform JSON pack import/export).
+   - Built-in artistic starter pack (frosted snowflakes, sparkles, ribbon wave, seal emblem, glowing serif title & poetic quotes).
+   - Subject-aware multi-scale aesthetic auto-layout algorithm: computes a 48×48 visual saliency + portrait-center protection map so large/bright watermarks frame open edges while avoiding faces and key subjects, combining Hero focal pieces, varied-size Accents, and subtle Micro anti-theft texture stamps.
+   - Interactive direct-manipulation canvas (mouse & touch): every auto-generated or manually dragged watermark can be freely dragged, resized, rotated, locked against shuffle, layered, undone/redone, and proportionally synced across all loaded images.
 
-- Windows 64-bit standalone single-file `.exe` built with Python, PySide6 (Qt 6), Pillow, and bundled FFmpeg 7.1 for high-speed H.264 MP4 + AAC video batching.
-- Source package managed via `uv` (`pyproject.toml` + `uv.lock`).
+## Privacy, Formats & Export
 
-## Frequently Asked Questions (Direct Answers)
-
-- **Is BatchWatermark free and private?** Yes. It is free, MIT open-source, requires no sign-up, and performs 100% of image/video processing locally on the user's device without uploading files.
-- **Can it watermark landscape and portrait photos differently in one batch?** Yes. Enable Orientation Isolation ("横竖隔离") and independent orientation parameters to configure landscape and portrait watermarks separately and export them into `横版/` and `竖版/` folders automatically.
-- **Does it work on mobile phones?** Yes. The web app at https://watermark.zak-cloud.top/ features a mobile-optimized layout with pinned live preview and tabbed touch controls for iOS and Android browsers.
-- **How does BatchWatermark compare to cloud watermark websites?** Unlike cloud tools that upload private photos to remote servers, enforce file-count limits, or require paid subscriptions, BatchWatermark processes unlimited batches locally with real-time multi-image preview, video support, and open-source transparency.
+- **Zero Server Uploads**: All image decoding, Canvas 2D compositing, saliency analysis, MediaRecorder video encoding, and UTF-8 ZIP packaging run strictly inside local browser memory.
+- **Supported Formats**: Images (`JPG`, `JPEG`, `PNG`, `WebP`, `BMP`, `GIF`, `AVIF`); Videos (`MP4`, `WebM`, `MOV`, preserving original audio).
+- **Desktop Companion**: Standalone Windows 64-bit single-file EXE (Python + PySide6 + Pillow + bundled FFmpeg) with identical Work Mode, Creative Mode, and 4-language UI (`zh-CN`, `en`, `ja`, `zh-Hant`).

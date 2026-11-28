@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>BatchWatermark — 無料オンライン画像・動画一括透かし＆アート透かし作成ツール（完全ローカル）</title>
+  <meta name="description" content="インストール不要・サーバー送信ゼロの完全ローカル一括透かし（ウォーターマーク）ツール。ワークモードで画像・動画を一括処理、クリエイティブモードで透過PNGスタンプや文字ライブラリから人物を回避した大小ランダムなアート透かしを自動生成・自由ドラッグ編集できます。" />
+  <meta name="keywords" content="透かし 一括,ウォーターマーク 無料,画像 透かし オンライン,動画 透かし,イラスト 盗用防止 透かし,アート透かし,ローカル 透かし ツール,アップロードなし 透かし,BatchWatermark" />
+  <meta name="author" content="drank5090" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://watermark.zak-cloud.top/ja/" />
+  <link rel="alternate" hreflang="zh-CN" href="https://watermark.zak-cloud.top/" />
+  <link rel="alternate" hreflang="en" href="https://watermark.zak-cloud.top/en/" />
+  <link rel="alternate" hreflang="ja" href="https://watermark.zak-cloud.top/ja/" />
+  <link rel="alternate" hreflang="zh-Hant" href="https://watermark.zak-cloud.top/zh-hant/" />
+  <link rel="alternate" hreflang="x-default" href="https://watermark.zak-cloud.top/" />
+
+  <!-- Performance hints for analytics & ads -->
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
+
+  <!-- Google Tag Manager (GTM-TQG2QNQK) + gtag dataLayer bridge -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    window.dataLayer.push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
+    gtag('js', new Date());
+  </script>
+  <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-TQG2QNQK"></script>
+
+  <!-- Google AdSense (ca-pub-5095229134923261) -->
+  <meta name="google-adsense-account" content="ca-pub-5095229134923261" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5095229134923261" crossorigin="anonymous"></script>
+
+  <!-- Browser / mobile / platform hints -->
+  <meta name="application-name" content="BatchWatermark Web" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="BatchWatermark" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#1e2128" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="renderer" content="webkit" />
+  <meta name="applicable-device" content="pc,mobile" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+  <!-- Open Graph (WeChat / Facebook / LinkedIn / Slack / Discord) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="BatchWatermark" />
+      <meta property="og:locale" content="ja_JP" />
+  <meta property="og:locale:alternate" content="zh_CN" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:locale:alternate" content="zh_Hant" />
+  <meta property="og:url" content="https://watermark.zak-cloud.top/ja/" />
+  <meta property="og:title" content="BatchWatermark — 完全ローカル画像・動画一括透かし＆アート透かしスタジオ" />
+  <meta property="og:description" content="ブラウザ内完結・アップロード一切なし。画像・動画の一括透かし（ワークモード）と、イラスト・写真向けの大小ランダム自動配置＆自由ドラッグ編集（クリエイティブモード）を搭載。" />
+  <meta property="og:image" content="https://watermark.zak-cloud.top/og-image.png" />
+  <meta property="og:image:secure_url" content="https://watermark.zak-cloud.top/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="BatchWatermark オンライン画像・動画一括透かしおよびクリエイティブモード画面" />
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="BatchWatermark — 完全ローカル画像・動画一括透かし＆アート透かしスタジオ" />
+  <meta name="twitter:description" content="ブラウザ内完結・アップロード一切なし。画像・動画の一括透かし（ワークモード）と、イラスト・写真向けの大小ランダム自動配置＆自由ドラッグ編集（クリエイティブモード）を搭載。" />
+  <meta name="twitter:image" content="https://watermark.zak-cloud.top/og-image.png" />
+  <meta name="twitter:image:alt" content="BatchWatermark オンライン画像・動画一括透かしおよびクリエイティブモード画面" />
+
+  <!-- Structured Data (JSON-LD @graph for SEO & Generative Engine Optimization / GEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://watermark.zak-cloud.top/#website",
+        "name": "BatchWatermark",
+        "alternateName": [
+          "BatchWatermark Web",
+          "無料一括透かしツール",
+          "イラスト盗用防止アート透かし"
+        ],
+        "url": "https://watermark.zak-cloud.top/",
+        "inLanguage": [
+          "zh-CN",
+          "en",
+          "ja",
+          "zh-Hant"
+        ],
+        "sameAs": [
+          "https://drank5090.github.io/BatchWatermark/",
+          "https://github.com/drank5090/BatchWatermark"
+        ]
+      },
+      {
+        "@type": "WebApplication",
+        "@id": "https://watermark.zak-cloud.top/ja/#app",
+        "name": "BatchWatermark オンライン一括透かし＆クリエイティブスタジオ",
+        "alternateName": [
+          "BatchWatermark Web",
+          "無料一括透かしツール",
+          "イラスト盗用防止アート透かし"
+        ],
+        "url": "https://watermark.zak-cloud.top/ja/",
+        "inLanguage": "ja",
+        "sameAs": [
+          "https://drank5090.github.io/BatchWatermark/ja/",
+          "https://github.com/drank5090/BatchWatermark"
+        ],
+        "description": "インストール不要・サーバー送信ゼロの完全ローカル一括透かし（ウォーターマーク）ツール。ワークモードで画像・動画を一括処理、クリエイティブモードで透過PNGスタンプや文字ライブラリから人物を回避した大小ランダムなアート透かしを自動生成・自由ドラッグ編集できます。",
+        "applicationCategory": "MultimediaApplication",
+        "applicationSubCategory": "Image and Video Watermarking Tool",
+        "operatingSystem": "Web Browser (Chrome, Edge, Safari, Firefox, iOS, Android), Windows 10/11",
+        "browserRequirements": "Requires HTML5 Canvas 2D and MediaRecorder support",
+        "softwareVersion": "1.1.0",
+        "isAccessibleForFree": true,
+        "license": "https://opensource.org/licenses/MIT",
+        "screenshot": "https://watermark.zak-cloud.top/og-image.png",
+        "image": "https://watermark.zak-cloud.top/og-image.png",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "JPY"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "drank5090",
+          "url": "https://github.com/drank5090"
+        },
+        "featureList": [
+          "100% ブラウザ内ローカル処理・画像および動画のサーバーアップロードゼロ",
+          "上部タブで完全独立する2モード：ワークモード（一括処理）とクリエイティブモード（アート透かし）",
+          "クリエイティブモード：画像＆文字ライブラリ、人物・主体回避アルゴリズム、大小ランダム自動配置、自由ドラッグ・拡縮・回転",
+          "ワークモード：複数画像・動画のリアルタイム同期プレビュー、斜めレンガ状タイル、9点アンカー、縦横分離書き出し",
+          "ローカル保存プリセット＆透かし素材パック（Windows デスクトップ版 EXE と JSON 完全互換）",
+          "単体保存・ZIP書き出し・ローカルフォルダ直接保存・PCおよびスマホ操作に最適化"
+        ]
+      },
+      {
+        "@type": "HowTo",
+        "@id": "https://watermark.zak-cloud.top/ja/#howto",
+        "name": "BatchWatermark で画像・動画にローカル一括透かしを入れる手順",
+        "description": "インストール不要・サーバー送信ゼロ。わずか4ステップで画像・動画の一括透かしやアート透かしを作成できます。",
+        "inLanguage": "ja",
+        "totalTime": "PT1M",
+        "tool": [
+          {
+            "@type": "HowToTool",
+            "name": "モダンブラウザ（Chrome / Edge / Safari / Firefox）"
+          }
+        ],
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "ワークモードまたはクリエイティブモードを選択",
+            "text": "上部タブで「ワークモード」（画像・動画の一括タイル／9点配置・縦横分離）と「クリエイティブモード」（透過スタンプ＆文字ライブラリ・人物回避自動配置・自由ドラッグ）を切り替えます。"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "画像・動画または透かし素材を読み込む",
+            "text": "ファイル複数選択、フォルダ読み込み、ドラッグ＆ドロップに対応。クリエイティブモードでは独自の透過PNGスタンプや複数行テキストをライブラリに保存できます。"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "リアルタイムプレビューと微調整",
+            "text": "ワークモードは全サムネイルと動画フレームを同時更新。クリエイティブモードは「自動レイアウト／別の案」で一括生成し、個別の移動・拡縮・回転・ロックも可能です。"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 4,
+            "name": "ワンクリックでローカル書き出し",
+            "text": "単体ダウンロード、UTF-8 ZIP 一括保存、または Chrome / Edge でのローカルフォルダ直接書き出しに対応。データは外部へ送信されません。"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://watermark.zak-cloud.top/ja/#faq",
+        "inLanguage": "ja",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "BatchWatermark は無料ですか？アカウント登録は必要ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "完全無料・MIT ライセンスのオープンソースです。登録やログインは不要で、処理枚数の上限や強制ロゴもありません。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "画像や動画がサーバーにアップロードされることはありますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "一切ありません。画像デコード、Canvas 2D 合成、主体回避解析、動画録画、ZIP 生成まですべてお使いのブラウザ内メモリで完結します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ワークモードとクリエイティブモードの違いは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ワークモードは大量の写真・動画に斜めタイルやロゴ透かしを素早く一括適用する用途向けです。クリエイティブモードはイラスト・同人作品・写真向けに、複数の透過PNGスタンプや文字を人物の顔を避けつつ大小バランスよく自動配置し、そのまま自由ドラッグで微調整できます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "スマートフォン（iPhone / Android）でも使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。スマホ画面ではプレビュー・編集キャンバスを上部に固定し、下部タブで直感的にパラメータや素材ライブラリを切り替えられ、1枚だけの直接保存にも対応しています。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "対応している画像・動画フォーマットは？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "画像は JPG / JPEG / PNG / WebP / BMP / GIF / AVIF に対応し、元形式維持または JPEG / PNG / WebP 書き出しが可能。動画は MP4 / WebM / MOV に対応し、音声を保持してローカル書き出しできます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "横向き画像と縦向き画像で別々の透かし設定・別フォルダ書き出しはできますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。ワークモード上部の「縦横分離」をオンにすると横向き（幅 ≥ 高さ）と縦向き（高さ > 幅）を自動分類し、個別設定と別サブフォルダ出力が行えます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "作成した透かしライブラリやプリセットはデスクトップ版と共有できますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。ブラウザ内（IndexedDB / localStorage）に自動保存されるほか、UTF-8 JSON パックとして書き出し、Windows デスクトップ EXE 版と双方向に読み込めます。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "長時間の高画質動画を大量処理したい場合、オフライン版はありますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。Python + PySide6 + FFmpeg 内蔵の Windows 単体実行 EXE 版を GitHub Releases で無料配布しており、ワーク＆クリエイティブ両モードと4言語切替に対応しています。"
+            }
+          }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://watermark.zak-cloud.top/ja/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "BatchWatermark ホーム",
+            "item": "https://watermark.zak-cloud.top/ja/"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Icons & PWA manifest -->
+  <link rel="icon" href="../favicon.ico" sizes="48x48" />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+  <link rel="manifest" href="../site.webmanifest" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TQG2QNQK" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+  <div id="top" class="app-shell">
+    <!-- Top Dual-Mode Tab Switcher (Work Mode / Creative Mode — completely independent) -->
+    <nav id="modeTabBar" class="mode-tab-bar" role="tablist" aria-label="系统模式切换">
+      <div class="mode-bar-left">
+        <h1 class="brand">
+          <span class="brand-icon" aria-hidden="true">💧</span>
+          <span class="brand-title">BatchWatermark</span>
+          <span class="brand-tag">Web</span>
+          <span class="sr-only">無料オンライン画像・動画一括透かし＆アート透かしクリエイティブツール</span>
+        </h1>
+        <div class="mode-tabs" role="tablist">
+          <button id="tabModeWork" class="mode-tab-btn active" role="tab" aria-selected="true" data-app-mode="work" type="button" title="クラシック一括モード：画像・動画、縦横分離、プリセット管理">🛠️ ワークモード</button>
+          <button id="tabModeCreative" class="mode-tab-btn" role="tab" aria-selected="false" data-app-mode="creative" type="button" title="クリエイティブスタジオ：画像＆文字ライブラリ、自動アート配置、自由ドラッグ編集">✨ クリエイティブ</button>
+        </div>
+      </div>
+      <div class="mode-bar-right">
+        <span class="privacy-pill" title="すべての画像・動画はブラウザ内でローカル処理され、サーバーへ一切アップロードされません">🔒 完全ローカル処理</span>
+        <select id="langSelect" class="lang-select" data-i18n-skip aria-label="Language / 语言 / 言語">
+          <option value="zh-CN">🌐 简体中文</option>
+          <option value="en">🌐 English</option>
+          <option value="ja" selected>🌐 日本語</option>
+          <option value="zh-Hant">🌐 繁體中文</option>
+        </select>
+        <a class="btn btn-ghost repo-link" href="https://github.com/drank5090/BatchWatermark" target="_blank" rel="noopener noreferrer" title="GitHub オープンソースリポジトリと Windows デスクトップ版 EXE を見る">GitHub</a>
+      </div>
+    </nav>
+
+    <!-- ==================== WORK MODE (Original Classic Batch Mode) ==================== -->
+    <div id="workModeView" class="mode-view">
+    <!-- Top Toolbar -->
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <button id="btnAddFiles" class="btn desktop-only-inline" type="button" title="複数の画像または動画を選択">＋ 画像/動画を追加</button>
+        <button id="btnAddFolder" class="btn desktop-only-inline" type="button" title="フォルダ内の画像・動画を一括読み込み">📂 フォルダ追加</button>
+        <button id="btnIsolateToggle" class="btn btn-toggle" type="button" aria-pressed="false" title="开启后横版与竖版分开展示、支持独立参数，并分文件夹导出">縦横分離</button>
+        <button id="btnClearAll" class="btn btn-danger" type="button" disabled>✕ クリア</button>
+        <span id="countBadge" class="count-badge">0 件</span>
+      </div>
+
+      <div class="top-bar-right">
+        <label class="size-control" for="cardSizeSlider">
+          <span class="muted-text">プレビュー</span>
+          <input id="cardSizeSlider" type="range" min="170" max="380" value="250" />
+        </label>
+        <button id="btnTopExport" class="btn btn-primary desktop-only-inline" type="button" disabled>⬇ 一括書き出し</button>
+      </div>
+    </header>
+
+    <!-- Main Split Workspace -->
+    <main class="workspace">
+      <!-- Left Gallery Area -->
+      <section id="galleryPane" class="gallery-pane" aria-label="实时多图预览区">
+        <!-- Mobile-only compact preview bar when items are loaded -->
+        <div id="mobileGalleryBar" class="mobile-gallery-bar hidden">
+          <span id="mobileGallerySummary" class="mobile-gallery-summary">ライブプレビュー</span>
+          <div class="mobile-gallery-bar-actions">
+            <button id="btnMobileExpandGallery" class="btn-pill" type="button">拡大表示</button>
+            <a class="btn-pill mobile-guide-pill" href="#guide">ガイド</a>
+          </div>
+        </div>
+
+        <!-- Orientation Isolation Scope Filter Bar -->
+        <div id="galleryFilterBar" class="gallery-filter-bar hidden">
+          <div class="filter-bar-left">
+            <span class="filter-label">縦横分離ビュー：</span>
+            <div class="pill-group" role="group" aria-label="横竖视图筛选">
+              <button class="btn-pill active" data-scope="both" type="button">両方表示</button>
+              <button class="btn-pill" id="btnScopeLand" data-scope="landscape" type="button">横のみ (0)</button>
+              <button class="btn-pill" id="btnScopePort" data-scope="portrait" type="button">縦のみ (0)</button>
+            </div>
+          </div>
+          <span class="muted-text desktop-only-inline">書き出し時に横向き・縦向きサブフォルダへ自動分類されます</span>
+        </div>
+
+        <!-- Empty Drop Zone -->
+        <div id="emptyState" class="empty-state">
+          <div id="dropZone" class="drop-zone">
+            <div class="drop-icons" aria-hidden="true">🖼️ 🎬</div>
+            <h2>画像・動画を選択またはドラッグ＆ドロップして一括透かし</h2>
+            <p class="drop-sub">画像：JPG / PNG / WebP / BMP / GIF · 動画：MP4 / WebM / MOV · 完全ローカル処理</p>
+            <div class="drop-actions">
+              <button id="btnEmptyAddFiles" class="btn btn-primary" type="button">＋ 画像 / 動画を選択</button>
+              <button id="btnEmptyAddFolder" class="btn desktop-only-inline" type="button">📂 フォルダを選択</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Populated Gallery Scroll Area -->
+        <div id="galleryScroll" class="gallery-scroll hidden">
+          <!-- Primary Section (All items in unified mode, Landscape items in isolated mode) -->
+          <div id="primarySection" class="media-section">
+            <div id="landHeader" class="group-header hidden">
+              <span class="group-title">横向きメディア（幅 ≥ 高さ）</span>
+              <span id="landCountBadge" class="group-badge">0 件</span>
+            </div>
+            <div id="landEmptyHint" class="group-empty hidden">横向きの画像・動画はありません</div>
+            <div id="primaryGrid" class="media-grid"></div>
+          </div>
+
+          <!-- Portrait Section (Visible only in orientation-isolated mode) -->
+          <div id="portraitSection" class="media-section hidden">
+            <div id="portHeader" class="group-header">
+              <span class="group-title">縦向きメディア（高さ &gt; 幅）</span>
+              <span id="portCountBadge" class="group-badge">0 件</span>
+            </div>
+            <div id="portEmptyHint" class="group-empty hidden">縦向きの画像・動画はありません</div>
+            <div id="portraitGrid" class="media-grid"></div>
+          </div>
+        </div>
+
+        <!-- Status Bar -->
+        <footer class="status-bar">
+          <span id="statusText">準備完了 · 画像・動画を追加するかフォルダをドロップしてください</span>
+          <span class="status-right">
+            <span class="muted-text desktop-only-inline">デスクトップ版 EXE と JSON プリセット完全互換</span>
+            <a class="guide-link" href="#guide">使い方・FAQ ↓</a>
+          </span>
+        </footer>
+      </section>
+
+      <!-- Right Control Panel (Desktop sidebar / Mobile tabbed drawer below pinned preview) -->
+      <aside id="controlPanel" class="control-panel" data-active-mobile-tab="content" aria-label="水印参数操作面板">
+        <!-- Mobile-only thumb-friendly parameter category tabs -->
+        <nav id="mobileParamTabs" class="mobile-param-tabs" role="tablist" aria-label="水印参数分类">
+          <button class="mobile-tab-btn active" role="tab" aria-selected="true" data-mobile-tab="content" type="button">内容</button>
+          <button class="mobile-tab-btn" role="tab" aria-selected="false" data-mobile-tab="style" type="button">透明/角度</button>
+          <button class="mobile-tab-btn" role="tab" aria-selected="false" data-mobile-tab="layout" type="button">配置</button>
+          <button class="mobile-tab-btn" role="tab" aria-selected="false" data-mobile-tab="preset" type="button">プリセット</button>
+          <button class="mobile-tab-btn" role="tab" aria-selected="false" data-mobile-tab="export" type="button">書き出し</button>
+        </nav>
+
+        <div class="panel-scroll">
+          <!-- Orientation Independent Params Card -->
+          <section id="orientationCard" class="section-card orientation-card hidden" data-tab-group="preset">
+            <div class="section-title accent-title">縦横分離 · パラメータ</div>
+            <label class="checkbox-row">
+              <input id="chkIndependentParams" type="checkbox" />
+              <span>横向き・縦向きで個別の透かし設定を使用</span>
+            </label>
+            <div id="orientSwitchHost" class="orient-switch-host hidden">
+              <div class="segmented-row">
+                <button id="btnEditLandscape" class="btn-segmented active" type="button">横向きを編集</button>
+                <button id="btnEditPortrait" class="btn-segmented" type="button">縦向きを編集</button>
+              </div>
+              <button id="btnSyncOtherOrient" class="btn btn-ghost full-width" type="button">現在の設定をもう一方の向きへコピー</button>
+            </div>
+          </section>
+
+          <!-- Preset Management Card -->
+          <section class="section-card" data-tab-group="preset">
+            <div class="section-title">プリセット管理（ローカル保存・JSON）</div>
+            <div class="inline-row">
+              <select id="presetSelect" class="input-select grow" aria-label="选择水印预设"></select>
+              <button id="btnResetParams" class="btn btn-ghost" type="button">リセット</button>
+            </div>
+            <div class="preset-actions">
+              <button id="btnSavePreset" class="btn btn-ghost grow" type="button" title="現在の設定をブラウザにローカル保存">保存</button>
+              <button id="btnDeletePreset" class="btn btn-ghost" type="button" disabled title="選択中のカスタムプリセットを削除">削除</button>
+              <button id="btnImportPreset" class="btn btn-ghost" type="button" title="JSON ファイルからプリセットを読み込み（デスクトップ版互換）">読込</button>
+              <div class="dropdown-wrap">
+                <button id="btnExportPresetMenu" class="btn btn-ghost" type="button">出力 ▾</button>
+                <div id="exportPresetDropdown" class="dropdown-menu hidden">
+                  <button id="btnExportCurPreset" type="button">現在の透かし設定を書き出し (.json)</button>
+                  <button id="btnExportAllPresets" type="button">すべてのカスタムプリセットを書き出し (.json)</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Watermark Content Card -->
+          <section class="section-card" data-tab-group="content">
+            <div class="section-title">透かし内容</div>
+            <div class="segmented-row">
+              <button id="btnTypeText" class="btn-segmented active" type="button">テキスト</button>
+              <button id="btnTypeImage" class="btn-segmented" type="button">画像 / ロゴ</button>
+            </div>
+
+            <!-- Text Controls -->
+            <div id="textControls" class="control-stack">
+              <textarea id="txtWatermark" class="input-textarea" rows="2" placeholder="透かしテキストを入力（複数行対応）..."></textarea>
+
+              <div class="inline-row">
+                <span class="field-label short">フォント</span>
+                <select id="fontSelect" class="input-select grow" aria-label="选择字体">
+                  <option value="微软雅黑">微软雅黑</option>
+                  <option value="微软雅黑 粗体">微软雅黑 粗体</option>
+                  <option value="黑体">黑体</option>
+                  <option value="宋体">宋体</option>
+                  <option value="楷体">楷体</option>
+                  <option value="仿宋">仿宋</option>
+                  <option value="PingFang SC">PingFang SC</option>
+                  <option value="Segoe UI">Segoe UI</option>
+                  <option value="Arial">Arial</option>
+                  <option value="Georgia">Georgia</option>
+                  <option value="Monospace">等宽字体 (Monospace)</option>
+                </select>
+                <button id="btnLoadCustomFont" class="btn btn-ghost" type="button" title="ローカルの .ttf / .otf / .woff2 フォントを読み込み">フォント読込</button>
+              </div>
+              <div id="customFontInfo" class="muted-text hidden"></div>
+
+              <div class="slider-row">
+                <span class="field-label">文字サイズ</span>
+                <input id="rngFontSize" type="range" min="10" max="220" value="44" />
+                <input id="numFontSize" class="input-num" type="number" min="10" max="220" value="44" />
+              </div>
+
+              <label class="checkbox-row">
+                <input id="chkProportionalText" type="checkbox" checked />
+                <span>メディアサイズに合わせて自動スケーリング</span>
+              </label>
+
+              <div class="slider-row">
+                <span class="field-label">行間</span>
+                <input id="rngLineSpacing" type="range" min="10" max="25" value="13" />
+                <input id="numLineSpacing" class="input-num" type="number" min="1.0" max="2.5" step="0.1" value="1.3" />
+              </div>
+
+              <div class="color-row">
+                <span class="field-label">文字色</span>
+                <label class="color-chip">
+                  <input id="clrText" type="color" value="#ffffff" />
+                  <span id="clrTextHex">#FFFFFF</span>
+                </label>
+                <div class="swatches" id="textSwatches">
+                  <button type="button" class="swatch" data-color="#FFFFFF" style="background:#FFFFFF" title="白" aria-label="白"></button>
+                  <button type="button" class="swatch" data-color="#000000" style="background:#000000" title="黒" aria-label="黒"></button>
+                  <button type="button" class="swatch" data-color="#E5E7EB" style="background:#E5E7EB" title="ライトグレー" aria-label="ライトグレー"></button>
+                  <button type="button" class="swatch" data-color="#EF4444" style="background:#EF4444" title="赤" aria-label="赤"></button>
+                  <button type="button" class="swatch" data-color="#3B82F6" style="background:#3B82F6" title="青" aria-label="青"></button>
+                  <button type="button" class="swatch" data-color="#F59E0B" style="background:#F59E0B" title="ゴールド" aria-label="ゴールド"></button>
+                </div>
+              </div>
+
+              <div class="effect-header">
+                <label class="checkbox-row">
+                  <input id="chkStroke" type="checkbox" checked />
+                  <span>縁取り</span>
+                </label>
+                <label class="color-chip compact">
+                  <input id="clrStroke" type="color" value="#000000" />
+                  <span id="clrStrokeHex">#000000</span>
+                </label>
+              </div>
+              <div class="slider-row" id="strokeWidthRow">
+                <span class="field-label">縁取り幅</span>
+                <input id="rngStrokeWidth" type="range" min="1" max="16" value="2" />
+                <input id="numStrokeWidth" class="input-num" type="number" min="1" max="16" value="2" />
+              </div>
+
+              <div class="effect-header">
+                <label class="checkbox-row">
+                  <input id="chkShadow" type="checkbox" checked />
+                  <span>ドロップシャドウ</span>
+                </label>
+                <label class="color-chip compact">
+                  <input id="clrShadow" type="color" value="#000000" />
+                  <span id="clrShadowHex">#000000</span>
+                </label>
+              </div>
+              <div class="slider-row" id="shadowOffsetRow">
+                <span class="field-label">影オフセット</span>
+                <input id="rngShadowOffset" type="range" min="1" max="20" value="3" />
+                <input id="numShadowOffset" class="input-num" type="number" min="1" max="20" value="3" />
+              </div>
+            </div>
+
+            <!-- Image/Logo Controls -->
+            <div id="logoControls" class="control-stack hidden">
+              <div class="logo-picker-box">
+                <div id="logoThumbBox" class="logo-thumb">ロゴなし</div>
+                <div class="logo-picker-info">
+                  <div id="logoFileName" class="muted-text">透過 PNG / WebP ロゴ画像を選択してください</div>
+                  <button id="btnPickLogo" class="btn" type="button">ロゴ画像を選択...</button>
+                </div>
+              </div>
+              <div class="slider-row">
+                <span class="field-label">拡大縮小</span>
+                <input id="rngLogoScale" type="range" min="3" max="100" value="22" />
+                <input id="numLogoScale" class="input-num" type="number" min="3" max="100" value="22" />
+              </div>
+              <label class="checkbox-row">
+                <input id="chkProportionalLogo" type="checkbox" checked />
+                <span>対象メディアの幅に対する割合でスケーリング</span>
+              </label>
+            </div>
+          </section>
+
+          <!-- Appearance Card -->
+          <section class="section-card" data-tab-group="style">
+            <div class="section-title">不透明度と角度</div>
+            <div class="slider-row">
+              <span class="field-label">不透明度</span>
+              <input id="rngOpacity" type="range" min="0" max="100" value="55" />
+              <input id="numOpacity" class="input-num" type="number" min="0" max="100" value="55" />
+            </div>
+            <div class="slider-row">
+              <span class="field-label">回転角度</span>
+              <input id="rngRotation" type="range" min="-180" max="180" value="-25" />
+              <input id="numRotation" class="input-num" type="number" min="-180" max="180" value="-25" />
+            </div>
+            <div class="quick-angles">
+              <span class="field-label muted-text">クイック角度</span>
+              <button class="btn-pill" data-angle="0" type="button">0°</button>
+              <button class="btn-pill" data-angle="-25" type="button">-25°</button>
+              <button class="btn-pill" data-angle="-45" type="button">-45°</button>
+              <button class="btn-pill" data-angle="30" type="button">30°</button>
+              <button class="btn-pill" data-angle="45" type="button">45°</button>
+            </div>
+          </section>
+
+          <!-- Position & Layout Card -->
+          <section class="section-card" data-tab-group="layout">
+            <div class="section-title">配置とレイアウト</div>
+            <div class="segmented-row">
+              <button id="btnModeTiled" class="btn-segmented active" type="button">全面タイル</button>
+              <button id="btnModeSingle" class="btn-segmented" type="button">単点配置</button>
+            </div>
+
+            <!-- Tiled options -->
+            <div id="tiledControls" class="control-stack">
+              <div class="slider-row">
+                <span class="field-label">水平間隔</span>
+                <input id="rngTileX" type="range" min="10" max="500" value="120" />
+                <input id="numTileX" class="input-num" type="number" min="10" max="500" value="120" />
+              </div>
+              <div class="slider-row">
+                <span class="field-label">垂直間隔</span>
+                <input id="rngTileY" type="range" min="10" max="500" value="100" />
+                <input id="numTileY" class="input-num" type="number" min="10" max="500" value="100" />
+              </div>
+              <label class="checkbox-row">
+                <input id="chkTileStagger" type="checkbox" checked />
+                <span>偶数・奇数行を互い違いに配置（レンガ状）</span>
+              </label>
+            </div>
+
+            <!-- Single options -->
+            <div id="singleControls" class="control-stack hidden">
+              <div class="anchor-row">
+                <span class="field-label">9点アンカー</span>
+                <div id="anchorGrid" class="anchor-grid" role="group" aria-label="九宫格锚点">
+                  <button type="button" class="anchor-btn" data-anchor="top_left" title="左上">↖</button>
+                  <button type="button" class="anchor-btn" data-anchor="top_center" title="上中央">↑</button>
+                  <button type="button" class="anchor-btn" data-anchor="top_right" title="右上">↗</button>
+                  <button type="button" class="anchor-btn" data-anchor="middle_left" title="左中央">←</button>
+                  <button type="button" class="anchor-btn" data-anchor="center" title="中央">●</button>
+                  <button type="button" class="anchor-btn" data-anchor="middle_right" title="右中央">→</button>
+                  <button type="button" class="anchor-btn" data-anchor="bottom_left" title="左下">↙</button>
+                  <button type="button" class="anchor-btn" data-anchor="bottom_center" title="下中央">↓</button>
+                  <button type="button" class="anchor-btn active" data-anchor="bottom_right" title="右下">↘</button>
+                </div>
+              </div>
+              <div class="slider-row">
+                <span class="field-label">水平余白</span>
+                <input id="rngMarginX" type="range" min="0" max="300" value="40" />
+                <input id="numMarginX" class="input-num" type="number" min="0" max="30" step="0.5" value="4.0" />
+              </div>
+              <div class="slider-row">
+                <span class="field-label">垂直余白</span>
+                <input id="rngMarginY" type="range" min="0" max="300" value="40" />
+                <input id="numMarginY" class="input-num" type="number" min="0" max="30" step="0.5" value="4.0" />
+              </div>
+            </div>
+
+            <!-- Shared Fine Offsets -->
+            <div class="slider-row">
+              <span class="field-label">水平微調整</span>
+              <input id="rngOffsetX" type="range" min="-400" max="400" value="0" />
+              <input id="numOffsetX" class="input-num" type="number" min="-40" max="40" step="0.5" value="0.0" />
+            </div>
+            <div class="slider-row">
+              <span class="field-label">垂直微調整</span>
+              <input id="rngOffsetY" type="range" min="-400" max="400" value="0" />
+              <input id="numOffsetY" class="input-num" type="number" min="-40" max="40" step="0.5" value="0.0" />
+            </div>
+          </section>
+
+          <!-- Export Settings Card -->
+          <section class="section-card" data-tab-group="export">
+            <div class="section-title">一括書き出し設定</div>
+            <div id="exportIsolationHint" class="info-hint hidden">
+              縦横分離オン：横向き・縦向きサブフォルダに分けて書き出します
+            </div>
+            <div class="inline-row">
+              <span class="field-label short">接頭辞</span>
+              <input id="txtPrefix" class="input-text grow" type="text" placeholder="任意" />
+              <span class="field-label short">接尾辞</span>
+              <input id="txtSuffix" class="input-text grow" type="text" value="_watermarked" placeholder="例: _wm" />
+            </div>
+            <div class="inline-row">
+              <span class="field-label">画像形式</span>
+              <select id="selOutputFormat" class="input-select grow">
+                <option value="keep">元の形式を維持</option>
+                <option value="jpeg">JPEG (.jpg)</option>
+                <option value="png">PNG (.png)</option>
+                <option value="webp">WebP (.webp)</option>
+              </select>
+            </div>
+            <div class="slider-row">
+              <span class="field-label">品質</span>
+              <input id="rngQuality" type="range" min="50" max="100" value="92" />
+              <input id="numQuality" class="input-num" type="number" min="50" max="100" value="92" />
+            </div>
+            <label class="checkbox-row">
+              <input id="chkVideoAudio" type="checkbox" checked />
+              <span>動画の音声を保持（ローカル Canvas 録画）</span>
+            </label>
+          </section>
+        </div>
+
+        <!-- Sticky Export Footer -->
+        <div class="export-footer">
+          <div class="export-footer-row">
+            <button id="btnMobileAdd" class="btn mobile-only-flex" type="button">＋ 追加</button>
+            <button id="btnExportZip" class="btn btn-primary grow export-main-btn" type="button" disabled>
+              ⬇ ZIP 書き出し (0)
+            </button>
+          </div>
+          <button id="btnExportDir" class="btn full-width desktop-only-block" type="button" disabled title="Chrome / Edge ではローカルフォルダへ直接書き出せます">
+            📁 ローカルフォルダへ直接保存
+          </button>
+        </div>
+      </aside>
+    </main>
+    </div><!-- /#workModeView -->
+
+    <!-- ==================== CREATIVE MODE (Art Watermark Studio) ==================== -->
+    <div id="creativeModeView" class="mode-view hidden" aria-label="创作模式工作区">
+      <header class="top-bar creative-toolbar">
+        <div class="top-bar-left">
+          <button id="btnCreativeAddImg" class="btn" type="button">＋ 画像を追加</button>
+          <button id="btnCreativeClearImgs" class="btn btn-danger" type="button" disabled>✕ クリア</button>
+          <span id="creativeCountBadge" class="count-badge">0 枚</span>
+          <button id="btnCreativeAuto" class="btn btn-primary" type="button" disabled title="人物や主体を回避しつつ大小バランスの良い透かしを自動生成">✨ 自動レイアウト</button>
+          <button id="btnCreativeShuffle" class="btn" type="button" disabled title="シードを変更して再生成（ロック中レイヤーは保持）">🎲 別の案</button>
+          <button id="btnCreativeAutoAll" class="btn desktop-only-inline" type="button" disabled title="読み込んだすべての画像に最適な自動レイアウトを生成">⚡ 全画像に自動配置</button>
+          <button id="btnCreativeSyncAll" class="btn desktop-only-inline" type="button" disabled title="現在の手動レイアウトを相対比率で全画像に適用">📋 全画像へ適用</button>
+        </div>
+        <div class="top-bar-right">
+          <button id="btnCreativeUndo" class="btn btn-ghost" type="button" disabled title="元に戻す (Ctrl+Z)">↶ 元に戻す</button>
+          <button id="btnCreativeRedo" class="btn btn-ghost" type="button" disabled title="やり直す (Ctrl+Y)">↷ やり直す</button>
+          <button id="btnCreativeExportTop" class="btn btn-primary desktop-only-inline" type="button" disabled>⬇ 書き出し</button>
+        </div>
+      </header>
+
+      <main id="creativeWorkspace" class="creative-workspace" data-mobile-creative-tab="auto">
+        <!-- Left Pane: Watermark Library (Images + Texts) -->
+        <aside id="creativeLibPane" class="creative-lib-pane" data-creative-panel="library" aria-label="创作模式水印素材库">
+          <div class="creative-pane-header">
+            <span class="section-title">🎨 透かし素材ライブラリ（画像＋文字）</span>
+            <span id="creativeLibCount" class="group-badge">0 件</span>
+          </div>
+          <p class="muted-text creative-pane-hint">チェックで自動配置に参加。カードをキャンバスへドラッグ、または「＋」で配置</p>
+          <div class="creative-lib-actions">
+            <button id="btnLibUploadImg" class="btn btn-primary grow" type="button">＋ 画像透かし追加</button>
+            <button id="btnLibAddText" class="btn grow" type="button">＋ 文字透かし</button>
+          </div>
+          <div class="creative-lib-pack-row">
+            <button id="btnLibImport" class="btn btn-ghost grow" type="button" title="JSON 透かしライブラリを読み込み（デスクトップ版互換）">読込</button>
+            <button id="btnLibExport" class="btn btn-ghost grow" type="button" title="JSON 透かしライブラリを書き出し（デスクトップ版互換）">書出</button>
+            <button id="btnLibReset" class="btn btn-ghost grow" type="button" title="内蔵の雪結晶・星光・スタンプ素材を復元">初期化</button>
+          </div>
+          <div id="creativeLibList" class="creative-lib-list"></div>
+        </aside>
+
+        <!-- Center Pane: Interactive Drag/Scale/Rotate Canvas + Filmstrip -->
+        <section id="creativeStagePane" class="creative-stage-pane" aria-label="创作模式交互画布">
+          <div id="creativeStageBox" class="creative-stage-box">
+            <div id="creativeEmptyState" class="creative-empty-state">
+              <div class="drop-zone creative-drop-zone">
+                <div class="drop-icons" aria-hidden="true">✨ 🖼️ 🎨</div>
+                <h2>画像を選択またはドロップしてアート透かし作成を開始</h2>
+                <p class="drop-sub">透過PNGスタンプ＆文字を登録 · 人物を自動回避して大小バランス配置 · 自由に移動・拡縮・回転</p>
+                <div class="drop-actions">
+                  <button id="btnCreativeEmptyAdd" class="btn btn-primary" type="button">＋ 画像を選んで開始</button>
+                </div>
+              </div>
+            </div>
+            <canvas id="creativeCanvas" class="creative-canvas hidden"></canvas>
+          </div>
+          <div id="creativeFilmstrip" class="creative-filmstrip" aria-label="已导入创作图片列表"></div>
+        </section>
+
+        <!-- Mobile-only Creative Mode Tab Strip -->
+        <nav id="creativeMobileTabs" class="mobile-param-tabs creative-mobile-tabs" role="tablist" aria-label="创作模式面板切换">
+          <button class="mobile-tab-btn active" role="tab" aria-selected="true" data-creative-tab="auto" type="button">✨ 自動配置</button>
+          <button class="mobile-tab-btn" role="tab" aria-selected="false" data-creative-tab="library" type="button">🎨 素材庫</button>
+          <button class="mobile-tab-btn" role="tab" aria-selected="false" data-creative-tab="layer" type="button">🖐️ 微調整</button>
+          <button class="mobile-tab-btn" role="tab" aria-selected="false" data-creative-tab="export" type="button">⬇ 書き出し</button>
+        </nav>
+
+        <!-- Right Pane: Auto Algorithm + Selected Layer Inspector + Export -->
+        <aside id="creativeRightPane" class="creative-right-pane" aria-label="创作模式参数面板">
+          <div class="panel-scroll">
+            <!-- Auto Aesthetic Layout Card -->
+            <section class="section-card" data-creative-panel="auto">
+              <div class="section-title">✨ 自動アートレイアウト</div>
+              <div class="inline-row">
+                <span class="field-label">スタイル</span>
+                <select id="selCreativeStyle" class="input-select grow" aria-label="自动排版风格">
+                  <option value="artistic_scatter">アート散りばめ（おすすめ）</option>
+                  <option value="frame_halo">フレーム囲み · 中央クリア</option>
+                  <option value="full_anti_theft">全面盗用防止 · 多サイズ</option>
+                  <option value="magazine_editorial">雑誌ポスター · タイトル＋装飾</option>
+                </select>
+              </div>
+              <div class="slider-row">
+                <span class="field-label">密度</span>
+                <input id="rngCDensity" type="range" min="10" max="100" value="58" />
+                <input id="numCDensity" class="input-num" type="number" min="10" max="100" value="58" />
+              </div>
+              <div class="slider-row">
+                <span class="field-label">サイズ差</span>
+                <input id="rngCScaleVar" type="range" min="0" max="100" value="72" />
+                <input id="numCScaleVar" class="input-num" type="number" min="0" max="100" value="72" />
+              </div>
+              <div class="slider-row">
+                <span class="field-label">主体回避</span>
+                <input id="rngCAvoid" type="range" min="0" max="100" value="75" />
+                <input id="numCAvoid" class="input-num" type="number" min="0" max="100" value="75" />
+              </div>
+              <div class="slider-row">
+                <span class="field-label">全体不透明</span>
+                <input id="rngCOpacity" type="range" min="15" max="100" value="78" />
+                <input id="numCOpacity" class="input-num" type="number" min="15" max="100" value="78" />
+              </div>
+              <div class="slider-row">
+                <span class="field-label">ランダム回転</span>
+                <input id="rngCRotJitter" type="range" min="0" max="45" value="18" />
+                <input id="numCRotJitter" class="input-num" type="number" min="0" max="45" value="18" />
+              </div>
+              <label class="checkbox-row">
+                <input id="chkCSoftGlow" type="checkbox" checked />
+                <span>ソフト発光（明暗どちらの背景でもくっきり）</span>
+              </label>
+              <label class="checkbox-row">
+                <input id="chkCMicroGrid" type="checkbox" checked />
+                <span>微細な盗用防止マイクロスタンプを追加</span>
+              </label>
+              <div class="inline-row">
+                <button id="btnPanelAutoGen" class="btn btn-primary grow" type="button">✨ 自動配置を生成</button>
+                <button id="btnPanelShuffle" class="btn" type="button">🎲 別の案</button>
+                <button id="btnClearLayers" class="btn btn-ghost" type="button">クリア</button>
+              </div>
+            </section>
+
+            <!-- Selected Layer Inspector Card -->
+            <section class="section-card" data-creative-panel="layer">
+              <div class="section-title">🖐️ 選択レイヤーの微調整</div>
+              <p id="creativeInspectorEmpty" class="muted-text">キャンバス上の透かしをクリック、またはライブラリからドラッグすると大きさ・角度・不透明度を調整できます（Delete / Ctrl+Z対応）。</p>
+              <div id="creativeInspectorBody" class="control-stack hidden">
+                <div id="inspectorLayerName" class="info-hint"></div>
+                <div class="slider-row">
+                  <span class="field-label">サイズ比</span>
+                  <input id="rngLayerScale" type="range" min="30" max="800" value="140" />
+                  <input id="numLayerScale" class="input-num" type="number" min="3" max="80" step="0.5" value="14.0" />
+                </div>
+                <div class="slider-row">
+                  <span class="field-label">不透明度</span>
+                  <input id="rngLayerOpacity" type="range" min="5" max="100" value="75" />
+                  <input id="numLayerOpacity" class="input-num" type="number" min="5" max="100" value="75" />
+                </div>
+                <div class="slider-row">
+                  <span class="field-label">回転角度</span>
+                  <input id="rngLayerRot" type="range" min="-180" max="180" value="0" />
+                  <input id="numLayerRot" class="input-num" type="number" min="-180" max="180" value="0" />
+                </div>
+                <div class="inline-row">
+                  <label class="checkbox-row grow">
+                    <input id="chkLayerGlow" type="checkbox" checked />
+                    <span>ソフト発光</span>
+                  </label>
+                  <label class="checkbox-row grow">
+                    <input id="chkLayerLock" type="checkbox" />
+                    <span>🔒 位置ロック</span>
+                  </label>
+                </div>
+                <div class="preset-actions">
+                  <button id="btnLayerUp" class="btn btn-ghost grow" type="button">前面へ</button>
+                  <button id="btnLayerDown" class="btn btn-ghost grow" type="button">背面へ</button>
+                  <button id="btnLayerDup" class="btn btn-ghost grow" type="button">複製</button>
+                  <button id="btnLayerDel" class="btn btn-danger grow" type="button">削除</button>
+                </div>
+              </div>
+            </section>
+
+            <!-- Export Settings Card -->
+            <section class="section-card" data-creative-panel="export">
+              <div class="section-title">⬇ クリエイティブ書き出し設定</div>
+              <div class="inline-row">
+                <span class="field-label">出力形式</span>
+                <select id="selCOutputFormat" class="input-select grow">
+                  <option value="keep">元の形式を維持</option>
+                  <option value="png">PNG（可逆圧縮）</option>
+                  <option value="jpeg">JPEG (.jpg)</option>
+                  <option value="webp">WebP (.webp)</option>
+                </select>
+              </div>
+              <div class="slider-row">
+                <span class="field-label">品質</span>
+                <input id="rngCQuality" type="range" min="50" max="100" value="94" />
+                <input id="numCQuality" class="input-num" type="number" min="50" max="100" value="94" />
+              </div>
+              <div class="inline-row">
+                <span class="field-label">接尾辞</span>
+                <input id="txtCSuffix" class="input-text grow" type="text" value="_creative" />
+              </div>
+            </section>
+          </div>
+
+          <div class="export-footer creative-export-footer">
+            <div class="export-footer-row">
+              <button id="btnCreativeExportCur" class="btn" type="button" disabled>現在の画像を出力</button>
+              <button id="btnCreativeExportAll" class="btn btn-primary grow" type="button" disabled>⬇ ZIP 書き出し (0)</button>
+            </div>
+          </div>
+        </aside>
+      </main>
+    </div><!-- /#creativeModeView -->
+  </div>
+
+  <!-- Crawlable Product Guide & GEO Knowledge Hub (scroll below the app viewport) -->
+  <div class="site-guide-wrap">
+    <article id="guide" class="site-guide" aria-labelledby="guideTitle">
+      <header class="guide-hero">
+        <p class="guide-eyebrow">無料 · MIT オープンソース · インストール不要 · 完全ローカル処理</p>
+        <h2 id="guideTitle">BatchWatermark：画像・動画の一括透かし＆イラスト向けアート透かし作成</h2>
+        <p class="guide-lead"><strong>BatchWatermark</strong>（公式サイト <a href="https://watermark.zak-cloud.top/ja/">watermark.zak-cloud.top</a>）はブラウザ内で完結する無料の<strong>画像・動画一括透かしツール</strong>です。サーバーへのファイル送信は<strong>一切ゼロ</strong>。高速な一括処理の<strong>ワークモード</strong>と、透過スタンプ＆文字を人物回避しながら大小ランダム配置できる<strong>クリエイティブモード</strong>を上部タブで自在に切り替えられます。</p>
+        <a class="btn btn-primary guide-cta" href="#top">↑ ツールに戻って透かしを作成</a>
+      </header>
+
+      <section class="guide-section" aria-labelledby="tldrTitle">
+        <h2 id="tldrTitle">主な仕様（TL;DR）</h2>
+        <dl class="facts-grid">
+          <div class="fact-card">
+            <dt>プライバシー保護</dt>
+            <dd><strong>アップロード 0 回</strong> · 100% ブラウザ内 HTML5 Canvas + MediaRecorder 処理</dd>
+          </div>
+          <div class="fact-card">
+            <dt>独立した2つのモード</dt>
+            <dd><strong>ワークモード</strong>（写真・動画一括）＋ <strong>クリエイティブモード</strong>（素材庫・自動配置・自由ドラッグ）</dd>
+          </div>
+          <div class="fact-card">
+            <dt>対応フォーマット</dt>
+            <dd>画像 <strong>JPG / PNG / WebP / BMP / GIF / AVIF</strong> · 動画 <strong>MP4 / WebM / MOV</strong></dd>
+          </div>
+          <div class="fact-card">
+            <dt>縦横分離書き出し</dt>
+            <dd>横向き（幅 ≥ 高さ）と縦向き（高さ &gt; 幅）を自動分類し、個別設定・別フォルダ出力</dd>
+          </div>
+          <div class="fact-card">
+            <dt>デスクトップ版と完全互換</dt>
+            <dd>ローカル自動保存 ＋ UTF-8 JSON パックで <strong>Windows EXE 版と100%互換</strong></dd>
+          </div>
+          <div class="fact-card">
+            <dt>料金・ライセンス</dt>
+            <dd><strong>完全無料</strong> · 枚数制限なし · ログイン不要 · MIT オープンソース</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="guide-section" aria-labelledby="featTitle">
+        <h2 id="featTitle">主要機能</h2>
+        <ul class="feature-grid">
+          <li class="feature-item">
+            <h3>✨ クリエイティブモード（イラスト・作品向けアート透かし）</h3>
+            <p>透過 PNG スタンプと複数行テキストをライブラリ登録。顔や主体を回避しつつ大小メリハリのあるアート透かしを自動生成し、個別の移動・拡縮・回転・ロックや全画像への一括適用ができます。</p>
+          </li>
+          <li class="feature-item">
+            <h3>画像・動画の一括透かし処理</h3>
+            <p>複数ファイルやフォルダ丸ごとのドラッグ＆ドロップに対応。スマホ写真の EXIF 向きを自動補正し、動画は元の音声を保ったまま書き出せます。</p>
+          </li>
+          <li class="feature-item">
+            <h3>多行テキスト＆透過ロゴ透かし</h3>
+            <p>ローカルの <code>.ttf / .otf / .woff2</code> フォント読み込み、縁取り、影、行間、透明度・角度調整に対応。透過 PNG / WebP ロゴも比率維持で配置可能。</p>
+          </li>
+          <li class="feature-item">
+            <h3>盗用防止タイル＆9点アンカー配置</h3>
+            <p>レンガ状に互い違い配置する斜め全面タイルで切り抜きを防止。単点配置では 3×3 アンカーと余白・オフセット微調整に対応。</p>
+          </li>
+          <li class="feature-item">
+            <h3>複数同時プレビュー（PC・スマホ最適化）</h3>
+            <p>パラメータ変更が全プレビューへ即座に反映。スマホではキャンバス固定＋下部タブ操作で片手でも快適です。</p>
+          </li>
+          <li class="feature-item">
+            <h3>縦横分離＆JSON プリセット共有</h3>
+            <p>横長・縦長を分けて設定・書き出し可能。プリセットと透かし素材庫は JSON でデスクトップ版と自在にやり取りできます。</p>
+          </li>
+        </ul>
+      </section>
+
+      <section class="guide-section" aria-labelledby="compareTitle">
+        <h2 id="compareTitle">Web 版 vs デスクトップ EXE 版 vs 一般的なクラウド型サイト</h2>
+        <div class="table-scroll">
+          <table class="compare-table">
+            <thead>
+              <tr><th>比較項目</th><th>BatchWatermark Web（本サイト）</th><th>BatchWatermark デスクトップ EXE</th><th>一般的なオンライン透かしサイト</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>データ送信・安全性</td><td><strong>送信ゼロ</strong> · ローカルメモリ完結</td><td><strong>送信ゼロ</strong> · 完全オフライン</td><td>外部サーバーへのアップロード必須</td></tr>
+              <tr><td>ワーク＋クリエイティブ両対応</td><td><strong>標準搭載</strong>（自動配置＋自由ドラッグ）</td><td><strong>標準搭載</strong>（JSON 完全互換）</td><td>単純な単一透かしのみ</td></tr>
+              <tr><td>動画透かし対応</td><td>MP4 / WebM / MOV（ブラウザ録画）</td><td>MP4 / MOV / MKV / AVI（FFmpeg内蔵）</td><td>容量制限や有料プランが必要</td></tr>
+              <tr><td>利用制限・料金</td><td><strong>完全無料・無制限</strong>・登録不要</td><td><strong>完全無料・無制限</strong>・MIT公開</td><td>枚数上限・強制ロゴ・課金あり</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="guide-section" aria-labelledby="howtoTitle">
+        <h2 id="howtoTitle">4ステップで完了する使い方</h2>
+        <ol class="howto-steps">
+          <li><strong>ワークモードまたはクリエイティブモードを選択</strong>：上部タブで「ワークモード」（画像・動画の一括タイル／9点配置・縦横分離）と「クリエイティブモード」（透過スタンプ＆文字ライブラリ・人物回避自動配置・自由ドラッグ）を切り替えます。</li>
+          <li><strong>画像・動画または透かし素材を読み込む</strong>：ファイル複数選択、フォルダ読み込み、ドラッグ＆ドロップに対応。クリエイティブモードでは独自の透過PNGスタンプや複数行テキストをライブラリに保存できます。</li>
+          <li><strong>リアルタイムプレビューと微調整</strong>：ワークモードは全サムネイルと動画フレームを同時更新。クリエイティブモードは「自動レイアウト／別の案」で一括生成し、個別の移動・拡縮・回転・ロックも可能です。</li>
+          <li><strong>ワンクリックでローカル書き出し</strong>：単体ダウンロード、UTF-8 ZIP 一括保存、または Chrome / Edge でのローカルフォルダ直接書き出しに対応。データは外部へ送信されません。</li>
+        </ol>
+      </section>
+
+      <section class="guide-section" aria-labelledby="useTitle">
+        <h2 id="useTitle">おすすめの活用シーン</h2>
+        <ul class="feature-grid">
+          <li class="feature-item">
+            <h3>イラスト・同人・コミッションの盗用防止</h3>
+            <p>クリエイティブモードで雪の結晶・スタンプ・詩的な署名テキストを人物の顔を避けて美しく自動配置し、無断転載やAI学習対策に活用できます。</p>
+          </li>
+          <li class="feature-item">
+            <h3>EC 商品画像・写真納品の一括処理</h3>
+            <p>ワークモードで数十〜数百枚の商品写真やサンプル画像を同時プレビューし、横向き・縦向き別フォルダで一気に納品準備。</p>
+          </li>
+          <li class="feature-item">
+            <h3>本人確認書類・社内資料の保護</h3>
+            <p>「提出専用・複製禁止」などの斜め透かしを完全ローカルで追加。機密画像が外部ネットワークに出ることはありません。</p>
+          </li>
+        </ul>
+      </section>
+
+      <section class="guide-section" aria-labelledby="faqTitle">
+        <h2 id="faqTitle">よくある質問（FAQ）</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>BatchWatermark は無料ですか？アカウント登録は必要ですか？</summary>
+            <p>完全無料・MIT ライセンスのオープンソースです。登録やログインは不要で、処理枚数の上限や強制ロゴもありません。</p>
+          </details>
+          <details class="faq-item">
+            <summary>画像や動画がサーバーにアップロードされることはありますか？</summary>
+            <p>一切ありません。画像デコード、Canvas 2D 合成、主体回避解析、動画録画、ZIP 生成まですべてお使いのブラウザ内メモリで完結します。</p>
+          </details>
+          <details class="faq-item">
+            <summary>ワークモードとクリエイティブモードの違いは何ですか？</summary>
+            <p>ワークモードは大量の写真・動画に斜めタイルやロゴ透かしを素早く一括適用する用途向けです。クリエイティブモードはイラスト・同人作品・写真向けに、複数の透過PNGスタンプや文字を人物の顔を避けつつ大小バランスよく自動配置し、そのまま自由ドラッグで微調整できます。</p>
+          </details>
+          <details class="faq-item">
+            <summary>スマートフォン（iPhone / Android）でも使えますか？</summary>
+            <p>はい。スマホ画面ではプレビュー・編集キャンバスを上部に固定し、下部タブで直感的にパラメータや素材ライブラリを切り替えられ、1枚だけの直接保存にも対応しています。</p>
+          </details>
+          <details class="faq-item">
+            <summary>対応している画像・動画フォーマットは？</summary>
+            <p>画像は JPG / JPEG / PNG / WebP / BMP / GIF / AVIF に対応し、元形式維持または JPEG / PNG / WebP 書き出しが可能。動画は MP4 / WebM / MOV に対応し、音声を保持してローカル書き出しできます。</p>
+          </details>
+          <details class="faq-item">
+            <summary>横向き画像と縦向き画像で別々の透かし設定・別フォルダ書き出しはできますか？</summary>
+            <p>はい。ワークモード上部の「縦横分離」をオンにすると横向き（幅 ≥ 高さ）と縦向き（高さ &gt; 幅）を自動分類し、個別設定と別サブフォルダ出力が行えます。</p>
+          </details>
+          <details class="faq-item">
+            <summary>作成した透かしライブラリやプリセットはデスクトップ版と共有できますか？</summary>
+            <p>はい。ブラウザ内（IndexedDB / localStorage）に自動保存されるほか、UTF-8 JSON パックとして書き出し、Windows デスクトップ EXE 版と双方向に読み込めます。</p>
+          </details>
+          <details class="faq-item">
+            <summary>長時間の高画質動画を大量処理したい場合、オフライン版はありますか？</summary>
+            <p>はい。Python + PySide6 + FFmpeg 内蔵の Windows 単体実行 EXE 版を GitHub Releases で無料配布しており、ワーク＆クリエイティブ両モードと4言語切替に対応しています。</p>
+          </details>
+        </div>
+      </section>
+
+      <footer class="guide-footer">
+        <nav class="guide-links" aria-label="Language versions">
+          <a href="../" hreflang="zh-CN">简体中文</a> · <a href="../en/" hreflang="en">English</a> · <strong>日本語</strong> · <a href="../zh-hant/" hreflang="zh-Hant">繁體中文</a>
+        </nav>
+        <nav class="guide-links" aria-label="Related links">
+          <a href="https://watermark.zak-cloud.top/">watermark.zak-cloud.top</a>
+          <a href="https://drank5090.github.io/BatchWatermark/" rel="noopener">GitHub Pages Mirror</a>
+          <a href="https://github.com/drank5090/BatchWatermark" target="_blank" rel="noopener noreferrer">GitHub Source</a>
+          <a href="https://github.com/drank5090/BatchWatermark/releases" target="_blank" rel="noopener noreferrer">Windows EXE Releases</a>
+          <a href="../llms.txt">llms.txt (GEO)</a>
+        </nav>
+        <p class="muted-text">MIT オープンソース · 完全ローカル処理 · 多言語対応（简体中文 / English / 日本語 / 繁體中文）</p>
+      </footer>
+    </article>
+  </div>
+
+  <!-- Hidden File Inputs -->
+  <input id="fileInputMedia" type="file" multiple accept="image/*,video/*" hidden />
+  <input id="fileInputFolder" type="file" webkitdirectory directory multiple hidden />
+  <input id="fileInputLogo" type="file" accept="image/*" hidden />
+  <input id="fileInputFont" type="file" accept=".ttf,.otf,.woff,.woff2" hidden />
+  <input id="fileInputPreset" type="file" accept=".json,application/json" hidden />
+  <input id="creativeFileInput" type="file" accept="image/*" multiple hidden />
+  <input id="creativeAssetFileInput" type="file" accept="image/*" multiple hidden />
+  <input id="creativeLibImportInput" type="file" accept=".json,application/json" hidden />
+
+  <!-- Creative Mode Add Text Watermark Modal -->
+  <div id="creativeTextModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-label="文字透かしをライブラリに追加">
+    <div class="modal-card creative-text-modal-card">
+      <div class="modal-header">
+        <span class="modal-title">＋ 文字透かしをライブラリに追加</span>
+        <button id="btnCloseTextModal" class="btn btn-ghost" type="button">閉じる</button>
+      </div>
+      <div class="creative-modal-body">
+        <div class="inline-row">
+          <span class="field-label">素材名</span>
+          <input id="txtAssetName" class="input-text grow" type="text" placeholder="空欄の場合は本文から自動命名" />
+        </div>
+        <textarea id="txtAssetContent" class="input-textarea" rows="3" placeholder="透かしテキストを入力（複数行対応）...">© 原创作品 · 禁止二改搬运</textarea>
+        <div class="inline-row">
+          <span class="field-label">配置役割</span>
+          <select id="selAssetRole" class="input-select grow">
+            <option value="auto">自動階層（大小ランダム）</option>
+            <option value="hero">メインタイトル（大きく目立つ見出し）</option>
+            <option value="accent">中サイズ装飾・短文（余白に散りばめ）</option>
+            <option value="micro">マイクロ盗用防止（極小・低不透明）</option>
+          </select>
+        </div>
+        <div class="inline-row">
+          <span class="field-label">フォント</span>
+          <select id="selAssetFont" class="input-select grow">
+            <option value="宋体">宋体（艺术标题推荐）</option>
+            <option value="楷体">楷体</option>
+            <option value="微软雅黑">微软雅黑</option>
+            <option value="微软雅黑 粗体">微软雅黑 粗体</option>
+            <option value="黑体">黑体</option>
+            <option value="Georgia">Georgia（英文衬线）</option>
+          </select>
+          <input id="clrAssetColor" type="color" value="#FFFFFF" title="文字色" class="color-native-input" />
+        </div>
+        <div class="inline-row">
+          <label class="checkbox-row grow">
+            <input id="chkAssetStroke" type="checkbox" checked />
+            <span>細縁取り（視認性向上）</span>
+          </label>
+          <label class="checkbox-row grow">
+            <input id="chkAssetGlow" type="checkbox" checked />
+            <span>ソフト発光</span>
+          </label>
+        </div>
+        <div class="slider-row">
+          <span class="field-label">標準サイズ</span>
+          <input id="rngAssetScale" type="range" min="6" max="48" value="22" />
+          <span class="muted-text">%</span>
+        </div>
+        <div class="slider-row">
+          <span class="field-label">標準不透明</span>
+          <input id="rngAssetOpacity" type="range" min="15" max="100" value="78" />
+          <span class="muted-text">%</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btnCancelTextModal" class="btn btn-ghost" type="button">キャンセル</button>
+        <button id="btnConfirmAddText" class="btn btn-primary" type="button">ライブラリに追加</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- High-Res Lightbox Modal -->
+  <div id="lightboxModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-label="高画質ライブプレビュー">
+    <div class="modal-card lightbox-card">
+      <div class="modal-header">
+        <span id="lightboxTitle" class="modal-title">高画質ライブプレビュー</span>
+        <div class="modal-header-actions">
+          <button id="btnLbPrev" class="btn" type="button">◀ 前へ</button>
+          <button id="btnLbNext" class="btn" type="button">次へ ▶</button>
+          <button id="btnLbClose" class="btn" type="button">閉じる</button>
+        </div>
+      </div>
+      <div class="lightbox-stage">
+        <canvas id="lightboxCanvas"></canvas>
+      </div>
+      <div id="lightboxVideoBar" class="lightbox-video-bar hidden">
+        <button id="btnLbPlay" class="btn btn-primary" type="button">▶ プレビュー再生</button>
+        <input id="rngLbTime" type="range" min="0" max="1000" value="0" />
+        <span id="lblLbTime" class="muted-text time-readout">00:00 / 00:00</span>
+        <div class="pill-group">
+          <button class="btn-pill" data-jump="0" type="button">先頭</button>
+          <button class="btn-pill" data-jump="0.25" type="button">25%</button>
+          <button class="btn-pill" data-jump="0.5" type="button">50%</button>
+          <button class="btn-pill" data-jump="0.75" type="button">75%</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Batch Export Progress Modal -->
+  <div id="exportModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-label="批量导出进度">
+    <div class="modal-card export-progress-card">
+      <div class="modal-header">
+        <span id="exportModalTitle" class="modal-title">透かしメディアを一括書き出し中</span>
+      </div>
+      <div class="export-progress-body">
+        <div id="exportStatusDetail" class="muted-text">準備中...</div>
+        <div class="progress-track">
+          <div id="exportProgressFill" class="progress-fill" style="width:0%"></div>
+        </div>
+        <div id="exportPercentText" class="export-percent">0%</div>
+      </div>
+      <div class="modal-footer">
+        <button id="btnCancelExport" class="btn btn-danger" type="button">書き出しを中止</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toastHost" class="toast-host" aria-live="polite"></div>
+
+  <script type="module" src="../js/app.js"></script>
+</body>
+</html>

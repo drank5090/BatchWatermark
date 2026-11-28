@@ -4,12 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>BatchWatermark 在线批量加水印工具 · 免费图片与视频添加文字/Logo水印（零上传）</title>
-  <meta name="description" content="BatchWatermark（watermark.zak-cloud.top）是免费开源、100% 浏览器本地运行的在线批量加水印工具：无需安装、绝不上传服务器，支持多张图片与视频实时同步预览、文字/Logo 水印、全图平铺防盗、九宫格定位、横竖版隔离分开导出与 JSON 预设管理。" />
-  <meta name="keywords" content="批量加水印,在线加水印,图片加水印,视频加水印,批量水印,免费加水印工具,Logo水印,文字水印,平铺水印,防盗图水印,本地加水印,不上传图片加水印,横竖版水印,BatchWatermark,batch watermark online,watermark photos and videos free" />
+  <meta name="description" content="BatchWatermark（watermark.zak-cloud.top）是免费开源、100% 浏览器本地运行的双模式在线批量加水印工具：工作模式支持多张图片与视频实时预览、横竖版隔离导出与 JSON 预设；创作模式支持图文水印库、智能避让主体多尺度艺术排版与自由拖拽精修。" />
+  <meta name="keywords" content="批量加水印,在线加水印,图片加水印,视频加水印,艺术水印,画师防盗水印,免费加水印工具,Logo水印,文字水印,平铺水印,防盗图水印,本地加水印,不上传图片加水印,横竖版水印,BatchWatermark" />
   <meta name="author" content="drank5090" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <link rel="canonical" href="https://watermark.zak-cloud.top/" />
   <link rel="alternate" hreflang="zh-CN" href="https://watermark.zak-cloud.top/" />
+  <link rel="alternate" hreflang="en" href="https://watermark.zak-cloud.top/en/" />
+  <link rel="alternate" hreflang="ja" href="https://watermark.zak-cloud.top/ja/" />
+  <link rel="alternate" hreflang="zh-Hant" href="https://watermark.zak-cloud.top/zh-hant/" />
   <link rel="alternate" hreflang="x-default" href="https://watermark.zak-cloud.top/" />
 
   <!-- Performance hints for analytics & ads -->
@@ -46,24 +49,26 @@
   <!-- Open Graph (WeChat / Facebook / LinkedIn / Slack / Discord) -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="BatchWatermark" />
-  <meta property="og:locale" content="zh_CN" />
+    <meta property="og:locale" content="zh_CN" />
   <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:locale:alternate" content="ja_JP" />
+  <meta property="og:locale:alternate" content="zh_Hant" />
   <meta property="og:url" content="https://watermark.zak-cloud.top/" />
-  <meta property="og:title" content="BatchWatermark · 免费在线批量给图片和视频加水印（纯本地零上传）" />
-  <meta property="og:description" content="打开即用、绝不上传服务器：在浏览器本地批量为图片与视频添加文字或 Logo 水印，支持实时多图预览、平铺防盗、横竖版隔离导出与预设导入导出。" />
+  <meta property="og:title" content="BatchWatermark · 免费在线批量图片视频加水印 &amp; 艺术水印创作（零上传）" />
+  <meta property="og:description" content="100% 浏览器本地运行、绝不上传服务器：工作模式批量处理图片与视频，创作模式支持图文水印库、智能避让人物多尺度艺术排版与自由拖拽。" />
   <meta property="og:image" content="https://watermark.zak-cloud.top/og-image.png" />
   <meta property="og:image:secure_url" content="https://watermark.zak-cloud.top/og-image.png" />
   <meta property="og:image:type" content="image/png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="BatchWatermark 在线批量加水印工具界面：多张图片与视频同步实时预览平铺水印" />
+  <meta property="og:image:alt" content="BatchWatermark 在线批量加水印工具与创作模式艺术水印界面" />
 
   <!-- Twitter / X Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="BatchWatermark · 免费在线批量给图片和视频加水印（纯本地零上传）" />
-  <meta name="twitter:description" content="打开即用、绝不上传服务器：在浏览器本地批量为图片与视频添加文字或 Logo 水印，支持实时多图预览、平铺防盗、横竖版隔离导出与预设导入导出。" />
+  <meta name="twitter:title" content="BatchWatermark · 免费在线批量图片视频加水印 &amp; 艺术水印创作（零上传）" />
+  <meta name="twitter:description" content="100% 浏览器本地运行、绝不上传服务器：工作模式批量处理图片与视频，创作模式支持图文水印库、智能避让人物多尺度艺术排版与自由拖拽。" />
   <meta name="twitter:image" content="https://watermark.zak-cloud.top/og-image.png" />
-  <meta name="twitter:image:alt" content="BatchWatermark 在线批量加水印工具界面：多张图片与视频同步实时预览平铺水印" />
+  <meta name="twitter:image:alt" content="BatchWatermark 在线批量加水印工具与创作模式艺术水印界面" />
 
   <!-- Structured Data (JSON-LD @graph for SEO & Generative Engine Optimization / GEO) -->
   <script type="application/ld+json">
@@ -74,9 +79,18 @@
         "@type": "WebSite",
         "@id": "https://watermark.zak-cloud.top/#website",
         "name": "BatchWatermark",
-        "alternateName": ["BatchWatermark Web", "在线批量加水印工具"],
+        "alternateName": [
+          "BatchWatermark Web",
+          "在线批量加水印工具",
+          "艺术水印创作工具"
+        ],
         "url": "https://watermark.zak-cloud.top/",
-        "inLanguage": ["zh-CN", "en"],
+        "inLanguage": [
+          "zh-CN",
+          "en",
+          "ja",
+          "zh-Hant"
+        ],
         "sameAs": [
           "https://drank5090.github.io/BatchWatermark/",
           "https://github.com/drank5090/BatchWatermark"
@@ -86,13 +100,18 @@
         "@type": "WebApplication",
         "@id": "https://watermark.zak-cloud.top/#app",
         "name": "BatchWatermark 在线批量加水印工具",
-        "alternateName": ["BatchWatermark Web", "Batch Watermark Online"],
+        "alternateName": [
+          "BatchWatermark Web",
+          "在线批量加水印工具",
+          "艺术水印创作工具"
+        ],
         "url": "https://watermark.zak-cloud.top/",
+        "inLanguage": "zh-CN",
         "sameAs": [
           "https://drank5090.github.io/BatchWatermark/",
           "https://github.com/drank5090/BatchWatermark"
         ],
-        "description": "免费开源、100% 浏览器本地运行的批量图片与视频加水印工具。支持多图与视频实时同步预览、多行文字与透明 Logo 水印、斜向砖墙平铺防盗、3×3 九宫格定位、横竖版隔离独立参数与分文件夹导出、本地持久化预设及 JSON 导入导出。",
+        "description": "BatchWatermark（watermark.zak-cloud.top）是免费开源、100% 浏览器本地运行的双模式在线批量加水印工具：工作模式支持多张图片与视频实时预览、横竖版隔离导出与 JSON 预设；创作模式支持图文水印库、智能避让主体多尺度艺术排版与自由拖拽精修。",
         "applicationCategory": "MultimediaApplication",
         "applicationSubCategory": "Image and Video Watermarking Tool",
         "operatingSystem": "Web Browser (Chrome, Edge, Safari, Firefox, iOS, Android), Windows 10/11",
@@ -114,54 +133,57 @@
         },
         "featureList": [
           "100% 浏览器本地内存运算，图片与视频零上传服务器",
-          "批量导入多张图片、视频或整个文件夹，支持拖拽上传",
-          "多图与视频帧同步实时预览，支持高清大图与视频时间轴播放预览",
-          "支持多行文字水印（自定义字体、描边、投影）与透明 PNG/WebP Logo 水印",
-          "支持全图斜向交错平铺防盗与 3×3 九宫格单点定位",
-          "横版竖版一键隔离展示、独立水印参数设置与自动分文件夹导出",
-          "自定义预设本机保存与 JSON 导入导出，与 Windows 桌面 EXE 互通",
-          "支持单文件直下、零依赖 UTF-8 ZIP 打包导出与 Chrome/Edge 直写本地目录"
+          "双模式独立标签切换：工作模式（批量图片/视频）与创作模式（艺术水印/自由拖拽）",
+          "创作模式支持图文水印库、显著度主体避让算法、大小错落自动排版与单层拖拽缩放旋转",
+          "工作模式支持多图与视频帧同步实时预览、平铺防盗、九宫格定位与横竖版隔离分文件夹导出",
+          "自定义预设与创作水印库本机持久化，支持 UTF-8 JSON 导入导出并与 Windows 桌面 EXE 互通",
+          "支持单文件直下、ZIP 打包导出与 Chrome/Edge 直写本地文件夹，适配 PC 与手机端"
         ]
       },
       {
         "@type": "HowTo",
         "@id": "https://watermark.zak-cloud.top/#howto",
         "name": "如何使用 BatchWatermark 在线批量给图片和视频加水印",
-        "description": "无需安装软件、不上传文件，4 步在浏览器本地完成批量图片和视频水印添加与导出。",
+        "description": "无需安装软件、不上传文件，4 步在浏览器本地完成工作模式批量水印或创作模式艺术水印。",
+        "inLanguage": "zh-CN",
         "totalTime": "PT1M",
         "tool": [
-          { "@type": "HowToTool", "name": "现代浏览器（Chrome / Edge / Safari / Firefox）" }
+          {
+            "@type": "HowToTool",
+            "name": "现代浏览器（Chrome / Edge / Safari / Firefox）"
+          }
         ],
         "step": [
           {
             "@type": "HowToStep",
             "position": 1,
-            "name": "导入图片或视频",
-            "text": "点击「添加图片/视频」或「添加文件夹」，也可以直接把多张照片、短视频或整个文件夹拖拽到预览区。"
+            "name": "选择工作模式或创作模式",
+            "text": "在顶部标签栏切换「工作模式」（高效批量图片/视频、平铺/九宫格、横竖隔离）或「创作模式」（图文水印库、自动避让主体多尺度艺术排版、自由拖拽）。"
           },
           {
             "@type": "HowToStep",
             "position": 2,
-            "name": "调整文字或 Logo 水印参数",
-            "text": "在控制面板中选择文字水印或图片 Logo，调节字体、字号、颜色、描边、阴影、不透明度与旋转角度，所有预览图实时同步刷新。"
+            "name": "导入图片、视频或水印素材",
+            "text": "支持多选文件、导入整个文件夹或直接拖拽进入画布；创作模式还可上传透明 PNG 贴纸与多行文字组建本机持久化水印库。"
           },
           {
             "@type": "HowToStep",
             "position": 3,
-            "name": "选择平铺或九宫格排布（可选横竖隔离）",
-            "text": "选择「全图平铺」防盗图或「单点定位」九宫格摆放；若同时处理横屏与竖屏素材，可开启「横竖隔离」分别配置参数。"
+            "name": "实时预览与精细调整",
+            "text": "工作模式所有图片与视频帧同步实时刷新；创作模式可一键「智能排版 / 换一版」，并直接拖拽、缩放、旋转或锁定任意单个水印。"
           },
           {
             "@type": "HowToStep",
             "position": 4,
-            "name": "一键本地批量导出",
-            "text": "设置文件名前后缀、输出格式与导出质量，点击「打包导出 ZIP」或「直接导出到本地文件夹」即可完成本地保存。"
+            "name": "一键本地高清导出",
+            "text": "支持单文件直下、零依赖 UTF-8 ZIP 批量打包导出，或在 Chrome/Edge 中直接写入本地目录，全程零服务器上传。"
           }
         ]
       },
       {
         "@type": "FAQPage",
         "@id": "https://watermark.zak-cloud.top/#faq",
+        "inLanguage": "zh-CN",
         "mainEntity": [
           {
             "@type": "Question",
@@ -176,7 +198,15 @@
             "name": "我的图片和视频会被上传到服务器吗？",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "绝不会上传。BatchWatermark 的图片解码、Canvas 水印绘制、MediaRecorder 视频合成与 ZIP 打包全部在您的浏览器本地内存中完成，没有任何文件上传接口，适合处理商业素材、证件照与内部文档。"
+              "text": "绝不会上传。图片解码、Canvas 水印绘制、创作模式显著度计算、MediaRecorder 视频合成与 ZIP 打包全部在您的浏览器本地内存中完成，没有任何文件上传接口。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "工作模式和创作模式有什么区别？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "工作模式专注高效批量给图片和视频加文字/Logo 平铺或九宫格水印，并支持横竖隔离导出；创作模式面向插画、摄影与约稿防盗，支持上传图文水印库、算法自动避让主体生成大小不一的艺术排版，并可自由拖拽精修。两个模式完全独立，通过顶部标签页切换。"
             }
           },
           {
@@ -184,7 +214,7 @@
             "name": "支持手机端使用吗？",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "支持。网页版针对 iOS Safari 与 Android 浏览器做了专属移动端布局优化：顶部固定实时预览区，下方通过分类标签切换文字、样式、排布、预设与导出设置，单图支持直接下载保存到手机。"
+              "text": "支持。网页版针对 iOS Safari 与 Android 浏览器做了专属移动端布局优化：顶部固定实时预览/交互画布，下方通过分类标签切换参数，单图支持直接下载保存到手机。"
             }
           },
           {
@@ -197,26 +227,18 @@
           },
           {
             "@type": "Question",
-            "name": "如何给图片加斜向平铺水印防止盗图？",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "在「位置与排布」中选择「全图平铺」，将旋转角度设为 -25° 或 -45°，调节不透明度与水平/垂直间距，并勾选「奇偶行交错排布（砖墙错位）」，即可生成覆盖整张图片、难以裁剪去除的防盗水印。"
-            }
-          },
-          {
-            "@type": "Question",
             "name": "横版和竖版图片可以使用不同的水印并分开导出吗？",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "可以。点击顶部「横竖隔离」，预览区会自动分为「横版媒体区（宽 ≥ 高）」和「竖版媒体区（高 > 宽）」；勾选「横版与竖版使用独立水印参数」即可分别调节，导出时自动归入「横版/」和「竖版/」子文件夹。"
+              "text": "可以。在工作模式点击顶部「横竖隔离」，预览区自动分为横版区（宽 ≥ 高）和竖版区（高 > 宽），支持独立参数，导出时自动归入「横版/」和「竖版/」子文件夹。"
             }
           },
           {
             "@type": "Question",
-            "name": "watermark.zak-cloud.top 和 GitHub Pages 地址有什么区别？",
+            "name": "创作模式的水印库可以跨设备或与桌面版互通吗？",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "两个地址部署的是同一套开源代码，功能完全一致。watermark.zak-cloud.top 是官方推荐主站（访问更稳定且支持根路径完整 SEO/PWA 特性），drank5090.github.io/BatchWatermark/ 是官方 GitHub Pages 镜像。"
+              "text": "可以。创作模式水印库自动保存在浏览器本地 IndexedDB 中，并支持导出为标准 UTF-8 JSON 文件包，与 Windows 桌面 EXE 版 100% 双向导入导出互通。"
             }
           },
           {
@@ -224,7 +246,7 @@
             "name": "需要处理大量高清长视频，有离线桌面版吗？",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "有。BatchWatermark 提供基于 Python、PySide6 与内置 FFmpeg 7.1 的 Windows 独立单文件 EXE，导出 H.264 MP4 速度更快、格式兼容更广，可在 GitHub Releases 免费下载，且预设 JSON 与网页版 100% 互通。"
+              "text": "有。BatchWatermark 提供基于 Python、PySide6 与内置 FFmpeg 的 Windows 独立单文件 EXE，同样内置工作模式与创作模式及四语言切换，可在 GitHub Releases 免费下载。"
             }
           }
         ]
@@ -273,6 +295,12 @@
       </div>
       <div class="mode-bar-right">
         <span class="privacy-pill" title="所有图片与视频仅在您的浏览器内存中本地处理，不会上传到任何服务器">🔒 纯本地处理</span>
+        <select id="langSelect" class="lang-select" data-i18n-skip aria-label="Language / 语言 / 言語">
+          <option value="zh-CN">🌐 简体中文</option>
+          <option value="en">🌐 English</option>
+          <option value="ja">🌐 日本語</option>
+          <option value="zh-Hant">🌐 繁體中文</option>
+        </select>
         <a class="btn btn-ghost repo-link" href="https://github.com/drank5090/BatchWatermark" target="_blank" rel="noopener noreferrer" title="查看 GitHub 开源仓库与桌面端 EXE 下载">GitHub</a>
       </div>
     </nav>
@@ -1078,6 +1106,9 @@
       </section>
 
       <footer class="guide-footer">
+        <nav class="guide-links" aria-label="语言版本 / Languages">
+          <strong>简体中文</strong> · <a href="./en/" hreflang="en">English</a> · <a href="./ja/" hreflang="ja">日本語</a> · <a href="./zh-hant/" hreflang="zh-Hant">繁體中文</a>
+        </nav>
         <nav class="guide-links" aria-label="项目与镜像链接">
           <a href="https://watermark.zak-cloud.top/">官方主站 (watermark.zak-cloud.top)</a>
           <a href="https://drank5090.github.io/BatchWatermark/" rel="noopener">GitHub Pages 镜像</a>

@@ -1,19 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://watermark.zak-cloud.top/</loc>
-    <lastmod>2026-11-27</lastmod>
+    <lastmod>2026-11-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://watermark.zak-cloud.top/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://watermark.zak-cloud.top/en/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://watermark.zak-cloud.top/ja/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://watermark.zak-cloud.top/zh-hant/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://watermark.zak-cloud.top/" />
     <image:image>
       <image:loc>https://watermark.zak-cloud.top/og-image.png</image:loc>
-      <image:title>BatchWatermark 在线批量加水印工具界面预览</image:title>
+      <image:title>BatchWatermark 在线批量加水印工具</image:title>
+      <image:caption>BatchWatermark 在线批量加水印工具与创作模式艺术水印界面</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://watermark.zak-cloud.top/en/</loc>
+    <lastmod>2026-11-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://watermark.zak-cloud.top/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://watermark.zak-cloud.top/en/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://watermark.zak-cloud.top/ja/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://watermark.zak-cloud.top/zh-hant/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://watermark.zak-cloud.top/" />
+    <image:image>
+      <image:loc>https://watermark.zak-cloud.top/og-image.png</image:loc>
+      <image:title>BatchWatermark Online Batch Watermark &amp; Creative Studio</image:title>
+      <image:caption>BatchWatermark online batch photo/video watermark tool and Creative Mode canvas</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://watermark.zak-cloud.top/ja/</loc>
+    <lastmod>2026-11-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://watermark.zak-cloud.top/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://watermark.zak-cloud.top/en/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://watermark.zak-cloud.top/ja/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://watermark.zak-cloud.top/zh-hant/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://watermark.zak-cloud.top/" />
+    <image:image>
+      <image:loc>https://watermark.zak-cloud.top/og-image.png</image:loc>
+      <image:title>BatchWatermark オンライン一括透かし＆クリエイティブスタジオ</image:title>
+      <image:caption>BatchWatermark オンライン画像・動画一括透かしおよびクリエイティブモード画面</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://watermark.zak-cloud.top/zh-hant/</loc>
+    <lastmod>2026-11-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://watermark.zak-cloud.top/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://watermark.zak-cloud.top/en/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://watermark.zak-cloud.top/ja/" />
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://watermark.zak-cloud.top/zh-hant/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://watermark.zak-cloud.top/" />
+    <image:image>
+      <image:loc>https://watermark.zak-cloud.top/og-image.png</image:loc>
+      <image:title>BatchWatermark 線上批次加浮水印工具</image:title>
+      <image:caption>BatchWatermark 線上批次加浮水印工具與創作模式藝術浮水印介面</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://watermark.zak-cloud.top/llms.txt</loc>
-    <lastmod>2026-11-27</lastmod>
+    <lastmod>2026-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>

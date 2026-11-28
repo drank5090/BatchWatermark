@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>页面未找到 (404) | BatchWatermark 在线批量加水印工具</title>
-  <meta name="description" content="您访问的页面不存在。返回 BatchWatermark 首页，免费在线批量为图片和视频添加文字或 Logo 水印。" />
+  <title>404 Page Not Found | BatchWatermark</title>
+  <meta name="description" content="Page not found. Return to BatchWatermark to watermark images and videos locally in your browser." />
   <meta name="robots" content="noindex, follow" />
   <meta name="theme-color" content="#1e2128" />
   <meta name="color-scheme" content="dark" />
@@ -25,7 +25,7 @@
       font-family: "Microsoft YaHei UI", "PingFang SC", "Segoe UI", system-ui, -apple-system, sans-serif;
     }
     main {
-      max-width: 520px;
+      max-width: 560px;
       width: 100%;
       text-align: center;
       background: #1e2128;
@@ -37,14 +37,14 @@
     img { width: 72px; height: 72px; }
     .code { margin: 14px 0 4px; font-size: 56px; font-weight: 800; color: #93c5fd; letter-spacing: 2px; }
     h1 { margin: 0 0 10px; font-size: 20px; color: #f9fafb; }
-    p { margin: 0 0 22px; color: #9ca3af; line-height: 1.7; font-size: 14px; }
-    nav { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    p { margin: 0 0 20px; color: #9ca3af; line-height: 1.7; font-size: 14px; }
+    nav { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px; }
     a {
       display: inline-block;
-      padding: 10px 18px;
+      padding: 9px 15px;
       border-radius: 8px;
       text-decoration: none;
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 600;
       border: 1px solid #383f4e;
       color: #e5e7eb;
@@ -57,20 +57,28 @@
 </head>
 <body>
   <main>
-    <img id="iconImg" src="./favicon.svg" alt="BatchWatermark 图标" width="72" height="72" />
+    <img id="iconImg" src="./favicon.svg" alt="BatchWatermark" width="72" height="72" />
     <div class="code" aria-hidden="true">404</div>
-    <h1>页面未找到</h1>
-    <p>您访问的地址不存在或已被移动。<br />返回首页即可继续使用 BatchWatermark 免费在线批量给图片和视频加水印。</p>
-    <nav aria-label="404 页面导航">
-      <a id="homeLink" class="primary" href="./">返回在线水印工具首页</a>
-      <a href="https://watermark.zak-cloud.top/" rel="noopener">访问主站 watermark.zak-cloud.top</a>
-      <a href="https://github.com/drank5090/BatchWatermark" rel="noopener">GitHub 开源仓库</a>
+    <h1>页面未找到 · Page Not Found</h1>
+    <p>您访问的地址不存在或已被移动，请选择语言返回 BatchWatermark 首页。<br />The requested page was not found. Choose your language below.</p>
+    <nav aria-label="Language homepages">
+      <a id="linkZh" class="primary" href="./" hreflang="zh-CN">简体中文</a>
+      <a id="linkEn" href="./en/" hreflang="en">English</a>
+      <a id="linkJa" href="./ja/" hreflang="ja">日本語</a>
+      <a id="linkHant" href="./zh-hant/" hreflang="zh-Hant">繁體中文</a>
+    </nav>
+    <nav aria-label="External links">
+      <a href="https://watermark.zak-cloud.top/" rel="noopener">watermark.zak-cloud.top</a>
+      <a href="https://github.com/drank5090/BatchWatermark" rel="noopener">GitHub</a>
     </nav>
   </main>
   <script>
     (function () {
       var base = location.pathname.indexOf("/BatchWatermark/") === 0 ? "/BatchWatermark/" : "/";
-      document.getElementById("homeLink").setAttribute("href", base);
+      document.getElementById("linkZh").setAttribute("href", base);
+      document.getElementById("linkEn").setAttribute("href", base + "en/");
+      document.getElementById("linkJa").setAttribute("href", base + "ja/");
+      document.getElementById("linkHant").setAttribute("href", base + "zh-hant/");
       document.getElementById("iconImg").setAttribute("src", base + "favicon.svg");
     })();
   </script>

@@ -21,6 +21,7 @@ import {
   newCreativeId,
   sanitizeCreativeAsset,
 } from "./creative-models.js";
+import { t } from "./i18n.js";
 import { SUPPORTED_IMAGE_EXTS, getFileExtension, stripExtension } from "./models.js";
 import { loadImagePreview } from "./watermark-engine.js";
 import { ZipBuilder } from "./zip.js";
@@ -318,14 +319,14 @@ export class CreativeModeApp {
     const host = $("creativeLibList");
     host.innerHTML = "";
     const assets = this.libraryStore.listAssets();
-    $("creativeLibCount").textContent = `${assets.length} 项`;
+    $("creativeLibCount").textContent = t(`${assets.length} 项`);
 
     for (const asset of assets) {
       const card = document.createElement("div");
       card.className = "creative-asset-card";
       card.draggable = true;
       card.dataset.assetId = asset.id;
-      card.title = "按住拖拽到右侧画布任意位置，或点击「＋」直接放置";
+      card.title = t("按住拖拽到右侧画布任意位置，或点击「＋」直接放置");
 
       // Drag from library onto canvas
       card.addEventListener("dragstart", (e) => {
@@ -336,7 +337,7 @@ export class CreativeModeApp {
       const chk = document.createElement("input");
       chk.type = "checkbox";
       chk.checked = asset.enabled;
-      chk.title = "勾选后参与自动美观排版";
+      chk.title = t("勾选后参与自动美观排版");
       chk.addEventListener("change", async () => {
         asset.enabled = chk.checked;
         await this.libraryStore.updateAsset(asset);
@@ -353,7 +354,7 @@ export class CreativeModeApp {
         previewStamp.className = "asset-thumb-canvas";
         thumb.appendChild(previewStamp);
       } else {
-        thumb.textContent = asset.kind === "image" ? "图" : "字";
+        thumb.textContent = t(asset.kind === "image" ? "图" : "字");
       }
 
       const info = document.createElement("div");
@@ -361,21 +362,21 @@ export class CreativeModeApp {
 
       const title = document.createElement("div");
       title.className = "asset-name";
-      title.textContent = asset.name;
+      title.textContent = t(asset.name);
 
       const meta = document.createElement("div");
       meta.className = "asset-meta";
       const badge = document.createElement("span");
       badge.className = asset.kind === "image" ? "kind-badge img" : "kind-badge txt";
-      badge.textContent = asset.kind === "image" ? "图" : "字";
+      badge.textContent = t(asset.kind === "image" ? "图" : "字");
 
       const roleSel = document.createElement("select");
       roleSel.className = "mini-select";
-      roleSel.setAttribute("aria-label", `${asset.name} 排版角色`);
+      roleSel.setAttribute("aria-label", `${t(asset.name)} ${t("排版角色")}`);
       for (const [rk, rl] of Object.entries(ROLE_LABELS)) {
         const opt = document.createElement("option");
         opt.value = rk;
-        opt.textContent = rl;
+        opt.textContent = t(rl);
         if (rk === asset.role) opt.selected = true;
         roleSel.appendChild(opt);
       }
@@ -394,7 +395,7 @@ export class CreativeModeApp {
       btnDrop.type = "button";
       btnDrop.className = "card-icon-btn";
       btnDrop.textContent = "＋";
-      btnDrop.title = "放置到当前画布";
+      btnDrop.title = t("放置到当前画布");
       btnDrop.addEventListener("click", (ev) => {
         ev.stopPropagation();
         this.addAssetToCenter(asset.id);
@@ -404,7 +405,7 @@ export class CreativeModeApp {
       btnDel.type = "button";
       btnDel.className = "card-icon-btn remove";
       btnDel.textContent = "✕";
-      btnDel.title = "删除该素材";
+      btnDel.title = t("删除该素材");
       btnDel.addEventListener("click", async (ev) => {
         ev.stopPropagation();
         await this.libraryStore.deleteAsset(asset.id);
@@ -523,7 +524,7 @@ export class CreativeModeApp {
       top.className = "filmstrip-top";
       const badge = document.createElement("span");
       badge.className = "group-badge";
-      badge.textContent = `${doc.placements.length} 层`;
+      badge.textContent = t(`${doc.placements.length} 层`);
       const btnX = document.createElement("button");
       btnX.type = "button";
       btnX.className = "card-icon-btn remove mini";
@@ -719,7 +720,7 @@ export class CreativeModeApp {
       if (!layer) return;
 
       const asset = this.libraryStore.getAsset(layer.asset_id);
-      $("inspectorLayerName").textContent = `${asset ? asset.name : "水印图层"} · ${layer.auto_generated ? "自动生成" : "手动放置"}`;
+      $("inspectorLayerName").textContent = t(`${asset ? asset.name : "水印图层"} · ${layer.auto_generated ? "自动生成" : "手动放置"}`);
       const pct = +(layer.scale * 100).toFixed(1);
       $("rngLayerScale").value = String(Math.round(pct * 10));
       $("numLayerScale").value = pct.toFixed(1);
@@ -823,7 +824,7 @@ export class CreativeModeApp {
     const has = count > 0;
     const doc = this._activeDoc();
 
-    $("creativeCountBadge").textContent = `共 ${count} 张`;
+    $("creativeCountBadge").textContent = t(`共 ${count} 张`);
     $("creativeEmptyState").classList.toggle("hidden", has);
     $("creativeCanvas").classList.toggle("hidden", !has);
 
@@ -837,7 +838,7 @@ export class CreativeModeApp {
     $("btnCreativeExportTop").disabled = !has;
     $("btnCreativeExportCur").disabled = !has;
     $("btnCreativeExportAll").disabled = !has;
-    $("btnCreativeExportAll").textContent = count === 1 ? "⬇ 直接导出图片 (1 张)" : `⬇ 批量导出 ZIP (${count} 张)`;
+    $("btnCreativeExportAll").textContent = t(count === 1 ? "⬇ 直接导出图片 (1 张)" : `⬇ 批量导出 ZIP (${count} 张)`);
   }
 
   // ---- Interactive Canvas Rendering & Hit-Testing ----

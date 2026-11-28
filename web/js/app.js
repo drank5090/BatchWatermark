@@ -4,6 +4,13 @@
 
 import { CreativeModeApp } from "./creative-app.js";
 import {
+  applyDomTranslations,
+  buildLocaleNavigationUrl,
+  getLocale,
+  setLocale,
+  t,
+} from "./i18n.js";
+import {
   SUPPORTED_IMAGE_EXTS,
   SUPPORTED_VIDEO_EXTS,
   cloneConfig,
@@ -752,23 +759,24 @@ class BatchWatermarkApp {
         if (it && this._orientationOf(it) === "landscape") land++;
       }
       const port = total - land;
-      $("countBadge").textContent = `共 ${total} 项 · 横${land} / 竖${port}`;
+      $("countBadge").textContent = t(`共 ${total} 项 · 横${land} / 竖${port}`);
     } else {
       let vids = 0;
       for (const id of this.itemOrder) {
         if (this.items.get(id)?.mediaType === "video") vids++;
       }
-      $("countBadge").textContent = vids > 0 ? `共 ${total} 项 (视频 ${vids})` : `共 ${total} 项`;
+      $("countBadge").textContent = t(vids > 0 ? `共 ${total} 项 (视频 ${vids})` : `共 ${total} 项`);
     }
 
     $("btnClearAll").disabled = total === 0;
     $("btnTopExport").disabled = total === 0;
     $("btnExportZip").disabled = total === 0;
-    $("btnExportZip").textContent =
-      total === 1 ? "⬇ 直接导出文件 (1 项)" : `⬇ 打包导出 ZIP (${total} 项)`;
+    $("btnExportZip").textContent = t(
+      total === 1 ? "⬇ 直接导出文件 (1 项)" : `⬇ 打包导出 ZIP (${total} 项)`,
+    );
     $("btnExportDir").disabled = total === 0 || typeof window.showDirectoryPicker !== "function";
     if ($("mobileGallerySummary")) {
-      $("mobileGallerySummary").textContent = `实时预览 · ${$("countBadge").textContent}`;
+      $("mobileGallerySummary").textContent = `${t("实时预览")} · ${$("countBadge").textContent}`;
     }
   }
 
@@ -1472,7 +1480,7 @@ class BatchWatermarkApp {
   }
 
   _setStatus(text) {
-    $("statusText").textContent = text;
+    $("statusText").textContent = t(text);
   }
 
   _trackEvent(eventName, params = {}) {
@@ -1488,18 +1496,62 @@ class BatchWatermarkApp {
     const host = $("toastHost");
     const item = document.createElement("div");
     item.className = "toast-item";
-    item.textContent = message;
+    item.textContent = t(message);
     host.appendChild(item);
     setTimeout(() => item.remove(), 3200);
   }
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+  const initialLocale = getLocale();
+  setLocale(initialLocale, { persist: false });
+
   const workApp = new BatchWatermarkApp();
   const creativeApp = new CreativeModeApp({
     toast: (msg) => workApp._toast(msg),
     trackEvent: (name, params) => workApp._trackEvent(name, params),
   });
+
+  // Apply runtime translations to interactive app shell & modals on non-zh-CN pages
+  const applyAllUiTranslations = (loc) => {
+    const shell = document.getElementById("top");
+    if (shell) applyDomTranslations(shell, loc);
+    for (const modalId of ["creativeTextModal", "lightboxModal", "exportModal"]) {
+      const el = document.getElementById(modalId);
+      if (el) applyDomTranslations(el, loc);
+    }
+  };
+
+  if (initialLocale !== "zh-CN") {
+    applyAllUiTranslations(initialLocale);
+  }
+
+  // Language switcher: navigate cleanly to SEO localized URL if no active work,
+  // or translate losslessly in-place if the user already imported media!
+  const langSelect = $("langSelect");
+  if (langSelect) {
+    langSelect.value = initialLocale;
+    langSelect.addEventListener("change", () => {
+      const nextLoc = langSelect.value;
+      const hasActiveWork = workApp.itemOrder.length > 0 || creativeApp.docOrder.length > 0;
+      setLocale(nextLoc, { persist: true });
+      workApp._trackEvent("language_changed", { locale: nextLoc, in_place: hasActiveWork });
+
+      if (!hasActiveWork) {
+        window.location.href = buildLocaleNavigationUrl(nextLoc);
+        return;
+      }
+
+      // Lossless in-place re-translation preserving all imported images/videos/layers
+      applyAllUiTranslations(nextLoc);
+      creativeApp._renderLibraryList();
+      creativeApp._renderFilmstrip();
+      creativeApp._refreshInspector();
+      creativeApp._updateControlsState();
+      creativeApp.renderCanvas();
+      workApp._updateCountsAndButtons();
+    });
+  }
 
   // Top Dual-Mode Tab Switcher (Work Mode vs Creative Mode — completely independent)
   const switchMode = (mode) => {
@@ -1524,4 +1576,15 @@ window.addEventListener("DOMContentLoaded", () => {
   window.__batchWatermarkApp = workApp;
   window.__creativeApp = creativeApp;
   window.__switchAppMode = switchMode;
+  window.__setAppLanguage = (loc) => {
+    setLocale(loc, { persist: true });
+    if (langSelect) langSelect.value = getLocale();
+    applyAllUiTranslations(getLocale());
+    creativeApp._renderLibraryList();
+    creativeApp._renderFilmstrip();
+    creativeApp._refreshInspector();
+    creativeApp._updateControlsState();
+    creativeApp.renderCanvas();
+    workApp._updateCountsAndButtons();
+  };
 });
